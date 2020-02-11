@@ -8,5 +8,5 @@ def hello(request):
  return render(request, 'myapp/hello.html', {'posts':posts})
 
 def post_detail(request, pk):
- post= Post.objects.get(pk=pk)
+ post = get_object_or_404(Post, pk=pk)
  return render(request, 'myapp/post_detail.html', {'post':post})
