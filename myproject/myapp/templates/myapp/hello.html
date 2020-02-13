@@ -1,11 +1,29 @@
 {% extends 'myapp/base.html' %}
-
-{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8'/>
+<title>website template</title>
+<link rel='stylesheet' href="{% static 'css/mya>
+</head>
+<body>
+<div id='toolbar'>
+<svg id='toolbarsvg' width='600' height='150'>
+<svg id='logo' width='350' height='150'  viewBo>
+<svg id='menu' x='840' y='0' ><rect id='menurec>
+<svg id='dropdown' width='100%' height='600' st>
+</svg>
+</div>
 {% for post in posts%}
 <div id='post'>
-<h><a href="{% url 'post_detail' pk=post.pk %}">{{post.title}}</a></h>
+<h><a href="{% url 'post_detail' pk=post.pk %}">
 <p>{{post.text}}</p>
  {{post.published_date}}
 </div>
 {%endfor%}
-{% endblock %}
+</body>
+<script>document.getElementById('toolbarsvg').g>
+document.getElementById('toolbarsvg').getElemen>
+document.getElementById('arcH1content').onsubmi>
+</script>
