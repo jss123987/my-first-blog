@@ -1,7 +1,7 @@
 {% extends 'myapp/base.html' %}
 {% block content %}
 {% for post in posts %}
-<div id='post'>
+<div class='post'>
 <h><a href="{% url 'post_detail' pk=post.pk %}">{{post.title}}</a></h>
 <p>{{post.text}}</p>
  {{post.published_date}}
