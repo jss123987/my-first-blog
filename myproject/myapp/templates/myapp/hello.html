@@ -1,10 +1,10 @@
-{%load static%}
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset='utf-8'/>
 <title>website template</title>
-<link rel='stylesheet' href="{%static 'css/myapp.css'%}">
+<link rel="stylesheet"  href="{% static 'css/myapp.css' %}">
 </head>
 <body>
 <div id='toolbar'>
@@ -16,13 +16,13 @@
 <svg id='dropdown' width='100%' height='600' style='background-color: rgb(38, 38, 122) ; display:none; ' ><line x1='0' y1='0' x2='100%' y2='0' style='stroke:rgb(70, 70, 133);  stroke-width: 5 ' /><g transform='translate(0, 20)'><text fill='white'><tspan x='60' y='100' font-size='50' ><a href='page/US.html'>U.S.</a></tspan><tspan x='60' y='145' font-size='22.5'><a href='page/crime.html'>Crime</a></tspan><tspan x='60' y='185' font-size='22.5'><a href='page/education.html'>Education</a></tspan><tspan x='60' y='225' font-size='22.5'><a href='page/immigration.html'>Immigration</a></tspan><tspan x='60' y='290' font-size='50'><a href='page/world.html'>World</a></tspan><tspan x='60' y='330' font-size='22.5'><a href='page/conflicts.html'>Conflicts</a></tspan><tspan x='60' y='370' font-size='22.5'><a href='page/disaster.html'>Disaster</a></tspan><tspan x='60' y='410' font-size='22.5'><a href='page/environment.html'>Environment</a></tspan><tspan x='60' y='450' font-size='22.5'><a href='page/religion.html'>Religion</a></tspan><tspan x='60' y='490' font-size='22.5'><a href='page/scandals.html'>Scandals</a></tspan><tspan x='500' y='100' font-size='50'><a href='page/opinion.html'>Opinion</a></tspan><tspan x='500' y='190' font-size='50' ><a href='page/entertainment.html'>Entertainment</a></tspan><tspan x='500' y='235' font-size='22.5'><a href='page/musicnews.html'>Music News</a></tspan><tspan x='500' y='280' font-size='22.5'><a href='page/celebritynews.html'>Celebrity News</a></tspan><tspan x='500' y='350' font-size='50'><a href='page/science.html'>Science</a></tspan><tspan x='500' y='395' font-size='22.5'><a href='page/archeology.html'>Archeology</a></tspan><tspan x='500' y='440' font-size='22.5'><a href='page/wildnature.html'>Wild Nature</a></tspan><tspan x='500' y='485' font-size='22.5'><a href='page/naturalscience.html'>Natural Science</a></tspan></text></g>
 </svg>
 </div>
-{% for post in posts%}
+{% for post in posts %}
 <div id='post'>
 <h><a href="{% url 'post_detail' pk=post.pk %}">
 <p>{{post.text}}</p>
  {{post.published_date}}
 </div>
-{%endfor%}
+{% endfor %}
 </body>
 <script>document.getElementById('toolbarsvg').getElementById('menu').addEventListener ('click' , function(){ document.getElementById('toolbarsvg').getElementById('menu').style.display='none'; document.getElementById('toolbarsvg').getElementById('newmenu').style.display='inline'; document.getElementById('dropdown').style.display= 'flex'});
 document.getElementById('toolbarsvg').getElementById('newmenu').addEventListener ('click' , function(){ document.getElementById('toolbarsvg').getElementById('newmenu').style.display='none'; document.getElementById('toolbarsvg').getElementById('menu').style.display='inline'; document.getElementById('dropdown').style.display= 'none'});
