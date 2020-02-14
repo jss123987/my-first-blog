@@ -19,8 +19,5 @@
 {% block content %}
 {% endblock %}
 </body>
-<script>document.getElementById('toolbarsvg').getElementById('menu').addEventListener ('click' , function(){ document.getElementById('toolbarsvg').getElementById('menu').style.display='none'; document.getElementById('toolbarsvg').getElementById('newmenu').style.display='inline'; document.getElementById('dropdown').style.display= 'flex'});
-document.getElementById('toolbarsvg').getElementById('newmenu').addEventListener ('click' , function(){ document.getElementById('toolbarsvg').getElementById('newmenu').style.display='none'; document.getElementById('toolbarsvg').getElementById('menu').style.display='inline'; document.getElementById('dropdown').style.display= 'none'});
-document.getElementById('arcH1content').onsubmit= function(){ document.getElementById('arcH1').innerHTML= document.getElementById('textbox').innerHTML; return false;};
-</script>
+<script src="{% static 'js/myapp.js' %}"></script>
 </html> 
