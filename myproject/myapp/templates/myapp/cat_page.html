@@ -1,0 +1,10 @@
+{% extends base.html %}
+{% block content %}
+{% for post in category %}
+<div class='post'>
+<h><a href="{% url 'post_detail' pk=post.pk %}">{{post.title}}</a></h>
+<p>{{post.text}}</p>
+ {{post.published_date}}
+</div>
+{% endfor %}
+{% endblock %}
