@@ -9,18 +9,38 @@ class Post(models.Model):
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
-    ARCHEOLOGY='arch'
-    WORLD_NEWS='news'
-    SCIENCE='sci'
-    CELEBRITY='celeb'
+    ARCHEOLOGY='Archeology'
+    WORLD='World'
+    CRIME='Crime'
+    EDUCATION='Education'
+    IMMIGRATION='Immigration'
+    CONFLICTS='Conflicts'
+    DISASTER='Disaster'
+    ENVIRONMENT='Environment'
+    RELIGION='Religion'
+    SCANDALS='Scandals'
+    MUSICNEWS='Music News'
+    CELEBRITYNEWS='Celebrity News'
+    WILDNATURE='Wild Nature'
+    NATURALSCIENCE='Natural Science'
     news_categories = [
      (ARCHEOLOGY, 'Archeology'),
-     (WORLD_NEWS, 'World News'),
-     (SCIENCE, 'Science'),
-     (CELEBRITY, 'Celebrity'),
+     (CELEBRITYNEWS,'Celebrity News'),
+     (CONFLICTS,'Conflicts'),
+     (CRIME,'Crime'),
+     (DISASTER,'Disaster'),
+     (EDUCATION,'Education'),
+     (ENVIRONMENT,'Environment'),
+     (IMMIGRATION,'Immigration'),
+     (MUSICNEWS,'Music News'),
+     (NATURALSCIENCE,'Natural Science'),
+     (RELIGION,'Religion'),
+     (SCANDALS,'Scandals'),
+     (WILDNATURE,'Wild Nature'),
+     (WORLD,'World'),
     ]
     category = models.CharField(
-     max_length=5,
+     max_length=15,
      choices=news_categories,
      default=ARCHEOLOGY,
     )

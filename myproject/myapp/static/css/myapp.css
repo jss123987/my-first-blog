@@ -2,8 +2,9 @@
 #logo{display:flex;}
 #content {text-align: center;}
 h1 {font-size: 100px;}
-p {font-size: 50px;}
+p {font-size: 10px;}
 body {margin:0;}
 #textbox {width: 100%; height: 200px;} 
-#post {text-align:center;}
-h {font-size:100px;}
+.post {text-align:center;}
+h {font-size:100px; background-color: white;}
+a {fill:white; background-color: white;}

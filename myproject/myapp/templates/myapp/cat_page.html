@@ -1,10 +1,11 @@
-{% extends base.html %}
+{% extends 'myapp/base.html' %}
 {% block content %}
-{% for post in category %}
+{% for post in post %}
 <div class='post'>
-<h><a href="{% url 'post_detail' pk=post.pk %}">{{post.title}}</a></h>
+<h><a href="{% url 'post_detail' Pk=post.pk %}">{{post.title}}</a></h>
 <p>{{post.text}}</p>
  {{post.published_date}}
+<a href="{% url 'CatPage' cat=post.category %}">{{post.category}}</a>
 </div>
 {% endfor %}
 {% endblock %}
