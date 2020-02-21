@@ -45,6 +45,8 @@ def post_new(request):
     post.subcategory='Science'
    elif post.category=='Natural Science':
     post.subcategory='Science'
+   elif post.category=='Opinion':
+    post.subcategory='Opinion'
    post.save()
    return redirect('post_detail', Pk=post.pk)
  else:
