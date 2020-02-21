@@ -2,8 +2,8 @@
 #logo{display:flex;}
 #content {text-align: center;}
 h1 {font-size: 100px;}
-p {font-size: 59px;}
 body {margin:0;}
 .post {text-align:center;}
 h {font-size:100px;}
 a {fill:white;}
+#subcategory {font-size: 10px;}

@@ -6,11 +6,10 @@ from django.utils import timezone
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
-    text = models.TextField()
+    text = models.TextField(blank=True)
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
     ARCHEOLOGY='Archeology'
-    WORLD='World'
     CRIME='Crime'
     EDUCATION='Education'
     IMMIGRATION='Immigration'
@@ -23,6 +22,11 @@ class Post(models.Model):
     CELEBRITYNEWS='Celebrity News'
     WILDNATURE='Wild Nature'
     NATURALSCIENCE='Natural Science'
+    US ='U.S.'
+    OPINION='Opinion'
+    ENTERTAINMENT='Entertainment'
+    SCIENCE='Science'
+    WORLD='World'
     news_categories = [
      (ARCHEOLOGY, 'Archeology'),
      (CELEBRITYNEWS,'Celebrity News'),
@@ -37,13 +41,23 @@ class Post(models.Model):
      (RELIGION,'Religion'),
      (SCANDALS,'Scandals'),
      (WILDNATURE,'Wild Nature'),
-     (WORLD,'World'),
+     (OPINION, 'Opinion'),
     ]
     category = models.CharField(
      max_length=15,
      choices=news_categories,
      default=ARCHEOLOGY,
     )
+    ssubcategories=[
+     (WORLD,'World'),
+     (US,'U.S.'),
+     (ENTERTAINMENT,'Entertainment'),
+     (SCIENCE,'Science'),
+    ]
+    subcategory= models.CharField(
+     max_length=15,
+     choices=ssubcategories,
+     default=US)
 
     def publish(self):
         self.published_date = timezone.now()

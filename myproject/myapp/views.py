@@ -19,6 +19,32 @@ def post_new(request):
    post = form.save(commit=False)
    post.author = request.user
    post.published_date = timezone.now()
+   if post.category=='Religion':
+    post.subcategory='World'
+   elif post.category=='Disaster':
+    post.subcategory='World'
+   elif post.category=='Environment':
+    post.subcategory='World'
+   elif post.category=='Conflicts':
+    post.subcategory='World'
+   elif post.category=='Scandals':
+    post.subcategory='World'
+   elif post.category=='Crime':
+    post.subcategory='U.S.'
+   elif post.category=='Education':
+    post.subcategory='U.S.'
+   elif post.category=='Immigration':
+    post.subcategory='U.S.'
+   elif post.category=='Music News':
+    post.subcategory='Entertainmemt'
+   elif post.category=='Celebrity News':
+    post.subcategory='Entertainmemt'
+   elif post.category=='Archeology':
+    post.subcategory='Science'
+   elif post.category=='Wild Nature':
+    post.subcategory='Science'
+   elif post.category=='Natural Science':
+    post.subcategory='Science'
    post.save()
    return redirect('post_detail', Pk=post.pk)
  else:
@@ -26,5 +52,10 @@ def post_new(request):
  return render(request, 'myapp/post_edit.html', {'form': form})
 
 def ArcheologyCat(request, cat):
- post= Post.objects.filter(category=cat)
- return render(request, 'myapp/cat_page.html', {'post':post})
+ posts= Post.objects.filter(category=cat)
+ return render(request, 'myapp/cat_page.html', {'posts':posts})
+
+def subcat(request, Subcategory):
+ posts= Post.objects.filter(subcategory=Subcategory)
+ return render(request, 'myapp/subcatpage.html',{'posts':posts})
+
