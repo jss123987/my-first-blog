@@ -4,7 +4,8 @@
 h1 {font-size: 100px;}
 body {margin:0;}
 .post {text-align:center;}
-h {font-size:100px;}
+#title {font-size:100px;}
 a {fill:white;}
 #subcategory {font-size: 50px;}
 #text {font-size: 50px;}
+h {font-size: 50px;}
