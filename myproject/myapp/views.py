@@ -36,9 +36,9 @@ def post_new(request):
    elif post.category=='Immigration':
     post.subcategory='U.S.'
    elif post.category=='Music News':
-    post.subcategory='Entertainmemt'
+    post.subcategory='Entertainment'
    elif post.category=='Celebrity News':
-    post.subcategory='Entertainmemt'
+    post.subcategory='Entertainment'
    elif post.category=='Archeology':
     post.subcategory='Science'
    elif post.category=='Wild Nature':

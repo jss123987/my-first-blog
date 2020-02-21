@@ -48,16 +48,9 @@ class Post(models.Model):
      choices=news_categories,
      default=ARCHEOLOGY,
     )
-    ssubcategories=[
-     (WORLD,'World'),
-     (US,'U.S.'),
-     (ENTERTAINMENT,'Entertainment'),
-     (SCIENCE,'Science'),
-    ]
+  
     subcategory= models.CharField(
-     max_length=15,
-     choices=ssubcategories,
-     default=US)
+     max_length=15)
 
     def publish(self):
         self.published_date = timezone.now()
@@ -66,24 +59,3 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-class Student(models.Model):
-    FRESHMAN = 'FR'
-    SOPHOMORE = 'SO'
-    JUNIOR = 'JR'
-    SENIOR = 'SR'
-    GRADUATE = 'GR'
-    YEAR_IN_SCHOOL_CHOICES = [
-        (FRESHMAN, 'Freshman'),
-        (SOPHOMORE, 'Sophomore'),
-        (JUNIOR, 'Junior'),
-        (SENIOR, 'Senior'),
-        (GRADUATE, 'Graduate'),
-    ]
-    year_in_school = models.CharField(
-        max_length=2,
-        choices=YEAR_IN_SCHOOL_CHOICES,
-        default=FRESHMAN,
-    )
-
-    def is_upperclass(self):
-        return self.year_in_school in {self.JUNIOR, self.SENIOR}
