@@ -1,0 +1,13 @@
+{% extends 'myapp/base.html' %}
+{% block content %}
+<div style='margin-left:100px;margin-right:110px;'>
+<p style='text-align:center;font-size:575%;margin-top:50px;margin-bottom:50px;font-weight:bold;'>Create Account</p>
+<h><form method='POST'>
+{% csrf_token %}
+{% for field in form %}
+{{ field.label_tag }}<br>
+<p style='margin-bottom:0px;'>{{ field }}</p><br>
+{% endfor %}</h>
+<label><input type='submit' style='display:none;'/><p style='border-style:solid;background-color:rgb(38,38,122);color:white;padding:20px;padding-left:210px;padding-right:210px;margin-top:100px;border-radius:100px;'>Create Account</p></label>
+</form></div>
+{% endblock %}

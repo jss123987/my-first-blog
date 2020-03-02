@@ -4,7 +4,7 @@
 <div class='post'>
 <h>{{post.title}}</h>
 <p id='text'>{{post.text}}</p>
- {{post.published_date}}
+{{post.published_date}}
 <a href="{% url 'CatPage' cat=post.category %}"> {{ post.category}}</a>
 <p id='subcategory'><a href="{% url 'subcat' Subcategory=post.subcategory %}">{{post.subcategory}}</p></a>
 </div>

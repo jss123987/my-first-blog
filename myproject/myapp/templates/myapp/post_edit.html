@@ -1,9 +1,17 @@
 {% extends 'myapp/base.html' %}
 
 {% block content %}
-<h2>New post</h2>
-<h><form method='POST' class='post_form'>
-{% csrf_token %} {{ form.as_p }}
-<button type="submit" class="save btn btn-default">Save</button>
-</form></h>
+<div id='posteditbody'>
+<p style='margin-top:50px;margin-bottom:30px;text-align:center;font-size:575%;font-weight:bold;'>Create Post</p><br>
+<h><form method='POST'>
+{% csrf_token %}
+{{ form.title.label_tag }}<br>
+<p style='margin-bottom:0px;'>{{ form.title }}</p><br>
+{{ form.text.label_tag }}<br>
+<p style='margin-bottom:0px;'>{{ form.text }}</p><br>
+{{formset}}
+<p style='font-size:64.45px;'>{{ form.category.label_tag }}
+{{ form.category }}</p></h><br>
+<p style='text-align:right;margin-top:100px;'><label><input type='submit' style='display: none' /><svg viewbox='149.125 0 201.75 100' width='201.75' height='100'><path d=' M 325 90 H 175 C 137.5 90, 137.5 10, 175 10 H 325 C 362.5 10,362.5 90, 325 90 ' stroke='rgb(38, 38, 122)' fill='rgb(38, 38, 122)'/><text fill='white' font-size='75' y='77.5' x='172'>Post</text></svg></label></p>
+</form></div>
 {%endblock%}

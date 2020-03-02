@@ -2,19 +2,24 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post
 from django.utils import timezone
-from .forms import PostForm
+from .forms import PostForm, signupform, postformset
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
+from django.forms.formsets import formset_factory
+from django.forms import modelformset_factory
+from .models import Post
 
 def hello(request):
  posts = Post.objects.order_by('published_date')
  return render(request, 'myapp/hello.html', {'posts':posts})
 
 def post_detail(request, Pk):
- post = get_object_or_404(Post, pk=Pk)
- return render(request, 'myapp/post_detail.html', {'post':post})
+  post = get_object_or_404(Post, pk=Pk)
+  return render(request, 'myapp/post_detail.html', {'post':post,})
 
 def post_new(request):
  if request.method == "POST":
-  form = PostForm(request.POST)
+  form=postformset(request.POST)
   if form.is_valid():
    post = form.save(commit=False)
    post.author = request.user
@@ -50,7 +55,7 @@ def post_new(request):
    post.save()
    return redirect('post_detail', Pk=post.pk)
  else:
-  form = PostForm()
+  form = postformset()
  return render(request, 'myapp/post_edit.html', {'form': form})
 
 def ArcheologyCat(request, cat):
@@ -61,3 +66,16 @@ def subcat(request, Subcategory):
  posts= Post.objects.filter(subcategory=Subcategory)
  return render(request, 'myapp/subcatpage.html',{'posts':posts})
 
+def signup(request):
+ if request.method=='POST':
+  form=signupform(request.POST)
+  if form.is_valid():
+   form.save()
+   username = form.cleaned_data.get('username')
+   raw_password = form.cleaned_data.get('password1')
+   user = authenticate(username=username, password=raw_password)
+   login(request, user)
+   return redirect('hello')
+ else:
+  form=signupform()
+ return render(request, 'myapp/signup.html', {'form': form})

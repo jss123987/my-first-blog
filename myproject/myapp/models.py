@@ -1,10 +1,10 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
-
+from django.contrib.auth.models import User
 
 class Post(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(max_length=200)
     text = models.TextField(blank=True)
     created_date = models.DateTimeField(default=timezone.now)
@@ -48,7 +48,6 @@ class Post(models.Model):
      choices=news_categories,
      default=ARCHEOLOGY,
     )
-  
     subcategory= models.CharField(
      max_length=15)
 
@@ -58,4 +57,10 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+class login(models.Model):
+	username=models.CharField(
+	 max_length=12)
+	password=models.CharField(
+	 max_length=12)
 
