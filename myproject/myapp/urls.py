@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
  path('', views.hello, name='hello'),
@@ -8,5 +10,4 @@ urlpatterns = [
  path('cat/<str:cat>/', views.ArcheologyCat, name='CatPage'),
  path('subcat/<str:Subcategory>/', views.subcat, name='subcat'),
  path('signup/', views.signup, name='signup'),
-]
-
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

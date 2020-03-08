@@ -1,17 +1,37 @@
 {% extends 'myapp/base.html' %}
-
 {% block content %}
+
 <div id='posteditbody'>
 <p style='margin-top:50px;margin-bottom:30px;text-align:center;font-size:575%;font-weight:bold;'>Create Post</p><br>
-<h><form method='POST'>
+<h id='text0'><form method='POST' enctype="multipart/form-data">
 {% csrf_token %}
 {{ form.title.label_tag }}<br>
 <p style='margin-bottom:0px;'>{{ form.title }}</p><br>
-{{ form.text.label_tag }}<br>
-<p style='margin-bottom:0px;'>{{ form.text }}</p><br>
-{{formset}}
+<p>{{ form2.Text.label_tag}}
+{{ form2.Text }}</p>
+<p id='1' style='display:none;' >{{ form2.b }}</p>
+<p id='2' style='display:none;' >{{ form2.c }}</p>
+<p id='3' style='display:none;' >{{ form2.d }}</p>
+<p id='4' style='display:none;' >{{ form2.e }}</p>
+<p id='5' style='display:none;' >{{ form2.f }}</p>
+<p id='6' style='display:none;' >{{ form2.g }}</p>
+<p id='7' style='display:none;' >{{ form2.h }}</p>
+<p id='8' style='display:none;' >{{ form2.i }}</p>
+<p id='9' style='display:none;' >{{ form2.j }}</p>
+<p id='10' style='display:none;' >{{ form2.k }}</p>
+<p id='11' style='display:none;' >{{ form2.l }}</p>
+<p id='12' style='display:none;' >{{ form2.m }}</p>
+<button id='moretextbutton' type="button" >Add Textbox</button>
 <p style='font-size:64.45px;'>{{ form.category.label_tag }}
 {{ form.category }}</p></h><br>
+{{form.upload}}
 <p style='text-align:right;margin-top:100px;'><label><input type='submit' style='display: none' /><svg viewbox='149.125 0 201.75 100' width='201.75' height='100'><path d=' M 325 90 H 175 C 137.5 90, 137.5 10, 175 10 H 325 C 362.5 10,362.5 90, 325 90 ' stroke='rgb(38, 38, 122)' fill='rgb(38, 38, 122)'/><text fill='white' font-size='75' y='77.5' x='172'>Post</text></svg></label></p>
 </form></div>
+<script>
+i=1;  
+document.getElementById('moretextbutton').
+addEventListener('click',
+ function(){document.getElementById(i).style.
+  display='inline';return i=i+1});
+</script>
 {%endblock%}

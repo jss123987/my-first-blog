@@ -1,20 +1,38 @@
 from django import forms
-from .models import Post
+from .models import Post, yo
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.forms import modelform_factory, modelformset_factory
+from django.forms import modelform_factory, modelformset_factory, inlineformset_factory
 
 class PostForm(forms.ModelForm):
+
  class Meta:
   model=Post
   widgets = {
-            'text': forms.Textarea(attrs={'rows':10, 'cols':'25px', 'class':'postedittext', 'style':'padding-right:30.5px;', 'placeholder':'Enter content...',}),
             'title': forms.TextInput(attrs={'size':21, 'class':'postedittext', 'placeholder':'Enter title...', }),
   }
-  fields = ('title', 'text', 'category',)
+  fields = ('title', 'category','upload',)
 
-postformset=modelform_factory(Post, fields=('title','text','text','category'), form=PostForm,)
-
+class yoo(forms.ModelForm):
+ class Meta:
+  model=yo
+  widgets = {
+            'Text': forms.Textarea(attrs={'rows':10, 'cols':'25px', 'class':'postedittext', 'style':'padding-right:30.5px;', 'placeholder':'Enter content...',}),
+	    'b': forms.Textarea(attrs={'rows':10, 'cols':'25px', 'class':'postedittext', 'style':'padding-right:30.5px;', 'placeholder':'Enter content...',}),
+	    'c': forms.Textarea(attrs={'rows':10, 'cols':'25px', 'class':'postedittext', 'style':'padding-right:30.5px;', 'placeholder':'Enter content...',}),
+	    'd': forms.Textarea(attrs={'rows':10, 'cols':'25px', 'class':'postedittext', 'style':'padding-right:30.5px;', 'placeholder':'Enter content...',}),
+	    'e': forms.Textarea(attrs={'rows':10, 'cols':'25px', 'class':'postedittext', 'style':'padding-right:30.5px;', 'placeholder':'Enter content...',}),
+	    'f': forms.Textarea(attrs={'rows':10, 'cols':'25px', 'class':'postedittext', 'style':'padding-right:30.5px;', 'placeholder':'Enter content...',}),
+	    'g': forms.Textarea(attrs={'rows':10, 'cols':'25px', 'class':'postedittext', 'style':'padding-right:30.5px;', 'placeholder':'Enter content...',}),
+	    'h': forms.Textarea(attrs={'rows':10, 'cols':'25px', 'class':'postedittext', 'style':'padding-right:30.5px;', 'placeholder':'Enter content...',}),
+	    'i': forms.Textarea(attrs={'rows':10, 'cols':'25px', 'class':'postedittext', 'style':'padding-right:30.5px;', 'placeholder':'Enter content...',}),
+	    'j': forms.Textarea(attrs={'rows':10, 'cols':'25px', 'class':'postedittext', 'style':'padding-right:30.5px;', 'placeholder':'Enter content...',}),
+	    'k': forms.Textarea(attrs={'rows':10, 'cols':'25px', 'class':'postedittext', 'style':'padding-right:30.5px;', 'placeholder':'Enter content...',}),
+	    'l': forms.Textarea(attrs={'rows':10, 'cols':'25px', 'class':'postedittext', 'style':'padding-right:30.5px;', 'placeholder':'Enter content...',}),
+	    'm': forms.Textarea(attrs={'rows':10, 'cols':'25px', 'class':'postedittext', 'style':'padding-right:30.5px;', 'placeholder':'Enter content...',}),
+  }
+  fields =('Text','b','c','d','e','f','g','h','i','j','k','l','m',)
+postformset=modelform_factory(yo, fields=(), form=yoo, )
 class signupform(UserCreationForm):
  password2=forms.CharField(label='Confirm Password', widget=forms.PasswordInput(attrs={'size':21, 'placeholder':'Confirm password', 'class':'signupformtext',}))
  password1=forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'size':21, 'placeholder':'Enter your password', 'class':'signupformtext',}))

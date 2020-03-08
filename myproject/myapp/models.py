@@ -3,10 +3,26 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
+class yo(models.Model):
+ Text=models.TextField(blank=True)
+ b=models.TextField(blank=True)
+ c=models.TextField(blank=True)
+ d=models.TextField(blank=True)
+ e=models.TextField(blank=True)
+ f=models.TextField(blank=True)
+ g=models.TextField(blank=True)
+ h=models.TextField(blank=True)
+ i=models.TextField(blank=True)
+ j=models.TextField(blank=True)
+ k=models.TextField(blank=True)
+ l=models.TextField(blank=True)
+ m=models.TextField(blank=True)
+
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(max_length=200)
-    text = models.TextField(blank=True)
+    upload = models.FileField(upload_to='documents/', default='')
+    text= models.ForeignKey(yo, on_delete=models.CASCADE, blank=True, null=True)
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
     ARCHEOLOGY='Archeology'
@@ -51,6 +67,7 @@ class Post(models.Model):
     subcategory= models.CharField(
      max_length=15)
 
+
     def publish(self):
         self.published_date = timezone.now()
         self.save()
@@ -58,9 +75,13 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return '/%s/' % self.name
+
 class login(models.Model):
 	username=models.CharField(
 	 max_length=12)
 	password=models.CharField(
 	 max_length=12)
+
 

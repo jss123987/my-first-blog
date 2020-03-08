@@ -2,8 +2,21 @@
 {% load static %}
 {% block content %}
 <div class='post'>
-<h>{{post.title}}</h>
-<p id='text'>{{post.text}}</p>
+<p><img  style="width:100%;height:600px;object-fit:cover;object-position:20% 41%;"  src="/media/{{ post.upload }}"></p><br>
+<p id='text'>{{post.title}}</p>
+<p id='text'>{{post.text.Text}}</p>
+<p id='text'>{{post.text.b}}</p>
+<p id='text'>{{post.text.c}}</p>
+<p id='text'>{{post.text.d}}</p>
+<p id='text'>{{post.text.e}}</p>
+<p id='text'>{{post.text.f}}</p>
+<p id='text'>{{post.text.g}}</p>
+<p id='text'>{{post.text.h}}</p>
+<p id='text'>{{post.text.i}}</p>
+<p id='text'>{{post.text.j}}</p>
+<p id='text'>{{post.text.k}}</p>
+<p id='text'>{{post.text.l}}</p>
+<p id='text'>{{post.text.m}}</p>
 {{post.published_date}}
 <a href="{% url 'CatPage' cat=post.category %}"> {{ post.category}}</a>
 <p id='subcategory'><a href="{% url 'subcat' Subcategory=post.subcategory %}">{{post.subcategory}}</p></a>

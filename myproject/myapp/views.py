@@ -2,15 +2,15 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post
 from django.utils import timezone
-from .forms import PostForm, signupform, postformset
+from .forms import PostForm, signupform, yoo, postformset
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.forms.formsets import formset_factory
 from django.forms import modelformset_factory
-from .models import Post
+from .models import Post, yo
 
 def hello(request):
- posts = Post.objects.order_by('published_date')
+ posts = Post.objects.all()
  return render(request, 'myapp/hello.html', {'posts':posts})
 
 def post_detail(request, Pk):
@@ -19,7 +19,8 @@ def post_detail(request, Pk):
 
 def post_new(request):
  if request.method == "POST":
-  form=postformset(request.POST)
+  form=PostForm(request.POST, request.FILES) 
+  form2=yoo(request.POST)
   if form.is_valid():
    post = form.save(commit=False)
    post.author = request.user
@@ -52,11 +53,16 @@ def post_new(request):
     post.subcategory='Science'
    elif post.category=='Opinion':
     post.subcategory='Opinion'
+  if form2.is_valid:
+   post2 = form2.save(commit=False)
+   post2.save()
+   post.text=post2
    post.save()
    return redirect('post_detail', Pk=post.pk)
  else:
-  form = postformset()
- return render(request, 'myapp/post_edit.html', {'form': form})
+  form=PostForm()
+  form2 = yoo()
+  return render(request, 'myapp/post_edit.html', {'form': form, 'form2':form2})
 
 def ArcheologyCat(request, cat):
  posts= Post.objects.filter(category=cat)
