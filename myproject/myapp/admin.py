@@ -2,8 +2,7 @@
 # Register your models here.
 
 from django.contrib import admin
-from .models import Post, login, yo
+from .models import Post, login
 
 admin.site.register(Post)
 admin.site.register(login)
-admin.site.register(yo)

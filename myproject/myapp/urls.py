@@ -10,4 +10,6 @@ urlpatterns = [
  path('cat/<str:cat>/', views.ArcheologyCat, name='CatPage'),
  path('subcat/<str:Subcategory>/', views.subcat, name='subcat'),
  path('signup/', views.signup, name='signup'),
+ path('post/edit/<int:PK>/', views.Post_Edit, name='postedit'),
+ path('posts/unpublished/', views.unpublishedposts, name='unpublished'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

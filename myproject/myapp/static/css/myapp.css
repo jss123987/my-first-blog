@@ -6,11 +6,11 @@ h1 {font-size: 100px;}
 .postedittext {padding:20px;padding-left:30px;padding-right:24px;border-color:rgba(0,50,200,.3);border-radius:10px;border-style:solid;}
 .postedittext::placeholder{color:rgba(0,50,200,.5);font-size:85%;}
 .post {text-align:center;}
-#title {font-size:100px;}
-a {fill:white;}
+#title {font-size:100px;font-weight:bold;color:rgb(38,38,102);text-align:left;margin-left:40px;margin-top:5px;border-top:10px;}
 #subcategory {font-size: 50px;}
 #text {font-size: 50px;}
-h {font-size: 50px;}
 body {background-color:rgba(240,240,240,.5);}
 .signupformtext::placeholder{color:rgba(0,50,200,.5);font-size:85%;}
 .signupformtext {padding:20px;padding-left:30px;padding-right:24px;border-style:solid;border-color:rgba(0,50,200,.3);border-radius:10px;}
+#caption {background-color:rgba(38,38,122,.7);font-size:70px;color:white;font-weight:bold;}
+a {fill:white;}

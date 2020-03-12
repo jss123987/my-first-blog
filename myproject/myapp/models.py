@@ -3,28 +3,27 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
-class yo(models.Model):
- Text=models.TextField(blank=True)
- b=models.TextField(blank=True)
- c=models.TextField(blank=True)
- d=models.TextField(blank=True)
- e=models.TextField(blank=True)
- f=models.TextField(blank=True)
- g=models.TextField(blank=True)
- h=models.TextField(blank=True)
- i=models.TextField(blank=True)
- j=models.TextField(blank=True)
- k=models.TextField(blank=True)
- l=models.TextField(blank=True)
- m=models.TextField(blank=True)
-
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
-    title = models.CharField(max_length=200)
+    caption = models.CharField(max_length=200, blank=True)
+    title = models.CharField(max_length=55,blank=True,null=True)
+    Text=models.TextField(blank=True)
+    b=models.TextField(blank=True)
+    c=models.TextField(blank=True)
+    d=models.TextField(blank=True)
+    e=models.TextField(blank=True)
+    f=models.TextField(blank=True)
+    g=models.TextField(blank=True)
+    h=models.TextField(blank=True)
+    i=models.TextField(blank=True)
+    j=models.TextField(blank=True)
+    k=models.TextField(blank=True)
+    l=models.TextField(blank=True)
+    m=models.TextField(blank=True)
     upload = models.FileField(upload_to='documents/', default='')
-    text= models.ForeignKey(yo, on_delete=models.CASCADE, blank=True, null=True)
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
+    lastedit=models.DateTimeField(blank=True,null=True)
     ARCHEOLOGY='Archeology'
     CRIME='Crime'
     EDUCATION='Education'
@@ -63,6 +62,7 @@ class Post(models.Model):
      max_length=15,
      choices=news_categories,
      default=ARCHEOLOGY,
+     blank=True,null=True
     )
     subcategory= models.CharField(
      max_length=15)
