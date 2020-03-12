@@ -12,7 +12,7 @@ def hello(request):
  return render(request, 'myapp/hello.html', {'posts':posts})
 
 def unpublishedposts(request):
- PK=request.GET.get('PK', '85')
+ PK=request.GET.get('PK', '1')
  f=Post.objects.get(pk=PK)
  ti=f.title
  c=f.caption
@@ -29,7 +29,7 @@ def unpublishedposts(request):
  t11=f.k
  t12=f.l
  t13=f.m
- if f.pk != 85:
+ if f.pk != 1:
    form=PostForm(request.POST, request.FILES, instance=f)
    if form.is_valid():
     post=form.save(commit=False)
@@ -52,7 +52,7 @@ def unpublishedposts(request):
     post.save()
     return redirect('post_detail',Pk=f.pk)
  else:
-   posts=Post.objects.filter(published_date__isnull=True).exclude(pk=85)
+   posts=Post.objects.filter(published_date__isnull=True).exclude(pk=1)
    return render(request, 'myapp/unpublished.html', {'posts':posts})
 
 def post_detail(request, Pk):
