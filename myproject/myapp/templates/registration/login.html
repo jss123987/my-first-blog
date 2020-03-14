@@ -1,0 +1,17 @@
+{% extends 'myapp/base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div id='posteditbody'>
+  <h2>Login</h2>
+ <h1 id='text'> <form method="post">
+   {% csrf_token %}
+   <p>{{ form.username.label_tag }}</p><br>
+   <p>{{ form.username }}</p><br>
+   <p>{{ form.password.label_tag }}</p><br>
+   <p>{{ form.password }}</p><br>
+    <button type="submit">Login</button>
+  </form></h1></div>
+<a href="{% url 'signup' %}"><button type='button'>Create Account</button></a>
+{% endblock %}

@@ -5,9 +5,9 @@
 <h><form method='POST'>
 {% csrf_token %}
 {% for field in form %}
-{{ field.label_tag }}<br>
-<p style='margin-bottom:0px;'>{{ field }}</p><br>
-{% endfor %}</h>
+<p id='text'>{{ field.label_tag }}</p><br>
+<p id='text'>{{ field }}</p><br>
+{% endfor %}
 <label><input type='submit' style='display:none;'/><p style='border-style:solid;background-color:rgb(38,38,122);color:white;padding:20px;padding-left:210px;padding-right:210px;margin-top:100px;border-radius:100px;'>Create Account</p></label>
 </form></div>
 {% endblock %}

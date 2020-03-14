@@ -4,15 +4,17 @@ from .models import Post
 from django.utils import timezone
 from .forms import PostForm, signupform
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import Post
+from django.contrib.auth.models import User
+
 
 def hello(request):
  posts = Post.objects.filter(published_date__isnull=False).order_by('published_date')
  return render(request, 'myapp/hello.html', {'posts':posts})
 
 def unpublishedposts(request):
- PK=request.GET.get('PK', '1')
+ PK=request.GET.get('PK', '85')
  f=Post.objects.get(pk=PK)
  ti=f.title
  c=f.caption
@@ -29,7 +31,7 @@ def unpublishedposts(request):
  t11=f.k
  t12=f.l
  t13=f.m
- if f.pk != 1:
+ if f.pk != 85:
    form=PostForm(request.POST, request.FILES, instance=f)
    if form.is_valid():
     post=form.save(commit=False)
@@ -52,7 +54,7 @@ def unpublishedposts(request):
     post.save()
     return redirect('post_detail',Pk=f.pk)
  else:
-   posts=Post.objects.filter(published_date__isnull=True).exclude(pk=1)
+   posts=Post.objects.filter(published_date__isnull=True).filter(author=request.user)
    return render(request, 'myapp/unpublished.html', {'posts':posts})
 
 def post_detail(request, Pk):
@@ -162,3 +164,4 @@ def signup(request):
  else:
   form=signupform()
  return render(request, 'myapp/signup.html', {'form': form})
+
