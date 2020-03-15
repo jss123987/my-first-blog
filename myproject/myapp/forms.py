@@ -34,4 +34,10 @@ class signupform(UserCreationForm):
   model=User
   fields= ('username','password1','password2',)
 
-  
+class loginform(AuthenticationForm):
+ def __init__(self, *args, **kwargs):
+  super(loginform, self).__init__(*args, **kwargs)
+
+ password=forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'size':21, 'placeholder':'Enter your password', 'class':'signupformtext',}))
+ username=forms.CharField(widget=forms.TextInput(attrs={'class':'signupformtext','size':21, 'placeholder':'Username',}))
+

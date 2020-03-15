@@ -1,17 +1,15 @@
 {% extends 'myapp/base.html' %}
-
-{% block title %}Login{% endblock %}
-
 {% block content %}
 <div id='posteditbody'>
-  <h2>Login</h2>
+ <p style='margin-top:50px;margin-bottom:30px;text-align:center;font-size:575%;font-weight:bold;'>Login</p><br>
  <h1 id='text'> <form method="post">
    {% csrf_token %}
-   <p>{{ form.username.label_tag }}</p><br>
+   <p>{{ form.username.label_tag }}</p>
    <p>{{ form.username }}</p><br>
-   <p>{{ form.password.label_tag }}</p><br>
-   <p>{{ form.password }}</p><br>
-    <button type="submit">Login</button>
+   <p>{{ form.password.label_tag }}</p>
+   <p>{{ form.password }}</p>
+<label style='width:100%;text-align:center';><input type='submit' style='display:none;'><p style='border-style:solid;background-color:rgb(38,38,122);color:white;padding:20px;padding-left:120px;padding-right:120px;margin-top:100px;border-radius:100px;font-weight:bold;font-size:150%;'>Login</p></label>
+
   </form></h1></div>
-<a href="{% url 'signup' %}"><button type='button'>Create Account</button></a>
+<a href="{% url 'signup' %}"><p style='margin-left:100px;margin-right:110px;border-style:solid;background-color:rgb(38,38,122);color:white;padding:20px;padding-left:120px;padding-right:120px;margin-top:100px;border-radius:100px;font-weight:bold;font-size:440%;text-align:center;'>Create Account</p></a>
 {% endblock %}

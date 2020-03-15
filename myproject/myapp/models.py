@@ -76,13 +76,4 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-    def get_absolute_url(self):
-        return '/%s/' % self.name
-
-class login(models.Model):
-	username=models.CharField(
-	 max_length=12)
-	password=models.CharField(
-	 max_length=12)
-
 

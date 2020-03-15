@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post
 from django.utils import timezone
-from .forms import PostForm, signupform
+from .forms import PostForm, signupform, loginform
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import Post
