@@ -14,7 +14,7 @@ def hello(request):
  return render(request, 'myapp/hello.html', {'posts':posts})
 
 def unpublishedposts(request):
- PK=request.GET.get('PK', '85')
+ PK=request.GET.get('PK', '1')
  f=Post.objects.get(pk=PK)
  ti=f.title
  c=f.caption
@@ -31,7 +31,7 @@ def unpublishedposts(request):
  t11=f.k
  t12=f.l
  t13=f.m
- if f.pk != 85:
+ if f.pk != 1:
    form=PostForm(request.POST, request.FILES, instance=f)
    if form.is_valid():
     post=form.save(commit=False)
@@ -54,12 +54,13 @@ def unpublishedposts(request):
     post.save()
     return redirect('post_detail',Pk=f.pk)
  else:
-   posts=Post.objects.filter(published_date__isnull=True).filter(author=request.user)
+   posts=Post.objects.filter(published_date__isnull=True).filter(author=request.user).exclude(pk=1)
    return render(request, 'myapp/unpublished.html', {'posts':posts})
 
 def post_detail(request, Pk):
   post = get_object_or_404(Post, pk=Pk)
-  return render(request, 'myapp/post_detail.html', {'post':post,})
+  user=request.user
+  return render(request, 'myapp/post_detail.html', {'post':post,'user':user,})
 
 def post_new(request):
  if request.method == "POST":
@@ -104,6 +105,8 @@ def post_new(request):
 
 def Post_Edit(request, PK):
  f=Post.objects.get(pk=PK)
+ usert=request.user
+ a=f.author
  if request.method == "POST":
   form=PostForm(request.POST, request.FILES, instance=f)
   if form.is_valid():
@@ -138,6 +141,8 @@ def Post_Edit(request, PK):
    elif post.category=='Opinion':
     post.subcategory='Opinion'
    post.save()
+   if usert != post.author:
+    post.contributers.add(request.user)
    return redirect('post_detail', Pk=post.pk)
  else:
   form=PostForm(instance=f)
@@ -145,7 +150,7 @@ def Post_Edit(request, PK):
 
 def ArcheologyCat(request, cat):
  posts= Post.objects.filter(category=cat)
- return render(request, 'myapp/cat_page.html', {'posts':posts})
+ return render(request, 'myapp/cat_page.html', {'posts':posts, 'cat':cat})
 
 def subcat(request, Subcategory):
  posts= Post.objects.filter(subcategory=Subcategory)
