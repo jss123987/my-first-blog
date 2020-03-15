@@ -10,11 +10,11 @@ from django.contrib.auth.models import User
 
 
 def hello(request):
- posts = Post.objects.filter(published_date__isnull=False).order_by('published_date')
+ posts = Post.objects.filter(published_date__isnull=False).order_by('published_date').reverse()
  return render(request, 'myapp/hello.html', {'posts':posts})
 
 def unpublishedposts(request):
- PK=request.GET.get('PK', '1')
+ PK=request.GET.get('PK', '10')
  f=Post.objects.get(pk=PK)
  ti=f.title
  c=f.caption
@@ -31,7 +31,7 @@ def unpublishedposts(request):
  t11=f.k
  t12=f.l
  t13=f.m
- if f.pk != 1:
+ if f.pk != 10:
    form=PostForm(request.POST, request.FILES, instance=f)
    if form.is_valid():
     post=form.save(commit=False)
@@ -54,7 +54,7 @@ def unpublishedposts(request):
     post.save()
     return redirect('post_detail',Pk=f.pk)
  else:
-   posts=Post.objects.filter(published_date__isnull=True).filter(author=request.user).exclude(pk=1)
+   posts=Post.objects.filter(published_date__isnull=True).filter(author=request.user).order_by('created_date').reverse().exclude(pk=10)
    return render(request, 'myapp/unpublished.html', {'posts':posts})
 
 def post_detail(request, Pk):
@@ -69,6 +69,7 @@ def post_new(request):
    post = form.save(commit=False)
    post.author = request.user
    post.created_date = timezone.now()
+   post.lastedit = timezone.now()
    if post.category=='Religion':
     post.subcategory='World'
    elif post.category=='Disaster':
@@ -149,11 +150,11 @@ def Post_Edit(request, PK):
   return render(request, 'myapp/post_edit.html', {'form':form})
 
 def ArcheologyCat(request, cat):
- posts= Post.objects.filter(category=cat)
+ posts= Post.objects.filter(category=cat).order_by('published_date').reverse()
  return render(request, 'myapp/cat_page.html', {'posts':posts, 'cat':cat})
 
 def subcat(request, Subcategory):
- posts= Post.objects.filter(subcategory=Subcategory)
+ posts= Post.objects.filter(subcategory=Subcategory).order_by('published_date').reverse()
  return render(request, 'myapp/subcatpage.html',{'posts':posts})
 
 def signup(request):
