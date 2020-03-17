@@ -2,7 +2,7 @@ from django import forms
 from .models import Post
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from PIL import Image
+
 
 class PostForm(forms.ModelForm):
 
@@ -24,6 +24,7 @@ class PostForm(forms.ModelForm):
 	    'k': forms.Textarea(attrs={'rows':10, 'cols':'25px', 'class':'postedittext', 'style':'padding-right:30.5px;', 'placeholder':'Enter content...',}),
 	    'l': forms.Textarea(attrs={'rows':10, 'cols':'25px', 'class':'postedittext', 'style':'padding-right:30.5px;', 'placeholder':'Enter content...',}),
 	    'm': forms.Textarea(attrs={'rows':10, 'cols':'25px', 'class':'postedittext', 'style':'padding-right:30.5px;', 'placeholder':'Enter content...',}),}
+
 
   fields =('title','category','upload','caption','Text','b','c','d','e','f','g','h','i','j','k','l','m',)
 
