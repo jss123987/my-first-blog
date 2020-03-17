@@ -65,41 +65,79 @@ def post_detail(request, Pk):
 def post_new(request):
  if request.method == "POST":
   form=PostForm(request.POST, request.FILES) 
-  if form.is_valid():
-   post = form.save(commit=False)
-   post.author = request.user
-   post.created_date = timezone.now()
-   post.lastedit = timezone.now()
-   if post.category=='Religion':
-    post.subcategory='World'
-   elif post.category=='Disaster':
-    post.subcategory='World'
-   elif post.category=='Environment':
-    post.subcategory='World'
-   elif post.category=='Conflicts':
-    post.subcategory='World'
-   elif post.category=='Scandals':
-    post.subcategory='World'
-   elif post.category=='Crime':
-    post.subcategory='U.S.'
-   elif post.category=='Education':
-    post.subcategory='U.S.'
-   elif post.category=='Immigration':
-    post.subcategory='U.S.'
-   elif post.category=='Music News':
-    post.subcategory='Entertainment'
-   elif post.category=='Celebrity News':
-    post.subcategory='Entertainment'
-   elif post.category=='Archeology':
-    post.subcategory='Science'
-   elif post.category=='Wild Nature':
-    post.subcategory='Science'
-   elif post.category=='Natural Science':
-    post.subcategory='Science'
-   elif post.category=='Opinion':
-    post.subcategory='Opinion'
-   post.save()
-   return redirect('post_detail', Pk=post.pk)
+  if 'save' in request.POST:
+   if form.is_valid():
+    post = form.save(commit=False)
+    post.author = request.user
+    post.created_date = timezone.now()
+    post.lastedit = timezone.now()
+    if post.category=='Religion':
+     post.subcategory='World'
+    elif post.category=='Disaster':
+     post.subcategory='World'
+    elif post.category=='Environment':
+     post.subcategory='World'
+    elif post.category=='Conflicts':
+     post.subcategory='World'
+    elif post.category=='Scandals':
+     post.subcategory='World'
+    elif post.category=='Crime':
+     post.subcategory='U.S.'
+    elif post.category=='Education':
+     post.subcategory='U.S.'
+    elif post.category=='Immigration':
+     post.subcategory='U.S.'
+    elif post.category=='Music News':
+     post.subcategory='Entertainment'
+    elif post.category=='Celebrity News':
+     post.subcategory='Entertainment'
+    elif post.category=='Archeology':
+     post.subcategory='Science'
+    elif post.category=='Wild Nature':
+     post.subcategory='Science'
+    elif post.category=='Natural Science':
+     post.subcategory='Science'
+    elif post.category=='Opinion':
+     post.subcategory='Opinion'
+    post.save()
+    return redirect('post_detail', Pk=post.pk)
+  if 'publish' in request.POST:
+   if form.is_valid():
+    post = form.save(commit=False)
+    post.author = request.user
+    post.created_date = timezone.now()
+    post.published_date = timezone.now()
+    post.lastedit = timezone.now()
+    if post.category=='Religion':
+     post.subcategory='World'
+    elif post.category=='Disaster':
+     post.subcategory='World'
+    elif post.category=='Environment':
+     post.subcategory='World'
+    elif post.category=='Conflicts':
+     post.subcategory='World'
+    elif post.category=='Scandals':
+     post.subcategory='World'
+    elif post.category=='Crime':
+     post.subcategory='U.S.'
+    elif post.category=='Education':
+     post.subcategory='U.S.'
+    elif post.category=='Immigration':
+     post.subcategory='U.S.'
+    elif post.category=='Music News':
+     post.subcategory='Entertainment'
+    elif post.category=='Celebrity News':
+     post.subcategory='Entertainment'
+    elif post.category=='Archeology':
+     post.subcategory='Science'
+    elif post.category=='Wild Nature':
+     post.subcategory='Science'
+    elif post.category=='Natural Science':
+     post.subcategory='Science'
+    elif post.category=='Opinion':
+     post.subcategory='Opinion'
+    post.save()
+    return redirect('post_detail', Pk=post.pk)
  else:
   form=PostForm()
   return render(request, 'myapp/post_edit.html',{'form':form})
@@ -108,6 +146,7 @@ def Post_Edit(request, PK):
  f=Post.objects.get(pk=PK)
  usert=request.user
  a=f.author
+ p=f.published_date
  if request.method == "POST":
   form=PostForm(request.POST, request.FILES, instance=f)
   if form.is_valid():
@@ -147,7 +186,7 @@ def Post_Edit(request, PK):
    return redirect('post_detail', Pk=post.pk)
  else:
   form=PostForm(instance=f)
-  return render(request, 'myapp/post_edit.html', {'form':form})
+  return render(request, 'myapp/post_edit.html', {'form':form, 'p':p})
 
 def ArcheologyCat(request, cat):
  posts= Post.objects.filter(category=cat).order_by('published_date').reverse()

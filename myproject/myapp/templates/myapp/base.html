@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset='utf-8'/>
-<title>website template</title>
+<title>Fox News</title>
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 <link rel='stylesheet' href="{% static 'css/myapp.css' %}">
@@ -30,9 +30,6 @@
 <tspan x='60' y='410' font-size='22.5'><a href="{% url 'CatPage' cat='environmemt' %}">Environment</a></tspan>
 <tspan x='60' y='450' font-size='22.5'><a href="{% url 'CatPage' cat='Religion' %}">Religion</a></tspan>
 <tspan x='60' y='490' font-size='22.5'><a href="{% url 'CatPage' cat='Scandals' %}">Scandals</a></tspan>
-{% if user.is_authenticated %}
-<tspan x='60' y='530' font-size='22.5'><a href="{% url 'unpublished' %}">Unpublished posts</a></tspan>
-{% endif %}
 <tspan x='500' y='100' font-size='50'><a href="{% url 'CatPage' cat='Opinion' %}">Opinion</a></tspan>
 <tspan x='500' y='190' font-size='50' ><a href="{% url 'subcat' Subcategory='Entertainment' %}">Entertainment</a></tspan>
 <tspan x='500' y='235' font-size='22.5'><a href="{% url 'CatPage' cat='Music News' %}">Music News</a></tspan>
@@ -41,8 +38,13 @@
 <tspan x='500' y='395' font-size='22.5'><a href="{% url 'CatPage' cat='Archeology' %}">Archeology</a></tspan>
 <tspan x='500' y='440' font-size='22.5'><a href="{% url 'CatPage' cat='Wild Nature' %}">Wild Nature</a></tspan>
 <tspan x='500' y='485' font-size='22.5'><a href="{% url 'CatPage' cat='Natural Science' %}">Natural Science</a></tspan>
-<tspan x='500' y='530' font-size='22.5'><a fill='white'  href="{% url 'post_new' %}">Make New Shit</a></tspan></text></g></svg>
-
+</text></g></svg>
+{% if user.is_authenticated %}
+<div id='postsvg' style='display:none;'><svg  width='100%' style='position:absolute;top:750px;display:inline;background-color:rgb(38, 38, 122);' height='200'><line x1='0' y1='0' x2='100%' y2='0' style='stroke:rgb(70, 70, 133);  stroke-width: 5 ' /></svg>
+<div style='position:absolute;z-index:2;top:786.5px;left:57px;'>
+<label><a href="{% url 'post_new' %}"><p style='background-color:rgb(155, 26, 25);color:white;border-radius:10px;font-size:500%;font-weight:bold;padding-left:20px;padding-right:20px;'>Create Post</p></a></label>
+<label><a href="{% url 'unpublished' %}"><p style='margin-left:50px;background-color:rgb(155, 26, 25);color:white;border-radius:10px;font-size:500%;font-weight:bold;padding-left:20px;padding-right:20px;'>View Drafts</p></a></label></div></div>
+{% endif %}
 </div>
 {% block content %}
 {% endblock %}

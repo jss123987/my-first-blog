@@ -1,34 +1,56 @@
 {% extends 'myapp/base.html' %}
 {% block content %}
 
-<div id='posteditbody'>
 <p style='margin-top:50px;margin-bottom:30px;text-align:center;font-size:575%;font-weight:bold;'>Create Post</p><br>
-<h1 id='text'><form method='POST' enctype="multipart/form-data">
-{% csrf_token %}
-{{ form.caption.label_tag }}<br>
-<p style='margin-bottom:0px;'>{{ form.caption }}</p><br>
-{{ form.title.label_tag }}<br>
-<p  style='margin-bottom:0px;'>{{ form.title }}</p><br>
-<p>{{ form.Text.label_tag}}
-{{ form.Text }}</p>
-<p id='1' style='display:none;' >{{ form.b }}</p>
-<p id='2' style='display:none;' >{{ form.c }}</p>
-<p id='3' style='display:none;' >{{ form.d }}</p>
-<p id='4' style='display:none;' >{{ form.e }}</p>
-<p id='5' style='display:none;' >{{ form.f }}</p>
-<p id='6' style='display:none;' >{{ form.g }}</p>
-<p id='7' style='display:none;' >{{ form.h }}</p>
-<p id='8' style='display:none;' >{{ form.i }}</p>
-<p id='9' style='display:none;' >{{ form.j }}</p>
-<p id='10' style='display:none;' >{{ form.k }}</p>
-<p id='11' style='display:none;' >{{ form.l }}</p>
-<p id='12' style='display:none;' >{{ form.m }}</p>
-<button id='moretextbutton' type="button" >Add Textbox</button>
-<p style='font-size:64.45px;'>{{ form.category.label_tag }}
-{{ form.category }}</p></h1><br>
-{{form.upload}}
-<p style='text-align:right;margin-top:100px;'><label><input type='submit' style='display: none' /><svg viewbox='149.125 0 201.75 100' width='201.75' height='100'><path d=' M 325 90 H 175 C 137.5 90, 137.5 10, 175 10 H 325 C 362.5 10,362.5 90, 325 90 ' stroke='rgb(38, 38, 122)' fill='rgb(38, 38, 122)'/><text fill='white' font-size='75' y='77.5' x='172'>Post</text></svg></label></p>
-</form></div>
+
+<form method='POST' enctype="multipart/form-data">
+ <div style='border-width:3px;border-color:rgba(38,38,122,1);border-style:solid;padding-top:100px;padding-bottom:100px;margin-left:40px;margin-right:40px;border-radius:10px;'>
+  <div id='posteditbody'>
+   <h1 id='text'>
+    {% csrf_token %}
+    {{ form.caption.label_tag }}<br>
+    <p style='margin-bottom:0px;'>{{ form.caption }}</p><br>
+    {{ form.title.label_tag }}<br>
+    <p  style='margin-bottom:0px;'>{{ form.title }}</p><br>
+    <p>{{ form.Text.label_tag}}{{ form.Text }}</p>
+    <p id='1' style='display:none;' >{{ form.b }}</p>
+    <p id='2' style='display:none;' >{{ form.c }}</p>
+    <p id='3' style='display:none;' >{{ form.d }}</p>
+    <p id='4' style='display:none;' >{{ form.e }}</p>
+    <p id='5' style='display:none;' >{{ form.f }}</p>
+    <p id='6' style='display:none;' >{{ form.g }}</p>
+    <p id='7' style='display:none;' >{{ form.h }}</p>
+    <p id='8' style='display:none;' >{{ form.i }}</p>
+    <p id='9' style='display:none;' >{{ form.j }}</p>
+    <p id='10' style='display:none;' >{{ form.k }}</p>
+    <p id='11' style='display:none;' >{{ form.l }}</p>
+    <p id='12' style='display:none;' >{{ form.m }}</p/>
+    <label style='margin-bottom:20px;margin-left:459px;'>
+     <p style='padding:5px;border-radius:100px;background-color:rgb(38,38,122);color:white;text-align:right;padding-right:20px;padding-left:20px;'  id='moretextbutton' >Add Textbox</p>
+    </label>
+    <p style='margin-bottom:0px;'>{{ form.category.label_tag }}</p>
+   </h1>
+   <p style='font-size:360%;'>{{ form.category }}</p><br>
+   <label style='text-align:right;'>
+    <p style='color:white;background-color:rgb(38, 38, 122);padding:15px;padding-left:40px;padding-right:40px;font-size:350%;font-weight:bold;border-radius:100px;'>Upload Image</p>
+    <p style='display:none;'>{{form.upload}}</p>
+   </label>
+  </div>
+ </div>
+
+ <div style='text-align:center;margin-left:40px;margin-right:40px;'>
+  <label style='width:100%;'>
+   <input type='submit' name='save' value='save' style='display:none;'/>
+   <p style='font-size:350%;border-style:solid;background-color:rgb(38,38,122);color:white;padding:20px;padding-left:210px;padding-right:210px;margin-top:50px;border-radius:100px;'>Save Post</p>
+  </label>
+  {% if p == Null %}
+  <label style='width:100%;'>
+   <input type='submit' name='publish' value='publish' style='display:none;'/>
+   <p style='font-size:350%;border-style:solid;background-color:rgb(38,38,122);color:white;padding:20px;padding-left:210px;padding-right:210px;margin-top:20px;border-radius:100px;'>Publish Post</p>
+  </label>
+  {% endif %}
+ </div>
+</form>
 <script>
 i=1;  
 document.getElementById('moretextbutton').

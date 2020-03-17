@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 {% for post in posts %}
-<div class='post'>
+<div style='margin-bottom:50px;'>
 <div style='position:relative;z-index:0;'>
 <a href="{% url 'post_detail' Pk=post.pk %}"><img  style="width:100%;height:600px;object-fit:cover;object-position:20% 41%;" src="/media/{{ post.upload }}">
 <p id='caption' style='position:absolute;top:500px;left:40px;padding-left:20px;padding-right:20px;'>{{post.caption}}</p></a></div>
