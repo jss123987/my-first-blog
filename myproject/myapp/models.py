@@ -21,7 +21,7 @@ class Post(models.Model):
     k=models.TextField(blank=True)
     l=models.TextField(blank=True)
     m=models.TextField(blank=True)
-    upload = models.ImageField(upload_to='documents/', default="")
+    upload = models.FileField(upload_to='documents/', default="")
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
     lastedit=models.DateTimeField(blank=True,null=True)
