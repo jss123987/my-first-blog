@@ -26,7 +26,7 @@ class PostForm(forms.ModelForm):
 	    'm': forms.Textarea(attrs={'rows':10, 'cols':'25px', 'class':'postedittext', 'style':'padding-right:30.5px;', 'placeholder':'Enter content...',}),}
 
 
-  fields =('title','category','upload','caption','Text','b','c','d','e','f','g','h','i','j','k','l','m',)
+  fields =('title','category','upload','caption','Text','b','c','d','e','f','g','h','i','j','k','l','m','p1','p2','p3','p4','p5','p6','p7','p8','p9','p10','p11','p12','p13',)
 
 class signupform(UserCreationForm):
  password2=forms.CharField(label='Confirm Password', widget=forms.PasswordInput(attrs={'size':21, 'placeholder':'Confirm password', 'class':'signupformtext',}))

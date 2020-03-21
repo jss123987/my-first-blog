@@ -4,28 +4,68 @@
 
 
 <div class='post'>
- <p id='title' style='font-size:130px;margin-left:40px;margin-right:40px;text-align:center;margin-top:80px;padding-top:0px;line-height:100%;'>{{ post.title }}</p>
- <p id='categories' style='font-weight:bold;color:rgb(38,38,102);font-size:170%;text-align:center;margin-left:40px;margin-bottom:50px;padding-top:30px;'>Written by: 
-  <a style='color:rgb(73,118,173);'>{{ post.author }} </a><br>
-  Contributions by: <a style='color:rgb(73,118,173);' >{% for contributer in post.contributers.all %}{{ contributer }}, {% endfor %}</a>
-  <br>
+ <p id='title' style='color:black;font-size:550%;margin-left:40px;margin-right:40px;text-align:center;margin-top:80px;padding-top:0px;line-height:100%;'>{{ post.title }}</p>
+ <p id='categories' style='font-weight:bold;color:rgb(38,38,122);font-size:170%;text-align:center;margin-left:0px;margin-bottom:50px;padding-top:30px;'>Written by: 
+  <a style='color:rgb(73,118,173);'>{{ post.author }} </a><br>{% if post.contributers.all.count != 0 %}Contributions by: <a style='color:rgb(73,118,173);' >{% for contributer in post.contributers.all %}
+{{ contributer }}
+{% if post.contributers.all.count > 1 %}, {% endif %}
+{% endfor %}</a><br>{% endif %}
   <a style='color:rgb(73,118,173);' href="{% url 'CatPage' cat=post.category %}"> {{post.category}}</a>
   <a style='color:rgb(73,118,173);padding-left:10px;' href="{% url 'subcat' Subcategory=post.subcategory %}">{{post.subcategory}}</a>
  </p>
  <img  style="width:100%;height:600px;object-fit:cover;object-position:20% 41%;" src="/media/{{ post.upload }}">
  <p id='textbox' style='margin-top:200px;'>{{post.Text}}</p>
+ {% if post.p1 != 't' %}
+ <img id='postimages' src="/media/{{ post.p1 }}">
+ {% endif %}
  <p id='textbox'>{{post.b}}</p>
+ {% if post.p2 != 't' %}
+ <img id='postimages' src="/media/{{ post.p2 }}">
+ {% endif %}
  <p id='textbox'>{{post.c}}</p>
+ {% if post.p3 != 't' %}
+ <img id='postimages' src="/media/{{ post.p3 }}">
+ {% endif %}
  <p id='textbox'>{{post.d}}</p>
+ {% if post.p4 != 't' %}
+ <img id='postimages' src="/media/{{ post.p4 }}">
+ {% endif %}
  <p id='textbox'>{{post.e}}</p>
+ {% if post.p5 != 't' %}
+ <img id='postimages' src="/media/{{ post.p5 }}">
+ {% endif %}
  <p id='textbox'>{{post.f}}</p>
+ {% if post.p6 != 't' %}
+ <img id='postimages' src="/media/{{ post.p6 }}">
+ {% endif %}
  <p id='textbox'>{{post.g}}</p>
+ {% if post.p7 != 't' %}
+ <img id='postimages' src="/media/{{ post.p7 }}">
+ {% endif %}
  <p id='textbox'>{{post.h}}</p>
+ {% if post.p8 != 't' %}
+ <img id='postimages' src="/media/{{ post.p8 }}">
+ {% endif %}
  <p id='textbox'>{{post.i}}</p>
+ {% if post.p9 != 't' %}
+ <img id='postimages' src="/media/{{ post.p9 }}">
+ {% endif %}
  <p id='textbox'>{{post.j}}</p>
+ {% if post.p10 != 't' %}
+ <img id='postimages' src="/media/{{ post.p10 }}">
+ {% endif %}
  <p id='textbox'>{{post.k}}</p>
+ {% if post.p11 != 't' %}
+ <img id='postimages' src="/media/{{ post.p11 }}">
+ {% endif %}
  <p id='textbox'>{{post.l}}</p>
+ {% if post.p12 != 't' %}
+ <img id='postimages' src="/media/{{ post.p12 }}">
+ {% endif %}
  <p id='textbox'>{{post.m}}</p>
+ {% if post.p13 != 't' %}
+ <img id='postimages' src="/media/{{ post.p13 }}">
+ {% endif %}
 </div>
 <label style='margin-left:40px;'>Published: <a style='color:rgb(73,118,173);' >{{ post.published_date }}</a></label><br>
 <label style='margin-left:40px;'>Last Edited: <a style='color:rgb(73,118,173);' >{{ post.lastedit }}</a></label><br>

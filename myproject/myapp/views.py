@@ -14,7 +14,7 @@ def hello(request):
  return render(request, 'myapp/hello.html', {'posts':posts})
 
 def unpublishedposts(request):
- PK=request.GET.get('PK', '10')
+ PK=request.GET.get('PK', '1')
  f=Post.objects.get(pk=PK)
  ti=f.title
  c=f.caption
@@ -31,7 +31,7 @@ def unpublishedposts(request):
  t11=f.k
  t12=f.l
  t13=f.m
- if f.pk != 10:
+ if f.pk != 1:
    form=PostForm(request.POST, request.FILES, instance=f)
    if form.is_valid():
     post=form.save(commit=False)
@@ -138,6 +138,8 @@ def post_new(request):
      post.subcategory='Opinion'
     post.save()
     return redirect('post_detail', Pk=post.pk)
+   else:
+    return HttpResponse(form.errors)
  else:
   form=PostForm()
   return render(request, 'myapp/post_edit.html',{'form':form})
@@ -194,7 +196,7 @@ def ArcheologyCat(request, cat):
 
 def subcat(request, Subcategory):
  posts= Post.objects.filter(subcategory=Subcategory).order_by('published_date').reverse()
- return render(request, 'myapp/subcatpage.html',{'posts':posts})
+ return render(request, 'myapp/subcatpage.html',{'posts':posts, 'Subcategory':Subcategory})
 
 def signup(request):
  if request.method=='POST':

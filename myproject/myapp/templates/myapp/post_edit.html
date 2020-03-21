@@ -13,20 +13,75 @@
     {{ form.title.label_tag }}<br>
     <p  style='margin-bottom:0px;'>{{ form.title }}</p><br>
     <p>{{ form.Text.label_tag}}{{ form.Text }}</p>
+    <label>
+     <p class='moretextbutton'>Add Image</p>
+     <p style='display:none;'>{{form.p1}}</p>
+    </label>
     <p id='1' style='display:none;' >{{ form.b }}</p>
+    <label id='13' style='display:none;' >
+     <p class='moretextbutton' >Add Image</p>
+     <p style='display:none;'>{{form.p2}}</p>
+    </label>
     <p id='2' style='display:none;' >{{ form.c }}</p>
+    <label id='14' style='display:none;'>
+     <p class='moretextbutton' >Add Image</p>
+     <p style='display:none;'>{{form.p3}}</p>
+    </label>
     <p id='3' style='display:none;' >{{ form.d }}</p>
+    <label id='15' style='display:none;'>
+     <p class='moretextbutton' >Add Image</p>
+     <p style='display:none;'>{{form.p4}}</p>
+    </label>
     <p id='4' style='display:none;' >{{ form.e }}</p>
+    <label id='16' style='display:none;'>
+     <p class='moretextbutton' >Add Image</p>
+     <p style='display:none;'>{{form.p5}}</p>
+    </label>
     <p id='5' style='display:none;' >{{ form.f }}</p>
+    <label id='17' style='display:none;'>
+     <p class='moretextbutton' >Add Image</p>
+     <p style='display:none;'>{{form.p6}}</p>
+    </label>
     <p id='6' style='display:none;' >{{ form.g }}</p>
+    <label id='18' style='display:none;'>
+     <p class='moretextbutton' >Add Image</p>
+     <p style='display:none;'>{{form.p7}}</p>
+    </label>
     <p id='7' style='display:none;' >{{ form.h }}</p>
+    <label id='19' style='display:none;'>
+     <p class='moretextbutton' >Add Image</p>
+     <p style='display:none;'>{{form.p8}}</p>
+    </label>
     <p id='8' style='display:none;' >{{ form.i }}</p>
+    <label id='20' style='display:none;'>
+     <p class='moretextbutton' >Add Image</p>
+     <p style='display:none;'>{{form.p9}}</p>
+    </label>
     <p id='9' style='display:none;' >{{ form.j }}</p>
+    <label id='21' style='display:none;'>
+     <p class='moretextbutton' >Add Image</p>
+     <p style='display:none;'>{{form.p10}}</p>
+    </label>
     <p id='10' style='display:none;' >{{ form.k }}</p>
+    <label id='22' style='display:none;'>
+     <p class='moretextbutton' >Add Image</p>
+     <p style='display:none;'>{{form.p11}}</p>
+    </label>
     <p id='11' style='display:none;' >{{ form.l }}</p>
-    <p id='12' style='display:none;' >{{ form.m }}</p/>
-    <label style='margin-bottom:20px;margin-left:459px;'>
-     <p style='padding:5px;border-radius:100px;background-color:rgb(38,38,122);color:white;text-align:right;padding-right:20px;padding-left:20px;'  id='moretextbutton' >Add Textbox</p>
+    <label id='23' style='display:none;'>
+     <p class='moretextbutton' >Add Image</p>
+     <p style='display:none;'>{{form.p12}}</p>
+    </label>
+    <p id='12' style='display:none;' >{{ form.m }}</p>
+    <label id='24' style='display:none;' >
+     <p class='moretextbutton' >Add Image</p>
+     <p style='display:none;'>{{form.p13}}</p>
+    </label>
+   <label  style='display:inline-block;margin-left:92px;' >
+     <p class='moretextbutton' id='lesstextbutton' >-</p>
+    </label>
+    <label style='margin-bottom:20px;display:inline-block;'>
+     <p class='moretextbutton' id='moretextbutton' >Add Textbox</p>
     </label>
     <p style='margin-bottom:0px;'>{{ form.category.label_tag }}</p>
    </h1>
@@ -44,18 +99,23 @@
    <p style='font-size:350%;border-style:solid;background-color:rgb(38,38,122);color:white;padding:20px;padding-left:210px;padding-right:210px;margin-top:50px;border-radius:100px;'>Save Post</p>
   </label>
   {% if p == Null %}
-  <label style='width:100%;'>
-   <input type='submit' name='publish' value='publish' style='display:none;'/>
-   <p style='font-size:350%;border-style:solid;background-color:rgb(38,38,122);color:white;padding:20px;padding-left:210px;padding-right:210px;margin-top:20px;border-radius:100px;'>Publish Post</p>
-  </label>
+   <label style='width:100%;'>
+    <input type='submit' name='publish' value='publish' style='display:none;'/>
+    <p style='font-size:350%;border-style:solid;background-color:rgb(38,38,122);color:white;padding:20px;padding-left:210px;padding-right:210px;margin-top:20px;border-radius:100px;'>Publish Post</p>
+   </label>
   {% endif %}
  </div>
 </form>
 <script>
-i=1;  
+i=0;  
+f=12;
+
 document.getElementById('moretextbutton').
 addEventListener('click',
- function(){document.getElementById(i).style.
-  display='inline';return i=i+1});
+ function(){ if(i<12){ i=i+1; f=f+1; document.getElementById(i).style.display='inline'; document.getElementById(f).style.display='inline-block';}; if(i===12){document.getElementById('moretextbutton').style.visibility='hidden';}; if(i>0){document.getElementById('lesstextbutton').style.visibility='visible';};});
+
+document.getElementById('lesstextbutton').
+addEventListener('click', 
+ function(){ document.getElementById(i).style.display='none'; document.getElementById(f).style.display='none'; if(i>0){ i=i-1; f=f-1;}; if(i===0){document.getElementById('lesstextbutton').style.visibility='hidden';}; if(i<12){document.getElementById('moretextbutton').style.visibility='visible';};});
 </script>
 {%endblock%}
