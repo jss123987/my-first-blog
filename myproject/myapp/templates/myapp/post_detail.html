@@ -6,8 +6,8 @@
 <div class='post'>
  <p id='title' style='color:black;font-size:550%;margin-left:40px;margin-right:40px;text-align:center;margin-top:80px;padding-top:0px;line-height:100%;'>{{ post.title }}</p>
  <p id='categories' style='font-weight:bold;color:rgb(38,38,122);font-size:170%;text-align:center;margin-left:0px;margin-bottom:50px;padding-top:30px;'>Written by: 
-  <a style='color:rgb(73,118,173);'>{{ post.author }} </a><br>{% if post.contributers.all.count != 0 %}Contributions by: <a style='color:rgb(73,118,173);' >{% for contributer in post.contributers.all %}
-{{ contributer }}
+  <a href="{% url 'profilepage' userpk=post.author.pk %}" style='color:rgb(73,118,173);'>{{ post.author }} </a><br>{% if post.contributers.all.count != 0 %}Contributions by: <a style='color:rgb(73,118,173);' >{% for contributer in post.contributers.all %}
+<a href="{% url 'profilepage' userpk=contributer.pk %}" >{{ contributer }}</a>
 {% if post.contributers.all.count > 1 %}, {% endif %}
 {% endfor %}</a><br>{% endif %}
   <a style='color:rgb(73,118,173);' href="{% url 'CatPage' cat=post.category %}"> {{post.category}}</a>
@@ -67,7 +67,7 @@
  <img id='postimages' src="/media/{{ post.p13 }}">
  {% endif %}
 </div>
-<label style='margin-left:40px;'>Published: <a style='color:rgb(73,118,173);' >{{ post.published_date }}</a></label><br>
+{% if post.published_date != null %}<label style='margin-left:40px;'>Published: <a style='color:rgb(73,118,173);' >{{ post.published_date }}</a></label><br>{% endif %}
 <label style='margin-left:40px;'>Last Edited: <a style='color:rgb(73,118,173);' >{{ post.lastedit }}</a></label><br>
 
 {% if user.is_authenticated %}

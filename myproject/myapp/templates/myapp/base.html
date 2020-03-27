@@ -13,9 +13,13 @@
    {% if user.is_authenticated %}
     <a href="{% url 'logout' %}"><p style='color:white;position:absolute;left:720px;top:57px;font-size:200%;background-color:rgb(155, 26, 25);padding-left:15px;padding-right:15px;padding-top:5px;padding-bottom:5px;font-weight:bold;border-radius:5px;'>Logout</p>
     </a>
-   {% else %}
-    <a href="{% url 'login' %}"><p style='color:white;position:absolute;left:720px;top:57px;font-size:200%;background-color:rgb(155, 26, 25);padding-left:15px;padding-right:15px;padding-top:5px;padding-bottom:5px;font-weight:bold;border-radius:5px;'>Login</p>
+    <a href="{% url 'profilepage' userpk=request.user.pk %}"><p style='color:white;position:absolute;left:525px;top:57px;font-size:200%;background-color:rgb(155, 26, 25);padding-left:15px;padding-right:15px;padding-top:5px;padding-bottom:5px;font-weight:bold;border-radius:5px;'>My Profile</p>
     </a>
+   {% else %}
+    <a href="{% url 'login' %}">
+<p style='color:white;position:absolute;left:720px;top:57px;font-size:200%;background-color:rgb(155, 26, 25);padding-left:15px;padding-right:15px;padding-top:5px;padding-bottom:5px;font-weight:bold;border-radius:5px;'>Login</p>
+    </a>
+    
    {% endif %}
    <svg id='toolbarsvg' width='600' height='150'>
     <a href="{% url 'hello' %}">
@@ -45,58 +49,58 @@
     <g transform='translate(0, 20)'>
      <text fill='white'>
       <tspan x='60' y='100' font-size='50' >
-       <a href="{% url 'subcat' Subcategory='U.S.' %}">U.S.</a>
+       <a class='dropdownlinks' href="{% url 'subcat' Subcategory='U.S.' %}">U.S.</a>
       </tspan>
       <tspan x='60' y='145' font-size='22.5'>
-       <a href="{% url 'CatPage' cat='Crime' %}">Crime</a>
+       <a class='dropdownlinks' href="{% url 'CatPage' cat='Crime' %}">Crime</a>
       </tspan>
       <tspan x='60' y='185' font-size='22.5'>
-       <a href="{% url 'CatPage' cat='Education' %}">Education</a>
+       <a class='dropdownlinks' href="{% url 'CatPage' cat='Education' %}">Education</a>
       </tspan>
       <tspan x='60' y='225' font-size='22.5'>
-       <a href="{% url 'CatPage' cat='Immigration' %}">Immigration</a>
+       <a class='dropdownlinks' href="{% url 'CatPage' cat='Immigration' %}">Immigration</a>
       </tspan>
       <tspan x='60' y='290' font-size='50'>
-       <a href="{% url 'subcat' Subcategory='World' %}">World</a>
+       <a class='dropdownlinks' href="{% url 'subcat' Subcategory='World' %}">World</a>
       </tspan>
       <tspan x='60' y='330' font-size='22.5'>
-       <a href="{% url 'CatPage' cat='Conflicts' %}">Conflicts</a>
+       <a class='dropdownlinks' href="{% url 'CatPage' cat='Conflicts' %}">Conflicts</a>
       </tspan>
       <tspan x='60' y='370' font-size='22.5'>
-       <a href="{% url 'CatPage' cat='Disaster' %}">Disaster</a>
+       <a class='dropdownlinks' href="{% url 'CatPage' cat='Disaster' %}">Disaster</a>
       </tspan>
       <tspan x='60' y='410' font-size='22.5'>
-       <a href="{% url 'CatPage' cat='environmemt' %}">Environment</a>
+       <a class='dropdownlinks' href="{% url 'CatPage' cat='environmemt' %}">Environment</a>
       </tspan>
       <tspan x='60' y='450' font-size='22.5'>
-       <a href="{% url 'CatPage' cat='Religion' %}">Religion</a>
+       <a class='dropdownlinks' href="{% url 'CatPage' cat='Religion' %}">Religion</a>
       </tspan>
       <tspan x='60' y='490' font-size='22.5'>
-       <a href="{% url 'CatPage' cat='Scandals' %}">Scandals</a>
+       <a class='dropdownlinks' href="{% url 'CatPage' cat='Scandals' %}">Scandals</a>
       </tspan>
       <tspan x='500' y='100' font-size='50'>
-       <a href="{% url 'CatPage' cat='Opinion' %}">Opinion</a>
+       <a class='dropdownlinks' href="{% url 'CatPage' cat='Opinion' %}">Opinion</a>
       </tspan>
       <tspan x='500' y='190' font-size='50' >
-       <a href="{% url 'subcat' Subcategory='Entertainment' %}">Entertainment</a>
+       <a class='dropdownlinks' href="{% url 'subcat' Subcategory='Entertainment' %}">Entertainment</a>
       </tspan>
       <tspan x='500' y='235' font-size='22.5'>
-       <a href="{% url 'CatPage' cat='Music News' %}">Music News</a>
+       <a class='dropdownlinks' href="{% url 'CatPage' cat='Music News' %}">Music News</a>
       </tspan>
       <tspan x='500' y='280' font-size='22.5'>
-       <a href="{% url 'CatPage' cat='Celebrity News' %}">Celebrity News</a>
+       <a class='dropdownlinks' href="{% url 'CatPage' cat='Celebrity News' %}">Celebrity News</a>
       </tspan>
       <tspan x='500' y='350' font-size='50'>
-       <a href="{% url 'subcat' Subcategory='Science' %}">Science</a>
+       <a class='dropdownlinks' href="{% url 'subcat' Subcategory='Science' %}">Science</a>
       </tspan>
       <tspan x='500' y='395' font-size='22.5'>
-       <a href="{% url 'CatPage' cat='Archeology' %}">Archeology</a>
+       <a class='dropdownlinks' href="{% url 'CatPage' cat='Archeology' %}">Archeology</a>
       </tspan>
       <tspan x='500' y='440' font-size='22.5'>
-       <a href="{% url 'CatPage' cat='Wild Nature' %}">Wild Nature</a>
+       <a class='dropdownlinks' href="{% url 'CatPage' cat='Wild Nature' %}">Wild Nature</a>
       </tspan>
       <tspan x='500' y='485' font-size='22.5'>
-       <a href="{% url 'CatPage' cat='Natural Science' %}">Natural Science</a>
+       <a class='dropdownlinks' href="{% url 'CatPage' cat='Natural Science' %}">Natural Science</a>
       </tspan>
      </text>
     </g>

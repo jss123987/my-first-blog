@@ -1,7 +1,7 @@
 {% extends 'myapp/base.html' %}
 {% load static %}
 {% block content %}
-<h1 style='font-weight:bold;text-align:center;margin:20px;position:relative;z-index:0;'>{{ Subcategory }}</h1>
+<h1 style='font-size:100px;font-weight:bold;text-align:center;margin:20px;position:relative;z-index:0;'>{{ Subcategory }}</h1>
 {% for post in posts %}
  <div style='margin-bottom:50px;'>
   <div style='position:relative;z-index:0;'>
@@ -11,10 +11,10 @@
    </a>
   </div>
   <p id='categories' style='font-weight:bold;color:rgb(38,38,102);font-size:140%;text-align:left;margin-left:40px;margin-bottom:0px;padding-top:30px;'>
-   <label style='padding-right:10px;'>Written by: <a style='color:rgb(73,118,173);'>{{ post.author }}</a>
+   <label style='padding-right:10px;'>Written by: <a href="{% url 'profilepage' userpk=post.author.pk %}" style='color:rgb(73,118,173);'>{{ post.author }}</a>
    </label>
    {% if post.contributers.all.count != 0 %}
-    <label style='padding-right:10px;'>Contributions by: <a style='color:rgb(73,118,173);'>{% for contributer in post.contributers.all %}{{ contributer }}{% if post.contributers.all.count > 1 %}, {% endif %}{% endfor %}</a>
+    <label style='padding-right:10px;'>Contributions by: <a style='color:rgb(73,118,173);'>{% for contributer in post.contributers.all %}<a href="{% url 'profilepage' userpk=contributer.pk %}" >{{ contributer }}</a>{% if post.contributers.all.count > 1 %}, {% endif %}{% endfor %}</a>
     </label>
    {% endif %}
    <label style='padding-right:10px;'>Last edited: <a style='color:rgb(73,118,173);' >{{ post.lastedit }}</a>

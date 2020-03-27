@@ -1,20 +1,70 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post
+from .models import Post, Profile
 from django.utils import timezone
-from .forms import PostForm, signupform, loginform
+from .forms import PostForm, signupform, loginform, CreateProfile
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import Post
 from django.contrib.auth.models import User
 
-
 def hello(request):
  posts = Post.objects.filter(published_date__isnull=False).order_by('published_date').reverse()
  return render(request, 'myapp/hello.html', {'posts':posts})
 
+def createprofile(request):
+ if request.method == "POST":
+  form=CreateProfile(request.POST, request.FILES)
+  if form.is_valid():
+   post = form.save(commit=False)
+   post.Username = request.user
+   post.EmailAddress = request.user.email
+   post.save()
+   return redirect('hello')
+  else:
+   return render(request, 'myapp/createprofile.html', {'form':form})
+ else:
+  form=CreateProfile()
+  user=request.user
+  if user.is_authenticated:
+   count=Profile.objects.filter(Username = request.user).count()
+  else:
+   count=True
+  return render(request, 'myapp/createprofile.html',{'form':form,'count':count,})
+
+def deletepost(request, PK):
+ Post.objects.get(pk=PK).delete()
+ return redirect('hello')
+
+def editprofile(request, profilepk):
+ f=Profile.objects.get(pk=profilepk)
+ pk=f.pk
+ if request.user.pk == f.Username.pk:
+  if request.method == "POST":
+   form=CreateProfile(request.POST, request.FILES, instance=f)
+   if form.is_valid():
+    post = form.save(commit=False)
+    post.save()
+    return redirect('hello')
+   else:
+    return render(request, 'myapp/createprofile.html', {'form':form,'pk':pk,})
+  else:
+   form=CreateProfile(instance=f)
+   user=request.user
+   return render(request, 'myapp/createprofile.html',{'form':form,'pk':pk,})
+ else:
+  return HttpResponse('You can only edit you own profile!')
+
+
+def profile(request, userpk):
+ users=User.objects.get(pk=userpk)
+ profile=Profile.objects.get(Username=users)
+ profileposts=Post.objects.filter(author=users, published_date__isnull=False).order_by('published_date').reverse()
+ return render(request, 'myapp/profile.html', {'profile':profile, 'profileposts':profileposts,})
+
+
 def unpublishedposts(request):
- PK=request.GET.get('PK', '1')
+ PK=request.GET.get('PK', '19')
  f=Post.objects.get(pk=PK)
  ti=f.title
  c=f.caption
@@ -31,7 +81,7 @@ def unpublishedposts(request):
  t11=f.k
  t12=f.l
  t13=f.m
- if f.pk != 1:
+ if f.pk != 19:
    form=PostForm(request.POST, request.FILES, instance=f)
    if form.is_valid():
     post=form.save(commit=False)
@@ -54,7 +104,7 @@ def unpublishedposts(request):
     post.save()
     return redirect('post_detail',Pk=f.pk)
  else:
-   posts=Post.objects.filter(published_date__isnull=True).filter(author=request.user).order_by('created_date').reverse().exclude(pk=10)
+   posts=Post.objects.filter(published_date__isnull=True).filter(author=request.user).order_by('created_date').reverse().exclude(pk=19)
    return render(request, 'myapp/unpublished.html', {'posts':posts})
 
 def post_detail(request, Pk):
@@ -101,6 +151,8 @@ def post_new(request):
      post.subcategory='Opinion'
     post.save()
     return redirect('post_detail', Pk=post.pk)
+   else:
+    return  messages.error(request, "Error")
   if 'publish' in request.POST:
    if form.is_valid():
     post = form.save(commit=False)
@@ -138,8 +190,6 @@ def post_new(request):
      post.subcategory='Opinion'
     post.save()
     return redirect('post_detail', Pk=post.pk)
-   else:
-    return HttpResponse(form.errors)
  else:
   form=PostForm()
   return render(request, 'myapp/post_edit.html',{'form':form})
@@ -149,46 +199,97 @@ def Post_Edit(request, PK):
  usert=request.user
  a=f.author
  p=f.published_date
+ p1=f.b
+ p2=f.c
+ p3=f.d
+ p4=f.e
+ p5=f.f
+ p6=f.g
+ p7=f.h
+ p8=f.i
+ p9=f.j
+ p10=f.k
+ p11=f.l
+ p12=f.m
+ pk=f.pk
  if request.method == "POST":
   form=PostForm(request.POST, request.FILES, instance=f)
-  if form.is_valid():
-   post = form.save(commit=False)
-   post.lastedit=timezone.now()
-   if post.category=='Religion':
-    post.subcategory='World'
-   elif post.category=='Disaster':
-    post.subcategory='World'
-   elif post.category=='Environment':
-    post.subcategory='World'
-   elif post.category=='Conflicts':
-    post.subcategory='World'
-   elif post.category=='Scandals':
-    post.subcategory='World'
-   elif post.category=='Crime':
-    post.subcategory='U.S.'
-   elif post.category=='Education':
-    post.subcategory='U.S.'
-   elif post.category=='Immigration':
-    post.subcategory='U.S.'
-   elif post.category=='Music News':
-    post.subcategory='Entertainment'
-   elif post.category=='Celebrity News':
-    post.subcategory='Entertainment'
-   elif post.category=='Archeology':
-    post.subcategory='Science'
-   elif post.category=='Wild Nature':
-    post.subcategory='Science'
-   elif post.category=='Natural Science':
-    post.subcategory='Science'
-   elif post.category=='Opinion':
-    post.subcategory='Opinion'
-   post.save()
-   if usert != post.author:
-    post.contributers.add(request.user)
-   return redirect('post_detail', Pk=post.pk)
+  if 'save' in request.POST:
+   if form.is_valid():
+    post = form.save(commit=False)
+    post.lastedit=timezone.now()
+    if post.category=='Religion':
+     post.subcategory='World'
+    elif post.category=='Disaster':
+     post.subcategory='World'
+    elif post.category=='Environment':
+     post.subcategory='World'
+    elif post.category=='Conflicts':
+     post.subcategory='World'
+    elif post.category=='Scandals':
+     post.subcategory='World'
+    elif post.category=='Crime':
+     post.subcategory='U.S.'
+    elif post.category=='Education':
+     post.subcategory='U.S.'
+    elif post.category=='Immigration':
+     post.subcategory='U.S.'
+    elif post.category=='Music News':
+     post.subcategory='Entertainment'
+    elif post.category=='Celebrity News':
+     post.subcategory='Entertainment'
+    elif post.category=='Archeology':
+     post.subcategory='Science'
+    elif post.category=='Wild Nature':
+     post.subcategory='Science'
+    elif post.category=='Natural Science':
+     post.subcategory='Science'
+    elif post.category=='Opinion':
+     post.subcategory='Opinion'
+    post.save()
+    if usert != post.author:
+     post.contributers.add(request.user)
+    return redirect('post_detail', Pk=post.pk)
+  if 'publish' in request.POST:
+   if form.is_valid():
+    post = form.save(commit=False)
+    post.author = request.user
+    post.created_date = timezone.now()
+    post.published_date = timezone.now()
+    post.lastedit = timezone.now()
+    if post.category=='Religion':
+     post.subcategory='World'
+    elif post.category=='Disaster':
+     post.subcategory='World'
+    elif post.category=='Environment':
+     post.subcategory='World'
+    elif post.category=='Conflicts':
+     post.subcategory='World'
+    elif post.category=='Scandals':
+     post.subcategory='World'
+    elif post.category=='Crime':
+     post.subcategory='U.S.'
+    elif post.category=='Education':
+     post.subcategory='U.S.'
+    elif post.category=='Immigration':
+     post.subcategory='U.S.'
+    elif post.category=='Music News':
+     post.subcategory='Entertainment'
+    elif post.category=='Celebrity News':
+     post.subcategory='Entertainment'
+    elif post.category=='Archeology':
+     post.subcategory='Science'
+    elif post.category=='Wild Nature':
+     post.subcategory='Science'
+    elif post.category=='Natural Science':
+     post.subcategory='Science'
+    elif post.category=='Opinion':
+     post.subcategory='Opinion'
+    post.save()
+    return redirect('post_detail', Pk=post.pk)
  else:
   form=PostForm(instance=f)
-  return render(request, 'myapp/post_edit.html', {'form':form, 'p':p})
+  return render(request, 'myapp/post_edit.html', {'form':form, 'p':p,'p1':p1,'p2':p2,'p3':p3,'p4':p4,'p5':p5,'p6':p6,'p7':p7,'p8':p8,'p9':p9,'p10':p10,'p11':p11,'p12':p12,'pk':pk,})
 
 def ArcheologyCat(request, cat):
  posts= Post.objects.filter(category=cat).order_by('published_date').reverse()
@@ -207,7 +308,7 @@ def signup(request):
    raw_password = form.cleaned_data.get('password1')
    user = authenticate(username=username, password=raw_password)
    login(request, user)
-   return redirect('hello')
+   return redirect('createprofile')
  else:
   form=signupform()
  return render(request, 'myapp/signup.html', {'form': form})

@@ -1,0 +1,50 @@
+{% extends 'myapp/base.html'%}
+{% block content %}
+{% if count != True %}
+<div style='margin-left:100px;margin-right:110px;'>
+<p id='profileheader' style='text-align:center;font-size:575%;margin-top:50px;margin-bottom:50px;font-weight:bold;'>Create Profile</p>
+<h><form method='POST' enctype="multipart/form-data">
+{% csrf_token %}
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+         <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+<p id='text' style='margin-bottom:0px;'>{{ form.Firstname.label_tag }}</p>
+<p id='text'>{{ form.Firstname }}</p><br>
+<p id='text' style='margin-bottom:0px;'>{{ form.Lastname.label_tag }}</p>
+<p id='text'>{{ form.Lastname }}</p><br>
+<p id='text' style='margin-bottom:0px;'>{{ form.Bio.label_tag }}</p>
+<p id='text'>{{ form.Bio }}</p><br>
+
+<label style='margin-bottom:100px;text-align:right;'>
+<p id='shrinkupload' style='margin-top:35px;position:absolute;left:327px;font-size:200%;z-index:1;'>{{ form.profilepic }}</p>
+<div style='background-color:rgb(240,240,240);margin-top:30px;position:absolute;z-index:2;width:39.8%;height:3.5%;'></div>
+<p style='position:absolute;z-index:3;color:white;background-color:rgb(38, 38, 122);padding:15px;padding-left:40px;padding-right:40px;font-size:350%;font-weight:bold;border-radius:100px;'>Upload Image</p>
+</label>
+
+<label style='width:100%;'><input type='submit' style='display:none;'/><p id='submitprofiletext' style='font-size:350%;border-style:solid;background-color:rgb(38,38,122);color:white;padding:20px;padding-left:210px;padding-right:210px;margin-top:100px;border-radius:100px;'>Create Profile</p></label>
+</form></div>
+{% if pk %}
+<script>
+document.getElementById('shrinkupload').style.fontSize='10%';
+document.getElementById('submitprofiletext').innerHTML='Save Changes';
+document.getElementById('profileheader').innerHTML='Edit Profile';
+</script>
+{% endif %}
+{% elif user.is_authenticated == False %}
+<p style='font-weight:bold;font-size:400%;text-align:center;'>You need to create an account first!</p>
+{% else %}
+<p style='font-weight:bold;font-size:400%;text-align:center;'>You've already created a profile!</p>
+{% endif %}
+
+{% endblock %}

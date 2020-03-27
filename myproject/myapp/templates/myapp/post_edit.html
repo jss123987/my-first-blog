@@ -1,6 +1,18 @@
 {% extends 'myapp/base.html' %}
 {% block content %}
-
+<div id='greyout'  style='display:none;width:100%;height:100vh;background-color:black;opacity:.6;position:fixed;z-index:4;top:0px;'>
+</div>
+ <div id='greyoutbox' style='display:none;text-align:center;border-radius:10px;background-color:white;position:fixed;top:20%;left:16%;width:66%;height:20%;z-index:5;'>
+ <p style='margin-top:40px;text-align:center;font-weight:bold;font-size:350%;'>Are you sure?</p>  
+ {% if pk %}
+ <label style='margin-top:30px;'>
+ <a href="{% url 'deletepost' PK=pk %}">
+  <p style='text-align:center;display:inline-block;font-size:350%;border-style:solid;background-color:rgb(38,38,122);color:white;padding:20px;padding-left:50px;padding-right:50px;border-radius:100px;'>Yes</p>
+ </a>
+ <p id='dontdelete' style='margin-left:20px;text-align:center;display:inline-block;font-size:350%;border-style:solid;background-color:rgb(38,38,122);color:white;padding:20px;padding-left:50px;padding-right:50px;border-radius:100px;'>No</p>
+ </label>
+ {% endif %}
+ </div>
 <p style='margin-top:50px;margin-bottom:30px;text-align:center;font-size:575%;font-weight:bold;'>Create Post</p><br>
 
 <form method='POST' enctype="multipart/form-data">
@@ -8,87 +20,187 @@
   <div id='posteditbody'>
    <h1 id='text'>
     {% csrf_token %}
+    {%if form.errors %}
+    {% for error in form.upload.errors %}
+    <div>
+     <p>{{ error|escape }}</p>
+    </div>
+    {% endfor %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+    {% endif %}
     {{ form.caption.label_tag }}<br>
-    <p style='margin-bottom:0px;'>{{ form.caption }}</p><br>
+    <p class='labeltofieldspace'>{{ form.caption }}</p><br>
     {{ form.title.label_tag }}<br>
-    <p  style='margin-bottom:0px;'>{{ form.title }}</p><br>
+    <p  class='labeltofieldspace'>{{ form.title }}</p><br>
     <p>{{ form.Text.label_tag}}{{ form.Text }}</p>
     <label>
      <p class='moretextbutton'>Add Image</p>
-     <p style='display:none;'>{{form.p1}}</p>
+     <p class='hiddenuploadbuttons'>{{form.p1}}</p>
     </label>
-    <p id='1' style='display:none;' >{{ form.b }}</p>
-    <label id='13' style='display:none;' >
+    <p id='1' class='hiddenuploadbuttons' >{{ form.b }}</p>
+    <label id='13' class='hiddenuploadbuttons' >
      <p class='moretextbutton' >Add Image</p>
-     <p style='display:none;'>{{form.p2}}</p>
+     <p class='hiddenuploadbuttons'>{{form.p2}}</p>
     </label>
-    <p id='2' style='display:none;' >{{ form.c }}</p>
-    <label id='14' style='display:none;'>
+    {% if p1 != '' and p1 != blank %}
+    <script>
+    document.getElementById('1').style.display='inline';
+    document.getElementById('13').style.display='inline-block';
+    </script>
+    {% endif %}    
+    <p id='2' class='hiddenuploadbuttons' >{{ form.c }}</p>
+    <label id='14' class='hiddenuploadbuttons'>
      <p class='moretextbutton' >Add Image</p>
-     <p style='display:none;'>{{form.p3}}</p>
+     <p class='hiddenuploadbuttons'>{{form.p3}}</p>
     </label>
-    <p id='3' style='display:none;' >{{ form.d }}</p>
-    <label id='15' style='display:none;'>
+    {% if p2 != '' and p2 != blank %}
+    <script>
+    document.getElementById('2').style.display='inline';
+    document.getElementById('14').style.display='inline-block';
+    </script>
+    {% endif %}
+    </label>
+    <p id='3' class='hiddenuploadbuttons' >{{ form.d }}</p>
+    <label id='15' class='hiddenuploadbuttons'>
      <p class='moretextbutton' >Add Image</p>
-     <p style='display:none;'>{{form.p4}}</p>
+     <p class='hiddenuploadbuttons'>{{form.p4}}</p>
     </label>
-    <p id='4' style='display:none;' >{{ form.e }}</p>
-    <label id='16' style='display:none;'>
+    {% if p3 != '' and p3 != blank %}
+    <script>
+    document.getElementById('3').style.display='inline';
+    document.getElementById('15').style.display='inline-block';
+    </script>
+    {% endif %}
+    <p id='4' class='hiddenuploadbuttons' >{{ form.e }}</p>
+    <label id='16' class='hiddenuploadbuttons'>
      <p class='moretextbutton' >Add Image</p>
-     <p style='display:none;'>{{form.p5}}</p>
+     <p class='hiddenuploadbuttons'>{{form.p5}}</p>
     </label>
-    <p id='5' style='display:none;' >{{ form.f }}</p>
-    <label id='17' style='display:none;'>
+    {% if p4 != '' and p4 != blank %}
+    <script>
+    document.getElementById('4').style.display='inline';
+    document.getElementById('16').style.display='inline-block';
+    </script>
+    {% endif %}
+    <p id='5' class='hiddenuploadbuttons' >{{ form.f }}</p>
+    <label id='17' class='hiddenuploadbuttons'>
      <p class='moretextbutton' >Add Image</p>
-     <p style='display:none;'>{{form.p6}}</p>
+     <p class='hiddenuploadbuttons'>{{form.p6}}</p>
     </label>
-    <p id='6' style='display:none;' >{{ form.g }}</p>
+    {% if p5 != '' and p5 != blank %}
+    <script>
+    document.getElementById('5').style.display='inline';
+    document.getElementById('17').style.display='inline-block';
+    </script>
+    {% endif %}
+    <p id='6' class='hiddenuploadbuttons' >{{ form.g }}</p>
     <label id='18' style='display:none;'>
      <p class='moretextbutton' >Add Image</p>
-     <p style='display:none;'>{{form.p7}}</p>
+     <p class='hiddenuploadbuttons'>{{form.p7}}</p>
     </label>
-    <p id='7' style='display:none;' >{{ form.h }}</p>
-    <label id='19' style='display:none;'>
+    {% if p6 != '' and p6 != blank %}
+    <script>
+    document.getElementById('6').style.display='inline';
+    document.getElementById('18').style.display='inline-block';
+    </script>
+    {% endif %}
+    <p id='7' class='hiddenuploadbuttons' >{{ form.h }}</p>
+    <label id='19' class='hiddenuploadbuttons'>
      <p class='moretextbutton' >Add Image</p>
-     <p style='display:none;'>{{form.p8}}</p>
+     <p class='hiddenuploadbuttons'{{form.p8}}</p>
     </label>
-    <p id='8' style='display:none;' >{{ form.i }}</p>
-    <label id='20' style='display:none;'>
+    {% if p7 != '' and p7 != blank %}
+    <script>
+    document.getElementById('7').style.display='inline';
+    document.getElementById('19').style.display='inline-block';
+    </script>
+    {% endif %}
+    <p id='8' class='hiddenuploadbuttons' >{{ form.i }}</p>
+    <label id='20' class='hiddenuploadbuttons'>
      <p class='moretextbutton' >Add Image</p>
-     <p style='display:none;'>{{form.p9}}</p>
+     <p class='hiddenuploadbuttons'>{{form.p9}}</p>
     </label>
-    <p id='9' style='display:none;' >{{ form.j }}</p>
-    <label id='21' style='display:none;'>
+    {% if p8 != '' and p8 != blank %}
+    <script>
+    document.getElementById('8').style.display='inline';
+    document.getElementById('20').style.display='inline-block';
+    </script>
+    {% endif %}
+    <p id='9' class='hiddenuploadbuttons' >{{ form.j }}</p>
+    <label id='21' class='hiddenuploadbuttons'>
      <p class='moretextbutton' >Add Image</p>
-     <p style='display:none;'>{{form.p10}}</p>
+     <p class='hiddenuploadbuttons'>{{form.p10}}</p>
     </label>
-    <p id='10' style='display:none;' >{{ form.k }}</p>
-    <label id='22' style='display:none;'>
+    {% if p9 != '' and p9 != blank %}
+    <script>
+    document.getElementById('9').style.display='inline';
+    document.getElementById('21').style.display='inline-block';
+    </script>
+    {% endif %}
+    <p id='10' class='hiddenuploadbuttons' >{{ form.k }}</p>
+    <label id='22' class='hiddenuploadbuttons'>
      <p class='moretextbutton' >Add Image</p>
-     <p style='display:none;'>{{form.p11}}</p>
+     <p class='hiddenuploadbuttons'>{{form.p11}}</p>
     </label>
-    <p id='11' style='display:none;' >{{ form.l }}</p>
-    <label id='23' style='display:none;'>
+    {% if p10 != '' and p10 != blank %}
+    <script>
+    document.getElementById('10').style.display='inline';
+    document.getElementById('22').style.display='inline-block';
+    </script>
+    {% endif %}
+    <p id='11' class='hiddenuploadbuttons' >{{ form.l }}</p>
+    <label id='23' class='hiddenuploadbuttons'>
      <p class='moretextbutton' >Add Image</p>
-     <p style='display:none;'>{{form.p12}}</p>
+     <p class='hiddenuploadbuttons'>{{form.p12}}</p>
     </label>
-    <p id='12' style='display:none;' >{{ form.m }}</p>
-    <label id='24' style='display:none;' >
+    {% if p11 != '' and p11 != blank %}
+    <script>
+    document.getElementById('11').style.display='inline';
+    document.getElementById('23').style.display='inline-block';
+    </script>
+    {% endif %}
+    <p id='12' class='hiddenuploadbuttons' >{{ form.m }}</p>
+    <label id='24' class='hiddenuploadbuttons' >
      <p class='moretextbutton' >Add Image</p>
-     <p style='display:none;'>{{form.p13}}</p>
+     <p class='hiddenuploadbuttons'>{{form.p13}}</p>
     </label>
-   <label  style='display:inline-block;margin-left:92px;' >
+    {% if p12 != '' and p12 != blank %}
+    <script>
+    document.getElementById('12').style.display='inline';
+    document.getElementById('24').style.display='inline-block';
+    </script>
+    {% endif %}
+    <label  style='display:inline-block;margin-left:90.2px;' >
      <p class='moretextbutton' id='lesstextbutton' >-</p>
     </label>
     <label style='margin-bottom:20px;display:inline-block;'>
      <p class='moretextbutton' id='moretextbutton' >Add Textbox</p>
     </label>
-    <p style='margin-bottom:0px;'>{{ form.category.label_tag }}</p>
+    <p class='labeltofieldspace'>{{ form.category.label_tag }}</p>
    </h1>
    <p style='font-size:360%;'>{{ form.category }}</p><br>
-   <label style='text-align:right;'>
-    <p style='color:white;background-color:rgb(38, 38, 122);padding:15px;padding-left:40px;padding-right:40px;font-size:350%;font-weight:bold;border-radius:100px;'>Upload Image</p>
-    <p style='display:none;'>{{form.upload}}</p>
+   <label style='margin-bottom:100px;text-align:right;'>
+
+ 
+    <p id='input' style='margin-top:35px;position:absolute;left:327px;font-size:200%;z-index:1;'>{{form.upload}}</p>
+    <div style='background-color:rgb(240,240,240);margin-top:30px;position:absolute;z-index:2;width:39.5%;height:3.5%;'></div>
+    <p id='realinput' style='position:absolute;z-index:3;color:white;background-color:rgb(38, 38, 122);padding:15px;padding-left:40px;padding-right:40px;font-size:350%;font-weight:bold;border-radius:100px;'>Upload Image</p>
+    {% if pk  %} 
+    <script>
+     document.getElementById('input').style.visibility='hidden';
+    </script>
+    {% endif %}
    </label>
   </div>
  </div>
@@ -104,11 +216,21 @@
     <p style='font-size:350%;border-style:solid;background-color:rgb(38,38,122);color:white;padding:20px;padding-left:210px;padding-right:210px;margin-top:20px;border-radius:100px;'>Publish Post</p>
    </label>
   {% endif %}
+  {% if pk %}
+   <label id='deletebutton' style='width:100%;'>
+    <p style='font-size:350%;border-style:solid;background-color:rgb(38,38,122);color:white;padding:20px;padding-left:210px;padding-right:210px;margin-top:20px;border-radius:100px;'>Delete Post</p>
+   </label>
+  {% endif %}
  </div>
 </form>
 <script>
-i=0;  
+i=0;
 f=12;
+for(i=1;document.getElementById(i).style.display==='inline';i++);
+i=i-1;
+if(i===0){document.getElementById('lesstextbutton').style.visibility='hidden';};
+if(i===12){document.getElementById('moretextbutton').style.visibility='hidden';};
+f=i+12;
 
 document.getElementById('moretextbutton').
 addEventListener('click',
@@ -117,5 +239,13 @@ addEventListener('click',
 document.getElementById('lesstextbutton').
 addEventListener('click', 
  function(){ document.getElementById(i).style.display='none'; document.getElementById(f).style.display='none'; if(i>0){ i=i-1; f=f-1;}; if(i===0){document.getElementById('lesstextbutton').style.visibility='hidden';}; if(i<12){document.getElementById('moretextbutton').style.visibility='visible';};});
+
+document.getElementById('deletebutton').
+addEventListener('click',
+ function(){document.getElementById('greyout').style.display='block';document.getElementById('greyoutbox').style.display='block';});
+
+document.getElementById('dontdelete').
+addEventListener('click',
+ function(){document.getElementById('greyout').style.display='none'; document.getElementById('greyoutbox').style.display='none';});
 </script>
 {%endblock%}

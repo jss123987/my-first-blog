@@ -6,8 +6,8 @@ from django.contrib.auth.models import User
 class Post(models.Model):
     author=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, related_name='original')
     contributers=models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='contributers')
-    caption = models.CharField(max_length=200, blank=True)
-    title = models.CharField(max_length=55,blank=True,null=True)
+    caption = models.CharField(max_length=200)
+    title = models.CharField(max_length=55, null=True)
     Text=models.TextField(blank=True)
     b=models.TextField(blank=True)
     c=models.TextField(blank=True)
@@ -89,4 +89,10 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-
+class Profile(models.Model):
+ Firstname = models.CharField(max_length=20, null=True)
+ Lastname = models.CharField(max_length=20, null=True)
+ EmailAddress = models.EmailField(null=True)
+ Bio = models.TextField(max_length=95, null=True)
+ Username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, related_name='usrname')
+ profilepic = models.FileField(upload_to='documents/', default='', )
