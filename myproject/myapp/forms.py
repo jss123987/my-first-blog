@@ -1,9 +1,13 @@
 from django import forms
-from .models import Post, Profile
+from .models import Post, Profile, Messages
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.validators import validate_email
 
+class SendMessage(forms.ModelForm):
+ class Meta:
+  model=Messages
+  fields =('message',)
 
 class CreateProfile(forms.ModelForm):
  Firstname=forms.CharField(label='First name', widget=forms.TextInput(attrs={'size':21, 'class':'postedittext', 'placeholder':'Enter first name...', }),)

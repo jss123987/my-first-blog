@@ -1,0 +1,212 @@
+{% extends 'myapp/messagebase.html' %}
+{% block content %}
+<div id="messageholder" style='margin-left:auto;margin-right:auto;height:1229px;width:99.5%;overflow:scroll;'>
+	<p>send a message!</p>
+</div>
+<div style='height:145px;padding-top:30px;border-top:1px outset rgb(74 166 255);'>
+		<input type='text' id='box' style='margin-left:15%;font-size:300%;width:70%;padding:10px;padding-left:30px;padding-right:24px;border-style:solid;border-color:rgba(0,50,200,.3);border-radius:20px;' />
+	<label style=''>
+		<p style='border-radius:50px;color:white;padding:8px;padding-left:20px;padding-right:20px;background-color:rgb(38 38 122);font-size:320%;font-weight:normal;'>Send</p>
+		<button style='display:none;' type="button" onclick="Values(); add();">Send</button>
+	</label>
+</div>
+
+<script>
+ var csrfcookie = function() {
+    var cookieValue = null,
+        name = 'csrftoken';
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+};
+
+
+ function submit(values){
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.open("POST", '../sendmessage.xml/{{recipient}}/', false);
+  var formdata = new FormData();
+  formdata.append("message", values );
+  xmlhttp.setRequestHeader('X-CSRFToken', csrfcookie());
+  xmlhttp.send(formdata);
+  };
+
+  var inputVal = document.getElementById("box").value;
+  
+
+function add(inputVal){if(inputVal !== ""){
+     g = document.createElement("LABEL");
+     g.className = 'titleo';
+     document.getElementById('messageholder').appendChild(g);
+     gs = document.createElement("LABEL");
+     gs.className = 'sento';
+     document.getElementById('messageholder').appendChild(gs);
+     j = document.getElementById('messageholder').scrollHeight;
+     refresh(); refreshsent(j);
+};};
+
+ 
+ var myVar = setInterval(add, 1000);
+ 
+
+ function addpadd(){
+ w = document.querySelectorAll(".titleo");
+ ws = document.querySelectorAll(".sento");
+ for(i=0;i<w.length;i++){
+ if(w[i].innerHTML !== ''){
+ w[i].style.display='block';
+ };};
+ for(i=0;i<ws.length;i++){
+ if(ws[i].innerHTML !== ''){
+ ws[i].style.display='block';
+ };};
+ };
+
+ var urvar = setInterval(addpadd, 1000);
+
+
+ function refresh(){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", "../sendmessage.xml/{{recipient}}/", true);
+    xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 &&this.status == 200) {
+     xmlDoc = xmlhttp.responseXML;
+     x = xmlDoc.getElementsByTagName("rmessage");
+     xp = xmlDoc.getElementsByTagName('published');
+     w = document.querySelectorAll(".titleo");
+
+     q = document.querySelectorAll(".ltitleo");
+     z = w.length-1;
+     for(i=q.length+w.length-1;i<x.length;i++){
+     w[z].innerHTML = "<p id='rpubdate' style='display:none;text-align:center;font-size:200%;'>" + xp[i].childNodes[0].nodeValue + "</p>" + "<img id='yo' src='/media/{{ sender.profilepic }}' style='display:inline-block;margin-top:-20px;border-radius:100px;width:100px;height:100px;object-fit:cover;object-position:20% 41%;'>" + "<p class='title'>" + x[i].childNodes[0].nodeValue; + "</p>"; z++;};
+     
+
+     if(w.length !== x.length-q.length){
+     for(i=w.length-1;i>x.length-q.length-1;i--){
+     w[i].parentNode.removeChild(w[i]);
+     };
+     }; 
+     rm = document.querySelectorAll('#rpubdate');
+     rn = document.querySelectorAll('.titleo');
+     for(let ll=0;ll<rn.length;ll++){
+
+     if(rm[ll].style.fontSize === '200%'){
+     rn[ll].addEventListener('click', function(){
+     if(rm[ll].style.display==='none')
+     {rm[ll].style.display='block';}
+     else{rm[ll].style.display='none';};
+     });
+     rm[ll].style.fontSize='201%';
+
+     };};
+     };};
+     xmlhttp.send();
+     };
+     
+ 
+ function Values(){
+            var inputVal = document.getElementById("box").value;
+            submit(inputVal);
+        };
+
+ function addsent(inputVal){if(inputVal !== ""){
+     g = document.createElement("p");
+     g.className = 'sent';
+     document.getElementById('messageholder').append(g);
+     refreshsent();
+};};
+
+ function refreshsent(j){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", "../sendmessage.xml/{{recipient}}/", true);
+    xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 &&this.status == 200) {
+     xmlDoc = xmlhttp.responseXML;
+     x = xmlDoc.getElementsByTagName("smessage");
+     xp =xmlDoc.getElementsByTagName('spublished');
+     w = document.querySelectorAll(".sento");
+     q = document.querySelectorAll(".lsento");
+     z = w.length-1;
+     for(i=q.length+w.length-1;i<x.length;i++){
+     w[z].innerHTML ="<p id='spubdate' style='display:none;text-align:center;font-size:200%;'>" + xp[i].childNodes[0].nodeValue + "</p>" +"<p class='sent'>" + x[i].childNodes[0].nodeValue + "</p>"; z++;};
+     if(w.length !== x.length-q.length){for(i=w.length-1;i>x.length-q.length-1;i--){
+     w[i].parentNode.removeChild(w[i]);};};
+     var div = document.getElementById("messageholder");
+     if(div.scrollHeight !== j){
+     div.scrollTop = div.scrollHeight;};
+     sm = document.querySelectorAll('#spubdate');
+     sn = document.querySelectorAll('.sento');
+     for(let sl=0;sl<sn.length;sl++){
+     if(sm[sl].style.fontSize === '200%'){
+     sn[sl].addEventListener('click', function(){
+     if(sm[sl].style.display==='none'){
+     sm[sl].style.display='block';}
+     else{sm[sl].style.display='none';};
+     });
+     sm[sl].style.fontSize='201%';};
+     };
+     };};
+     xmlhttp.send();};
+ 
+
+
+     var xmlhttp = new XMLHttpRequest();
+     xmlhttp.open("GET", "../sendmessage.xml/{{recipient}}/", true);
+
+     xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+     xmlDoc = this.responseXML;
+     x = xmlDoc.getElementsByTagName("rmessage");
+     xp = xmlDoc.getElementsByTagName("published");
+     xs = xmlDoc.getElementsByTagName("smessage");
+     xsp = xmlDoc.getElementsByTagName('spublished');
+
+     var both = [];
+     for(i=0;i<x.length;i++){both.push([x[i].getAttribute('pd'), xp[i].childNodes[0].nodeValue, x[i].childNodes[0].nodeValue, 'received' ]);};
+     for(i=0;i<xs.length;i++){both.push([xs[i].getAttribute('pd'), xsp[i].childNodes[0].nodeValue , xs[i].childNodes[0].nodeValue, 'sent']);}; 
+     both.sort();
+     for(i=0;i<both.length;i++){
+     if(both[i][3] === 'sent'){
+     gs = document.createElement("LABEL");
+     gs.className = 'lsento';
+     gs.innerHTML="<p id='lspubdate' style='display:none;text-align:center;font-size:200%;'>" + both[i][1] + "</p>" + "<p class='lsent'>" + both[i][2]; + "</p>";
+     document.getElementById('messageholder').appendChild(gs);
+     };
+     if(both[i][3] === 'received'){
+     g = document.createElement("LABEL");
+     g.className = 'ltitleo';
+     g.innerHTML="<p id='lrpubdate' style='text-align:center;font-size:200%;display:none;'>" + both[i][1] + "</p>" + "<img id='yo' src='/media/{{ sender.profilepic }}' style='margin-top:-20px;display:inline-block;border-radius:100px;width:100px;height:100px;object-fit:cover;object-position:20% 41%;'>" + "<p class='ltitle'>" + both[i][2]; + "</p>";
+     document.getElementById('messageholder').appendChild(g);
+     };
+     };
+     m = document.querySelectorAll('#lspubdate');
+     n = document.querySelectorAll('.lsento');
+     for(let l=0;l<n.length;l++){   
+     n[l].addEventListener('click', function(){ 
+     if(m[l].style.display==='none'){
+     m[l].style.display='block';}
+     else{m[l].style.display='none';};
+     });};
+     lrm = document.querySelectorAll('#lrpubdate');
+     lrn = document.querySelectorAll('.ltitleo');
+     for(let rl=0;rl<lrn.length;rl++){
+     lrn[rl].addEventListener('click', function(){
+     if(lrm[rl].style.display === 'none'){
+     lrm[rl].style.display='block';}
+     else{lrm[rl].style.display='none';};
+     });};
+     var div = document.getElementById("messageholder");
+     div.scrollTop = div.scrollHeight;
+     };};
+     xmlhttp.send(); 
+
+</script>
+{% endblock %}
+<script>document.getElementById('endblock').style.display='none';</script>

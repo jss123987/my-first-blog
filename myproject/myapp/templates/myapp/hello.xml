@@ -1,0 +1,10 @@
+<hellopage>
+{% for post in posts %}
+	<post>
+		<title>{{post.author}}</title>
+		<caption>{{post.caption}}</caption>
+		<image>{{post.upload}}</image>
+		<author>{{post.author}}</author>
+	</post>
+{% endfor %}
+</hellopage>

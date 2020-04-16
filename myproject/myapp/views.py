@@ -1,16 +1,48 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post, Profile
+from .models import Post, Profile, Messages
 from django.utils import timezone
-from .forms import PostForm, signupform, loginform, CreateProfile
+from .forms import PostForm, signupform, loginform, CreateProfile, SendMessage
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import Post
 from django.contrib.auth.models import User
+from django.template import Context, loader
+
+def messenger(request, recipient):
+ user=request.user
+ rec=User.objects.get(username=recipient)
+ sender=Profile.objects.get(Username=rec)
+ return render(request, 'myapp/message.html', {'recipient':recipient,'user':user,'sender':sender})
+
+def messengerxml(request, recipient):
+ if request.method=='POST':
+  form=SendMessage(request.POST)
+  if form.is_valid:
+   post=form.save(commit=False)
+   post.recipient = User.objects.get(username=recipient)
+   post.author = request.user
+   post.published_date = timezone.now()
+   post.save()
+ else:
+  poststo=Messages.objects.filter(author=request.user).filter(recipient=User.objects.get(username=recipient))
+  postsfrom=Messages.objects.filter(recipient=request.user).filter(author=User.objects.get(username=recipient))
+  t = loader.get_template('myapp/message.xml')
+  c = {'poststo':poststo,'postsfrom':postsfrom,}
+  return HttpResponse(t.render(c), content_type='application/xml')
+
+def helloxml(request):
+ t = loader.get_template('myapp/hello.xml')
+ posts =Post.objects.filter(published_date__isnull=False).order_by('published_date').reverse()
+ c = {'posts':posts}
+ return HttpResponse(t.render(c), content_type='application/xml')
 
 def hello(request):
  posts = Post.objects.filter(published_date__isnull=False).order_by('published_date').reverse()
  return render(request, 'myapp/hello.html', {'posts':posts})
+
+def about(request):
+    return render(request, 'myapp/about.html')
 
 def createprofile(request):
  if request.method == "POST":

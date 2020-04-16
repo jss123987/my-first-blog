@@ -2,6 +2,13 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.urls import reverse
+
+class Messages(models.Model):
+    author=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, related_name='from+')
+    recipient=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, related_name='to+')
+    message=models.TextField()
+    published_date= models.DateTimeField(blank=True, null=True)
 
 class Post(models.Model):
     author=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, related_name='original')
@@ -88,6 +95,11 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('post_detail',
+                       args=[str(self.pk)])
+
 
 class Profile(models.Model):
  Firstname = models.CharField(max_length=20, null=True)

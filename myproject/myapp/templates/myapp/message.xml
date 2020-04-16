@@ -1,0 +1,15 @@
+<messageholder>
+{% for post in postsfrom %}
+        <receivedmessages>
+                <rmessage pd='{{post.published_date|date:'Y-m-d  H:i'}}' >{{ post.message }}</rmessage>
+                <published>{{post.published_date|date:"F jS, Y "}} {{post.published_date|date:" P"}}</published>
+        </receivedmessages>
+{% endfor %}
+{% for post in poststo %}
+        <sentmessages>
+                <smessage pd='{{post.published_date|date:'Y-m-d  H:i:s'}}'>{{ post.message }}</smessage>
+		<spublished>{{post.published_date|date:'F jS, Y'}} AT {{post.published_date|date:'P'}}</spublished>
+        </sentmessages>
+{% endfor %}
+{{sender}}
+</messageholder>

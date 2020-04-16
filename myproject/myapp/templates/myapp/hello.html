@@ -1,6 +1,33 @@
 {% extends 'myapp/base.html' %}
 {% load static %}
 {% block content %}
+<?xml version="1.0" encoding="UTF-8"?>
+<note>
+<to>Tove</to>
+<from>Jani</from>
+<heading>Reminder</heading>
+<body>Don't forget me this weekend!</body>
+</note>
+
+<button type="button" onclick="loadXMLDoc()">
+Get my CD collection</button>
+
+<p id="demo"></p>
+
+<script>
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.open("GET", "hello.xml", true);
+  xmlhttp.send();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {    
+     xmlDoc = this.responseXML;
+     x = xmlDoc.getElementsByTagName("title");
+     w =document.querySelectorAll("#title");
+     for(i=0;i<x.length;i++){
+     w[i].innerHTML = x[i].childNodes[0].nodeValue;};
+};};
+
+</script>
 {% for post in posts %}
  <div style='margin-bottom:50px;'>
   <div style='position:relative;z-index:0;'>

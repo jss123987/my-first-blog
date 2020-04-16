@@ -1,12 +1,29 @@
 from django.urls import path
 from . import views
+from myapp.models import Post
 from . import models
 from myapp.forms import loginform
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.auth import views as auth_views
+from django.contrib.sitemaps.views import sitemap
+from django.contrib.sitemaps import GenericSitemap
+from django.contrib.sitemaps import views as vviews
+from myapp.sitemaps import StaticViewSitemap, HelloSitemap
+
+
+sitemaps = {
+    'static': StaticViewSitemap,
+    'hello': HelloSitemap,
+}
 
 urlpatterns = [
+ path('sendmessage/<str:recipient>', views.messenger, name='messenger'),
+ path('sendmessage.xml/<str:recipient>/', views.messengerxml, name='messengerxml'),
+ path('hello.xml/', views.helloxml, name='helloxml'),
+ path('sitemap.xml', vviews.index, {'sitemaps': sitemaps}),
+ path('sitemap-<section>.xml', vviews.sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+ path('about/', views.about, name='about'),
  path('', views.hello, name='hello'),
  path('post/<int:Pk>/', views.post_detail, name='post_detail'),
  path('post/new/', views.post_new, name='post_new'),
