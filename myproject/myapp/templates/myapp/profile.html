@@ -2,7 +2,15 @@
 {% block content %}
  <img style='margin-bottom:30px;' align='left' id='profileimage' src="/media/{{ profile.profilepic }}">
  <div style='font-weight:bold;width:56.9%;text-align:left;font-size:300%;display:inline-block;margin-left:30px;'>
-  <p style='font-weight:normal;font-size:200%;'> {{profile.Firstname}} {{profile.Lastname}}</p>
+  <p style='font-weight:normal;font-size:200%;margin-bottom:0px;'> {{profile.Firstname}} {{profile.Lastname}}</p>
+  <a  href="{% url 'messenger' recipient=profile.Username %}">
+   <svg viewbox='10 5 40 40' width='100px' height='80px' style='margin-top:-30px;margin-left:;padding:0px;background-color:;'>
+   <path d='M10.35,39.65 Q5.175,39.65 5.175,35.35 L5.175,14.65  Q5.175,10.35 10.35,10.35 H39.65 Q44.825,10.35 44.825,14.65 L44.825,35.35 L47.325,42.15 L39.65,39.65 Z' fill='rgb(38 38 122)' />
+   <circle cx='13.75' cy='25' r='2.5px' fill='white' />
+   <circle cx='25' cy='25' r='2.5px' fill='white' />
+   <circle cx='36.25' cy='25' r='2.5px' fill='white' />
+   </svg>
+  </a>
   <div style='margin-left:35px;width:90%;'>
    <i style='font-weight:normal;'>Username:</i> <br> {{ profile.Username }}<br>
    <p style='margin-bottom:0px;margin-top:0px;'> <i style='font-weight:normal;'>About Author:</i><br> 
@@ -11,7 +19,6 @@
 </div>
 <BR CLEAR='left'>
 <hr style='margin-bottom:20px;border-radius:30px;text-align:center;margin-top:;height:5px;width:90%;background-color:rgb(38,38,122);'>
-<a href="{% url 'messenger' recipient=profile.Username %}"><button type='button'>jdjfjjckc</button></a>
 <p style='margin-top:10px;text-align:center;margin-bottom:30px;font-size:500%;'>Posts by {{profile.Firstname}} {{profile.Lastname}}</p>
 {% for post in profileposts %}
 <div style='margin-bottom:50px;'>
