@@ -32,6 +32,26 @@
 <p style='position:absolute;z-index:3;color:white;background-color:rgb(38, 38, 122);padding:15px;padding-left:40px;padding-right:40px;font-size:350%;font-weight:bold;border-radius:100px;'>Upload Image</p>
 </label>
 
+   <div id='hidebox' style='display:none;'>
+    <div id='bigholder' style='background-color:blue;'>
+   <div id='clearholder' style='border-width:5px;border-style:dashed;touch-action:none;z-index:2;' ></div>
+   <div id='greyholder' style='position:relative;z-index:1;background-color:rgba(50, 50, 50, .9);'></div>
+   <img id='test' src='../../../../media/{{ f.profilepic }}'  style='max-width:100%;color:red;'><br>
+   </div>
+   <label for='xleft' style='font-weight:normal;font-size:400%;'>Left:</label><span id='xleft' style='font-size:300%;'>{{ form.x1 }}</span>
+   <label for='xright' style='margin-left:31%;font-weight:normal;font-size:400%;'>Right:</label><span id='xright' style='font-size:300%;'>{{form.x2 }}</span>
+   <label for='ytop' style='font-size:400%;font-weight:normal;'>Top:</label><span id='ytop' style='font-size:300%;'>{{ form.y1 }}</span>
+   <label for='ybottom' style='margin-left:23.75%;font-size:400%;font-weight:normal;'>Bottom:</label><span id='ybottom' style='font-size:300%;'>{{ form.y2 }}</span>
+   <label style='font-weight:normal;font-size:300%;'>
+   784px by 1200px(best quality): <input type='radio' name='size13' id='gq' value='ss'/><br>
+   1176px by 1800px: <input type='radio' name='size13' id='mq' value='ms'/><br>
+   1568px by 2400px: <input type='radio' name='size13' id='bq' value='fs'/><br>
+   1960px by 3000px: <input type='radio' name='size13' id='q1' value='ss1'/><br>
+   2352px by 3600px: <input type='radio' name='size13' id='q2' value='ss2'/><br>
+   size freely(leaves white spaces!): <input type='radio' name='size13' id='q3' value='ss3'/><br>
+   </label>
+   </div>
+ <p id='tester'>{{ f.profilepic }}</p>
 <label style='width:100%;'><input type='submit' style='display:none;'/><p id='submitprofiletext' style='font-size:350%;border-style:solid;background-color:rgb(38,38,122);color:white;padding:20px;padding-left:210px;padding-right:210px;margin-top:100px;border-radius:100px;'>Create Profile</p></label>
 </form></div>
 {% if pk %}
@@ -39,6 +59,7 @@
 document.getElementById('shrinkupload').style.fontSize='10%';
 document.getElementById('submitprofiletext').innerHTML='Save Changes';
 document.getElementById('profileheader').innerHTML='Edit Profile';
+document.getElementById('hidebox').style.display='initial';
 </script>
 {% endif %}
 {% elif user.is_authenticated == False %}
@@ -46,5 +67,307 @@ document.getElementById('profileheader').innerHTML='Edit Profile';
 {% else %}
 <p style='font-weight:bold;font-size:400%;text-align:center;'>You've already created a profile!</p>
 {% endif %}
+<script>
+     var csrfcookie = function() {
+    var cookieValue = null,
+        name = 'csrftoken';
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+};
+
+
+ function value(event){
+  submit(event.target);
+ };
+
+
+ document.getElementById('id_profilepic').addEventListener('change', value);
+
+
+
+ function submit(values){
+  var xmlhttp= new XMLHttpRequest();
+  xmlhttp.open('POST', '../../../originalphotos.xml/', false);
+  var formdata = new FormData();
+  formdata.append('trashphoto', values.files[0], values.value);
+  xmlhttp.setRequestHeader('X-CSRFToken',csrfcookie());
+  xmlhttp.send(formdata);
+  shower(values);
+  };
+
+
+ function shower(values){
+   document.getElementById('hidebox').style.display='initial';
+  grabtrash(values);
+  };
+
+ function grabtrash(event){
+  var xmlhttp= new XMLHttpRequest();
+  xmlhttp.open('GET', '../../../originalphotos.xml', true)
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 &&this.status == 200) {
+     xmlDoc = xmlhttp.responseXML;
+     x = xmlDoc.getElementsByTagName("originalphoto");
+     d = x.length-1;
+     myimg = document.getElementById('test');
+     myimg.src='../../../media/' + x[d].childNodes[0].nodeValue;
+     };};
+  xmlhttp.send();
+  setTimeout(sizematters, 300);};
+
+ function sizematters(){
+      myimg = document.getElementById('test');
+      document.getElementById('id_y1').value='0';
+      document.getElementById('id_x1').value='0';
+      document.getElementById('id_y2').value=myimg.naturalHeight;
+      document.getElementById('id_x2').value=myimg.naturalWidth;
+      document.getElementById('clearholder').style.height=myimg.height + 'px';
+      document.getElementById('clearholder').style.width=myimg.width + 'px';
+      document.getElementById('greyholder').style.height=myimg.height + 'px';
+      document.getElementById('greyholder').style.width=myimg.width + 'px';
+      setTimeout(absolutor, 100);
+     };
+
+
+function absolutor(){
+   document.getElementById('clearholder').style.position='absolute';
+   document.getElementById('greyholder').style.position='absolute';
+  cropper();
+  };
+
+{% if pk %}
+ sizematters();
+{% endif %}
+
+
+ document.getElementById('id_y1').addEventListener('input', cropper);
+ document.getElementById('id_y2').addEventListener('input', cropper);
+ document.getElementById('id_x1').addEventListener('input', cropper);
+ document.getElementById('id_x2').addEventListener('input', cropper);
+
+
+
+function cropper(){
+   myimg = document.getElementById('test');
+  clearbox = document.getElementById('clearholder');
+  xr = document.getElementById('id_x2').value;
+  yb = document.getElementById('id_y2').value;
+  xl = document.getElementById('id_x1').value;
+  yt = document.getElementById('id_y1').value;
+  oldxr = myimg.naturalWidth;
+  oldyb = myimg.naturalHeight;
+  newxr = myimg.width;
+  newyb = myimg.height;
+  yot =  myimg.offsetTop;
+  xot = myimg.offsetLeft;
+  ughxr = (newxr / oldxr) * xr -((newxr / oldxr) * xl) + 'px';
+  ughxl = (newxr / oldxr) * +xl + +xot + 'px';
+  ughyt = +yot + ((newyb / oldyb) * +yt) + 'px';
+  ughyb = (newyb / oldyb) * yb - ((newyb / oldyb) * +yt) + 'px';
+  clearbox.style.width= ughxr;
+  clearbox.style.height= ughyb;
+  clearbox.style.left= ughxl;
+  clearbox.style.top= ughyt;
+  clipper();
+ };
+
+function clipper(){
+  greybox = document.getElementById('greyholder');
+  clearbox = document.getElementById('clearholder');
+  myimg = document.getElementById('test');
+  imgW = myimg.width;
+  imgH = myimg.height;
+  L = clearbox.offsetLeft - greybox.offsetLeft + 'px';
+  T = clearbox.offsetTop - greybox.offsetTop + 'px';
+  B = clearbox.offsetHeight + (clearbox.offsetTop - greybox.offsetTop) + 'px';
+  R = clearbox.offsetWidth + (clearbox.offsetLeft - greybox.offsetLeft) + 'px';
+  greybox.style.clipPath='polygon(' + '0px 0px,' + ' ' + imgW + 'px' + ' 0px, ' + imgW + 'px' + ' ' +  imgH + 'px' + ',' + ' ' + '0px ' + imgH + 'px' + ',' + ' 0px 0px, ' + L + ' ' + T + ', ' + L + ' ' + B + ', ' + R + ' ' + B + ', ' + R + ' ' + T + ', ' + L + ' ' + T +')';
+ };
+
+ document.getElementById('clearholder').addEventListener('touchmove', grabber);
+ document.getElementById('clearholder').addEventListener('touchmove', clipper);
+ document.getElementById('clearholder').addEventListener('touchstart', fingerspot);
+ document.getElementById('clearholder').addEventListener('touchend', fixer);
+
+
+
+
+function fixer(e){
+  greybox = document.getElementById('greyholder');
+  clearbox = e.target;
+  x = document.getElementById('id_x1');
+  y = document.getElementById('id_y1');
+  if(clearbox.offsetLeft < greybox.offsetLeft){
+   clearbox.style.left=greybox.offsetLeft + 'px';
+  };
+  if(clearbox.offsetTop < greybox.offsetTop){
+   clearbox.style.top = greybox.offsetTop + 'px';
+  };
+  if(clearbox.offsetWidth + clearbox.offsetLeft > greybox.offsetWidth + greybox.offsetLeft){
+   clearbox.style.left = (greybox.offsetLeft + greybox.offsetWidth) - clearbox.offsetWidth + 'px';
+  };
+  if(clearbox.offsetHeight + clearbox.offsetTop  > greybox.offsetHeight + greybox.offsetTop){
+   clearbox.style.top = (greybox.offsetHeight + greybox.offsetTop) - clearbox.offsetHeight + 'px';
+  };
+  if(y.value < 0){
+   y.value = 0;
+  };
+  if(x.value < 0){
+   x.value = 0;
+  };
+ };
+
+ var offsetfinger = [];
+
+ function fingerspot(e){
+  img = e.target;
+  touch = {x: e.touches[0].pageX, y: e.touches[0].pageY, t: img.offsetTop, l: img.offsetLeft};
+  offsetfinger.push(touch);
+ };
+
+
+document.getElementById('bq').addEventListener('change', sizer);
+document.getElementById('gq').addEventListener('change', sizer);
+document.getElementById('mq').addEventListener('change', sizer);
+document.getElementById('q1').addEventListener('change', sizer);
+document.getElementById('q2').addEventListener('change', sizer);
+
+
+
+
+function sizer(){
+   clearbox = document.getElementById('clearholder');
+   greybox = document.getElementById('greyholder');
+   myimg = document.getElementById('test');
+   q1 = document.getElementById('gq');
+   q2 = document.getElementById('mq');
+   q3 = document.getElementById('bq');
+   q4 = document.getElementById('q1');
+   q5 = document.getElementById('q2');
+   q6 = document.getElementById('q3');
+  oldW = myimg.naturalWidth;
+  oldH = myimg.naturalHeight;
+  newW = myimg.width;
+  newH = myimg.height;
+  if(q1.checked === true){
+   clearbox.style.maxWidth=(newW / oldW) * 784 + 'px';
+   clearbox.style.maxHeight=(newH / oldH) * 1200 + 'px';
+   clearbox.style.minWidth=(newW / oldW) * 784 + 'px';
+   clearbox.style.minHeight=(newH / oldH) * 1200 + 'px';
+  } else if(q2.checked === true){
+   clearbox.style.maxWidth=(newW / oldW) * 1176 + 'px';
+   clearbox.style.maxHeight=(newH / oldH) * 1800 + 'px';
+   clearbox.style.minWidth=(newW / oldW) * 1176 + 'px';
+   clearbox.style.minHeight=(newH / oldH) * 1800 + 'px';
+  } else if(q3.checked === true){
+   clearbox.style.maxWidth=(newW / oldW) * 1568 + 'px';
+   clearbox.style.maxHeight=(newH / oldH) * 2400 + 'px';
+   clearbox.style.minWidth=(newW / oldW) * 1568 + 'px';
+   clearbox.style.minHeight=(newH / oldH) * 2400 + 'px';
+  } else if(q4.checked === true){
+   clearbox.style.maxWidth=(newW / oldW) * 1960 + 'px';
+   clearbox.style.maxHeight=(newH / oldH) * 3000 + 'px';
+   clearbox.style.minWidth=(newW / oldW) * 1960 + 'px';
+   clearbox.style.minHeight=(newH / oldH) * 3000 + 'px';
+  } else if(q5.checked === true){
+   clearbox.style.maxWidth=(newW / oldW) * 2352 + 'px';
+   clearbox.style.maxHeight=(newH / oldH) * 3600 + 'px';
+   clearbox.style.minWidth=(newW / oldW) * 2352 + 'px';
+   clearbox.style.minHeight=(newH / oldH) * 3600 + 'px';
+  };
+  document.getElementById('id_x1').value= (oldW / newW) * (clearbox.offsetLeft - greybox.offsetLeft);
+  document.getElementById('id_y1').value= (oldH / newH) * (clearbox.offsetTop - greybox.offsetTop);
+  document.getElementById('id_x2').value= (oldW / newW) * (clearbox.offsetWidth + ( clearbox.offsetLeft - greybox.offsetLeft));
+  document.getElementById('id_y2').value= (oldH / newH) * (clearbox.offsetHeight + (clearbox.offsetTop - greybox.offsetTop));
+  cropper();
+ };
+
+function grabber(e){
+   clearbox = document.getElementById('clearholder');
+   greybox = document.getElementById('greyholder');
+   myimg = document.getElementById('test');
+   q1 = document.getElementById('gq');
+   q2 = document.getElementById('mq');
+   q3 = document.getElementById('bq');
+   q4 = document.getElementById('q1');
+   q5 = document.getElementById('q2');
+   q6 = document.getElementById('q3');
+
+  oldW = myimg.naturalWidth;
+  oldH = myimg.naturalHeight;
+  newW = myimg.width;
+  newH = myimg.height;
+  if(q1.checked === true){
+   clearbox.style.maxWidth=(newW / oldW) * 784 + 'px';
+   clearbox.style.maxHeight=(newH / oldH) * 1200 + 'px';
+   clearbox.style.minWidth=(newW / oldW) * 784 + 'px';
+   clearbox.style.minHeight=(newH / oldH) * 1200 + 'px';
+  } else if(q2.checked === true){
+   clearbox.style.maxWidth=(newW / oldW) * 1176 + 'px';
+   clearbox.style.maxHeight=(newH / oldH) * 1800 + 'px';
+   clearbox.style.minWidth=(newW / oldW) * 1176 + 'px';
+   clearbox.style.minHeight=(newH / oldH) * 1800 + 'px';
+  } else if(q3.checked === true){
+   clearbox.style.maxWidth=(newW / oldW) * 1568 + 'px';
+   clearbox.style.maxHeight=(newH / oldH) * 2400 + 'px';    
+   clearbox.style.minWidth=(newW / oldW) * 1568 + 'px';
+   clearbox.style.minHeight=(newH / oldH) * 2400 + 'px';             
+  } else if(q4.checked === true){
+   clearbox.style.maxWidth=(newW / oldW) * 1960 + 'px';
+   clearbox.style.maxHeight=(newH / oldH) * 3000 + 'px';     
+   clearbox.style.minWidth=(newW / oldW) * 1960 + 'px';
+   clearbox.style.minHeight=(newH / oldH) * 3000 + 'px';                      
+  } else if(q5.checked === true){
+   clearbox.style.maxWidth=(newW / oldW) * 2352 + 'px';
+   clearbox.style.maxHeight=(newH / oldH) * 3600 + 'px';                   
+   clearbox.style.minWidth=(newW / oldW) * 2352 + 'px';
+   clearbox.style.minHeight=(newH / oldH) * 3600 + 'px';                     
+  } else{
+  clearbox.style.maxWidth= greybox.offsetWidth - (clearbox.offsetLeft - greybox.offsetLeft) + 'px';
+  clearbox.style.maxHeight= greybox.offsetHeight - (clearbox.offsetTop - greybox.offsetTop) + 'px';
+  clearbox.style.minWidth='0px';
+  clearbox.style.minHeight='0px';
+  };
+  document.getElementById('id_x1').value= (oldW / newW) * (clearbox.offsetLeft - greybox.offsetLeft);
+  document.getElementById('id_y1').value= (oldH / newH) * (clearbox.offsetTop - greybox.offsetTop);
+  document.getElementById('id_x2').value= (oldW / newW) * (clearbox.offsetWidth + ( clearbox.offsetLeft - greybox.offsetLeft));
+  document.getElementById('id_y2').value= (oldH / newH) * (clearbox.offsetHeight + (clearbox.offsetTop - greybox.offsetTop));
+  if(clearbox.offsetWidth + clearbox.offsetLeft <= greybox.offsetWidth + greybox.offsetLeft){
+   if(clearbox.offsetHeight + clearbox.offsetTop <= greybox.offsetHeight + greybox.offsetTop){
+    if(clearbox.offsetTop >= greybox.offsetTop){
+     if(clearbox.offsetLeft >= greybox.offsetLeft){                                                                                                          if(e.touches[0].pageX - clearbox.offsetLeft > .75 * clearbox.offsetWidth){
+       if(e.touches[0].pageY - clearbox.offsetTop > .75 * clearbox.offsetHeight){
+        clearbox.style.height= e.touches[0].pageY - clearbox.offsetTop + 'px';
+        clearbox.style.width= e.touches[0].pageX - clearbox.offsetLeft + 'px';}                                                                               else{
+        clearbox.style.width= e.touches[0].pageX - clearbox.offsetLeft + 'px';
+       };}
+      else if(e.touches[0].pageY - clearbox.offsetTop > .75 * clearbox.offsetHeight){
+       clearbox.style.height= e.touches[0].pageY - clearbox.offsetTop + 'px';}
+      else{
+       d = offsetfinger.length - 1;
+       x=offsetfinger[d].x;
+       y=offsetfinger[d].y;
+       t=offsetfinger[d].t;
+       l=offsetfinger[d].l;
+       clearbox.style.top = e.touches[0].pageY - (y - t) + 'px';
+       clearbox.style.left = e.touches[0].pageX - (x - l) + 'px';
+      };
+     } else{};
+    } else{};
+   };
+  };
+ };
+
+</script>
+
 
 {% endblock %}

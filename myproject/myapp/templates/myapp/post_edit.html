@@ -14,17 +14,7 @@
  {% endif %}
  </div>
 <p style='margin-top:50px;margin-bottom:30px;text-align:center;font-size:575%;font-weight:bold;'>Create Post</p><br>
-
-<form method='POST' enctype="multipart/form-data">
- <div style='border-width:3px;border-color:rgba(38,38,122,1);border-style:solid;padding-top:100px;padding-bottom:100px;margin-left:40px;margin-right:40px;border-radius:10px;'>
-  <div id='posteditbody'>
-   <h1 id='text'>
-    {% csrf_token %}
-    {%if form.errors %}
-    {% for error in form.upload.errors %}
-    <div>
-     <p>{{ error|escape }}</p>
-    </div>
+{%if form.errors %}                                  {% for error in form.upload.errors %}                <div>                                                 <p>{{ error|escape }}</p>                           </div>
     {% endfor %}
     {% for field in form %}
         {% for error in field.errors %}
@@ -39,6 +29,11 @@
         </div>
     {% endfor %}
     {% endif %}
+<form method='POST' enctype="multipart/form-data" novalidate>
+ <div style='border-width:3px;border-color:rgba(38,38,122,1);border-style:solid;padding-top:100px;padding-bottom:100px;margin-left:40px;margin-right:40px;border-radius:10px;'>
+  <div id='posteditbody'>
+   <h1 id='text'>
+    {% csrf_token %}
     {{ form.caption.label_tag }}<br>
     <p class='labeltofieldspace'>{{ form.caption }}</p><br>
     {{ form.title.label_tag }}<br>
@@ -48,27 +43,93 @@
      <p class='moretextbutton'>Add Image</p>
      <p class='hiddenuploadbuttons'>{{form.p1}}</p>
     </label>
+   
+   <div id='hidebox1' style='display:none;'> 
+   <div id='bigholder1' style='background-color:blue;'>
+   <div id='clearholder1' style='border-width:5px;border-style:dashed;touch-action:none;z-index:2;' ></div>
+   <div id='greyholder1' style='position:relative;z-index:1;background-color:rgba(50, 50, 50, .9);'></div>
+   <img id='test1' src=''  style='max-width:100%;color:red;'><br>
+   </div>
+   <label for='xleft1' style='font-weight:normal;font-size:125%;'>Left:</label><span id='xleft1' style='font-size:100%;'>{{ form.p1x1 }}</span>
+   <label for='xright1' style='margin-left:31%;font-weight:normal;font-size:125%;'>Right:</label><span id='xright1' style='font-size:100%;'>{{ form.p1x2 }}</span>
+   <label for='ytop1' style='font-size:125%;font-weight:normal;'>Top:</label><span id='ytop1' style='font-size:100%;'>{{ form.p1y1 }}</span>
+   <label for='ybottom1' style='margin-left:23.125%;font-size:125%;font-weight:normal;'>Bottom:</label><span id='ybottom1'style='font-size:100%;'>{{ form.p1y2 }}</span>
+   <label style='font-weight:normal;font-size:80%;'>
+   980px by 653.3px(best quality): <input type='radio' name='size1' id='gq1' value='ss'/><br>
+   1960px by 1306.6px(recomended): <input type='radio' name='size1' id='mq1' value='ms'/><br>
+   size freely(can leave white space!): <input type='radio' name='size1' id='bq1' value='fs'/>
+   </label>
+   </div>
+
     <p id='1' class='hiddenuploadbuttons' >{{ form.b }}</p>
     <label id='13' class='hiddenuploadbuttons' >
      <p class='moretextbutton' >Add Image</p>
      <p class='hiddenuploadbuttons'>{{form.p2}}</p>
     </label>
-    {% if p1 != '' and p1 != blank %}
+
+   <div id='hidebox2' style='display:none;'> 
+   <div id='bigholder2' style='background-color:blue;'>
+   <div id='clearholder2' style='border-width:5px;border-style:dashed;touch-action:none;z-index:2;' ></div>
+   <div id='greyholder2' style='position:relative;z-index:1;background-color:rgba(50, 50, 50, .9);'></div>
+   <img id='test2' src=''  style='max-width:100%;color:red;'><br>
+   </div>
+   <label for='xleft2' style='font-weight:normal;font-size:125%;'>Left:</label><span id='xleft2' style='font-size:100%;'>{{ form.p2x1 }}</span>
+   <label for='xright2' style='margin-left:31%;font-weight:normal;font-size:125%;'>Right:</label><span id='xright2' style='font-size:100%;'>{{form.p2x2 }}</span>
+   <label for='ytop2' style='font-size:125%;font-weight:normal;'>Top:</label><span id='ytop2' style='font-size:100%;'>{{ form.p2y1 }}</span>
+   <label for='ybottom2' style='margin-left:23.125%;font-size:125%;font-weight:normal;'>Bottom:</label><span id='ybottom2' style='font-size:100%;'>{{ form.p2y2 }}</span>
+   <label style='font-weight:normal;font-size:80%;'>
+   980px by 653.3px(best quality): <input type='radio' name='size2' id='gq2' value='ss'/><br>
+   1960px by 1306.6px(recomended): <input type='radio' name='size2' id='mq2' value='ms'/><br>
+   size freely(can leave white space!): <input type='radio' name='size2' id='bq2' value='fs'/>
+   </label>
+   </div>
+
+    {% if p1 != '' and p1 != blank or f.p1 != 't' and f.p1 != none%}
     <script>
     document.getElementById('1').style.display='inline';
     document.getElementById('13').style.display='inline-block';
     </script>
     {% endif %}    
+    {% if f.p1 != 't' and f.p1 != none %}
+     <script>
+     document.getElementById('hidebox1').style.display='initial';
+     document.getElementById('test1').src='../../../media/{{f.p1}}';
+     </script>
+    {% endif %}
     <p id='2' class='hiddenuploadbuttons' >{{ form.c }}</p>
     <label id='14' class='hiddenuploadbuttons'>
      <p class='moretextbutton' >Add Image</p>
      <p class='hiddenuploadbuttons'>{{form.p3}}</p>
     </label>
-    {% if p2 != '' and p2 != blank %}
+
+   <div id='hidebox3' style='display:none;'>   
+   <div id='bigholder3' style='background-color:blue;'>
+   <div id='clearholder3' style='border-width:5px;border-style:dashed;touch-action:none;z-index:2;' ></div>
+   <div id='greyholder3' style='position:relative;z-index:1;background-color:rgba(50, 50, 50, .9);'></div>
+   <img id='test3' src=''  style='max-width:100%;color:red;'><br>
+   </div>
+   <label for='xleft3' style='font-weight:normal;font-size:125%;'>Left:</label><span id='xleft3' style='font-size:100%;'>{{ form.p3x1 }}</span>
+   <label for='xright3' style='margin-left:31%;font-weight:normal;font-size:125%;'>Right:</label><span id='xright3' style='font-size:100%;'>{{form.p3x2 }}</span>
+   <label for='ytop3' style='font-size:125%;font-weight:normal;'>Top:</label><span id='ytop3' style='font-size:100%;'>{{ form.p3y1 }}</span>
+   <label for='ybottom3' style='margin-left:23.125%;font-size:125%;font-weight:normal;'>Bottom:</label><span id='ybottom3' style='font-size:100%;'>{{ form.p3y2 }}</span>
+   <label style='font-weight:normal;font-size:80%;'>
+   980px by 653.3px(best quality): <input type='radio' name='size3' id='gq3' value='ss'/><br>
+   1960px by 1306.6px(recomended): <input type='radio' name='size3' id='mq3' value='ms'/><br>
+   size freely(can leave white space!): <input type='radio' name='size3' id='bq3' value='fs'/>
+   </label>
+   </div>
+
+    {% if p2 != '' and p2 != blank or f.p2 != 't' and f.p2 != none %}
     <script>
     document.getElementById('2').style.display='inline';
     document.getElementById('14').style.display='inline-block';
     </script>
+    {% endif %}
+    {% if f.p2 != 't' and f.p2 != none %}
+     <script>
+     document.getElementById('hidebox2').style.display='initial';
+     document.getElementById('test2').src='../../../media/{{f.p2}}';
+     </script>
     {% endif %}
     </label>
     <p id='3' class='hiddenuploadbuttons' >{{ form.d }}</p>
@@ -76,110 +137,349 @@
      <p class='moretextbutton' >Add Image</p>
      <p class='hiddenuploadbuttons'>{{form.p4}}</p>
     </label>
-    {% if p3 != '' and p3 != blank %}
+
+   <div id='hidebox4' style='display:none;'>
+    <div id='bigholder4' style='background-color:blue;'>
+   <div id='clearholder4' style='border-width:5px;border-style:dashed;touch-action:none;z-index:2;' ></div>
+   <div id='greyholder4' style='position:relative;z-index:1;background-color:rgba(50, 50, 50, .9);'></div>
+   <img id='test4' src=''  style='max-width:100%;color:red;'><br>
+   </div>
+   <label for='xleft4' style='font-weight:normal;font-size:125%;'>Left:</label><span id='xleft4' style='font-size:100%;'>{{ form.p4x1 }}</span>
+   <label for='xright4' style='margin-left:31%;font-weight:normal;font-size:125%;'>Right:</label><span id='xright4' style='font-size:100%;'>{{form.p4x2 }}</span>
+   <label for='ytop4' style='font-size:125%;font-weight:normal;'>Top:</label><span id='ytop4' style='font-size:100%;'>{{ form.p4y1 }}</span>
+   <label for='ybottom4' style='margin-left:23.125%;font-size:125%;font-weight:normal;'>Bottom:</label><span id='ybottom3' style='font-size:100%;'>{{ form.p4y2 }}</span>
+   <label style='font-weight:normal;font-size:80%;'>
+   980px by 653.3px(best quality): <input type='radio' name='size4' id='gq4' value='ss'/><br>
+   1960px by 1306.6px(recomended): <input type='radio' name='size4' id='mq4' value='ms'/><br>
+   size freely(can leave white space!): <input type='radio' name='size4' id='bq4' value='fs'/>
+   </label>
+   </div>
+
+    {% if p3 != '' and p3 != blank or f.p3 != 't' and f.p3 != none %}
     <script>
     document.getElementById('3').style.display='inline';
     document.getElementById('15').style.display='inline-block';
     </script>
+    {% endif %}
+    {% if f.p3 != 't' and f.p3 != none %}
+     <script>
+     document.getElementById('hidebox3').style.display='initial';
+     document.getElementById('test3').src='../../../media/{{f.p3}}';
+     </script>
     {% endif %}
     <p id='4' class='hiddenuploadbuttons' >{{ form.e }}</p>
     <label id='16' class='hiddenuploadbuttons'>
      <p class='moretextbutton' >Add Image</p>
      <p class='hiddenuploadbuttons'>{{form.p5}}</p>
     </label>
-    {% if p4 != '' and p4 != blank %}
+
+   <div id='hidebox5' style='display:none;'>
+    <div id='bigholder5' style='background-color:blue;'>
+   <div id='clearholder5' style='border-width:5px;border-style:dashed;touch-action:none;z-index:2;' ></div>
+   <div id='greyholder5' style='position:relative;z-index:1;background-color:rgba(50, 50, 50, .9);'></div>
+   <img id='test5' src=''  style='max-width:100%;color:red;'><br>
+   </div>
+   <label for='xleft5' style='font-weight:normal;font-size:125%;'>Left:</label><span id='xleft5' style='font-size:100%;'>{{ form.p5x1 }}</span>
+   <label for='xright5' style='margin-left:31%;font-weight:normal;font-size:125%;'>Right:</label><span id='xright5' style='font-size:100%;'>{{form.p5x2 }}</span>
+   <label for='ytop5' style='font-size:125%;font-weight:normal;'>Top:</label><span id='ytop5' style='font-size:100%;'>{{ form.p5y1 }}</span>
+   <label for='ybottom5' style='margin-left:23.125%;font-size:125%;font-weight:normal;'>Bottom:</label><span id='ybottom5' style='font-size:100%;'>{{ form.p5y2 }}</span>
+   <label style='font-weight:normal;font-size:80%;'>
+   882px by 653.3px(best quality): <input type='radio' name='size5' id='gq5' value='ss'/><br>
+   1764px by 1306.6px(recomended): <input type='radio' name='size5' id='mq5' value='ms'/><br>
+   size freely(can leave white space!): <input type='radio' name='size5' id='bq5' value='fs'/>
+   </label>
+   </div>
+
+    {% if p4 != '' and p4 != blank or f.p4 != 't' and f.p4 != none %}
     <script>
     document.getElementById('4').style.display='inline';
     document.getElementById('16').style.display='inline-block';
     </script>
+    {% endif %}
+    {% if f.p4 != 't' and f.p4 != none %}
+     <script>
+     document.getElementById('hidebox4').style.display='initial';
+     document.getElementById('test4').src='../../../media/{{f.p4}}';
+     </script>
     {% endif %}
     <p id='5' class='hiddenuploadbuttons' >{{ form.f }}</p>
     <label id='17' class='hiddenuploadbuttons'>
      <p class='moretextbutton' >Add Image</p>
      <p class='hiddenuploadbuttons'>{{form.p6}}</p>
     </label>
-    {% if p5 != '' and p5 != blank %}
+
+   <div id='hidebox6' style='display:none;'>
+    <div id='bigholder6' style='background-color:blue;'>
+   <div id='clearholder6' style='border-width:5px;border-style:dashed;touch-action:none;z-index:2;' ></div>
+   <div id='greyholder6' style='position:relative;z-index:1;background-color:rgba(50, 50, 50, .9);'></div>
+   <img id='test6' src=''  style='max-width:100%;color:red;'><br>
+   </div>
+   <label for='xleft6' style='font-weight:normal;font-size:125%;'>Left:</label><span id='xleft6' style='font-size:100%;'>{{ form.p6x1 }}</span>
+   <label for='xright6' style='margin-left:31%;font-weight:normal;font-size:125%;'>Right:</label><span id='xright6' style='font-size:100%;'>{{form.p6x2 }}</span>
+   <label for='ytop6' style='font-size:125%;font-weight:normal;'>Top:</label><span id='ytop6' style='font-size:100%;'>{{ form.p6y1 }}</span>
+   <label for='ybottom6' style='margin-left:23.125%;font-size:125%;font-weight:normal;'>Bottom:</label><span id='ybottom6' style='font-size:100%;'>{{ form.p6y2 }}</span>
+   <label style='font-weight:normal;font-size:80%;'>
+   882px by 653.3px(best quality): <input type='radio' name='size6' id='gq6' value='ss'/><br>
+   1764px by 1306.6px(recomended): <input type='radio' name='size6' id='mq6' value='ms'/><br>
+   size freely(can leave white space!): <input type='radio' name='size6' id='bq6' value='fs'/>
+   </label>
+   </div>
+
+    {% if p5 != '' and p5 != blank or f.p5 != 't' and f.p5 != none %}
     <script>
     document.getElementById('5').style.display='inline';
     document.getElementById('17').style.display='inline-block';
     </script>
+    {% endif %}
+    {% if f.p5 != 't' and f.p5 != none %}
+     <script>
+     document.getElementById('hidebox5').style.display='initial';
+     document.getElementById('test5').src='../../../media/{{f.p5}}';
+     </script>
     {% endif %}
     <p id='6' class='hiddenuploadbuttons' >{{ form.g }}</p>
     <label id='18' style='display:none;'>
      <p class='moretextbutton' >Add Image</p>
      <p class='hiddenuploadbuttons'>{{form.p7}}</p>
     </label>
-    {% if p6 != '' and p6 != blank %}
+
+   <div id='hidebox7' style='display:none;'>
+    <div id='bigholder7' style='background-color:blue;'>
+   <div id='clearholder7' style='border-width:5px;border-style:dashed;touch-action:none;z-index:2;' ></div>
+   <div id='greyholder7' style='position:relative;z-index:1;background-color:rgba(50, 50, 50, .9);'></div>
+   <img id='test7' src=''  style='max-width:100%;color:red;'><br>
+   </div>
+   <label for='xleft7' style='font-weight:normal;font-size:125%;'>Left:</label><span id='xleft7' style='font-size:100%;'>{{ form.p7x1 }}</span>
+   <label for='xright7' style='margin-left:31%;font-weight:normal;font-size:125%;'>Right:</label><span id='xright7' style='font-size:100%;'>{{form.p7x2 }}</span>
+   <label for='ytop7' style='font-size:125%;font-weight:normal;'>Top:</label><span id='ytop7' style='font-size:100%;'>{{ form.p7y1 }}</span>
+   <label for='ybottom7' style='margin-left:23.125%;font-size:125%;font-weight:normal;'>Bottom:</label><span id='ybottom7' style='font-size:100%;'>{{ form.p7y2 }}</span>
+   <label style='font-weight:normal;font-size:80%;'>
+   882px by 653.3px(best quality): <input type='radio' name='size7' id='gq7' value='ss'/><br>
+   1764px by 1306.6px(recomended): <input type='radio' name='size7' id='mq7' value='ms'/><br>
+   size freely(can leave white space!): <input type='radio' name='size7' id='bq7' value='fs'/>
+   </label>
+   </div>
+
+    {% if p6 != '' and p6 != blank or f.p6 != 't' and f.p6 != none %}
     <script>
     document.getElementById('6').style.display='inline';
     document.getElementById('18').style.display='inline-block';
     </script>
     {% endif %}
+    {% if f.p6 != 't' and f.p6 != none %}
+     <script>
+     document.getElementById('hidebox6').style.display='initial';
+     document.getElementById('test6').src='../../../media/{{f.p6}}';
+     </script>
+    {% endif %}
     <p id='7' class='hiddenuploadbuttons' >{{ form.h }}</p>
     <label id='19' class='hiddenuploadbuttons'>
      <p class='moretextbutton' >Add Image</p>
-     <p class='hiddenuploadbuttons'{{form.p8}}</p>
+     <p class='hiddenuploadbuttons'>{{form.p8}}</p>
     </label>
-    {% if p7 != '' and p7 != blank %}
+
+    <div id='hidebox8' style='display:none;'>
+    <div id='bigholder8' style='background-color:blue;'>
+   <div id='clearholder8' style='border-width:5px;border-style:dashed;touch-action:none;z-index:2;' ></div>
+   <div id='greyholder8' style='position:relative;z-index:1;background-color:rgba(50, 50, 50, .9);'></div>
+   <img id='test8' src=''  style='max-width:100%;color:red;'><br>
+   </div>
+   <label for='xleft8' style='font-weight:normal;font-size:125%;'>Left:</label><span id='xleft8' style='font-size:100%;'>{{ form.p8x1 }}</span>
+   <label for='xright8' style='margin-left:31%;font-weight:normal;font-size:125%;'>Right:</label><span id='xright8' style='font-size:100%;'>{{form.p8x2 }}</span>
+   <label for='ytop8' style='font-size:125%;font-weight:normal;'>Top:</label><span id='ytop8' style='font-size:100%;'>{{ form.p8y1 }}</span>
+   <label for='ybottom8' style='margin-left:23.125%;font-size:125%;font-weight:normal;'>Bottom:</label><span id='ybottom8' style='font-size:100%;'>{{ form.p8y2 }}</span>
+   <label style='font-weight:normal;font-size:80%;'>
+   882px by 653.3px(best quality): <input type='radio' name='size8' id='gq8' value='ss'/><br>
+   1764px by 1306.6px(recomended): <input type='radio' name='size8' id='mq8' value='ms'/><br>
+   size freely(can leave white space!): <input type='radio' name='size8' id='bq8' value='fs'/>
+   </label>
+   </div>
+
+    {% if p7 != '' and p7 != blank or f.p7 != 't' and f.p7 != none %}
     <script>
     document.getElementById('7').style.display='inline';
     document.getElementById('19').style.display='inline-block';
     </script>
+    {% endif %}
+    {% if f.p7 != 't' and f.p7 != none %}
+     <script>
+     document.getElementById('hidebox7').style.display='initial';
+     document.getElementById('test7').src='../../../media/{{f.p7}}';
+     </script>
     {% endif %}
     <p id='8' class='hiddenuploadbuttons' >{{ form.i }}</p>
     <label id='20' class='hiddenuploadbuttons'>
      <p class='moretextbutton' >Add Image</p>
      <p class='hiddenuploadbuttons'>{{form.p9}}</p>
     </label>
-    {% if p8 != '' and p8 != blank %}
+
+    <div id='hidebox9' style='display:none;'>
+    <div id='bigholder9' style='background-color:blue;'>
+   <div id='clearholder9' style='border-width:5px;border-style:dashed;touch-action:none;z-index:2;' ></div>
+   <div id='greyholder9' style='position:relative;z-index:1;background-color:rgba(50, 50, 50, .9);'></div>
+   <img id='test9' src=''  style='max-width:100%;color:red;'><br>
+   </div>
+   <label for='xleft9' style='font-weight:normal;font-size:125%;'>Left:</label><span id='xleft9' style='font-size:100%;'>{{ form.p9x1 }}</span>
+   <label for='xright9' style='margin-left:31%;font-weight:normal;font-size:125%;'>Right:</label><span id='xright9' style='font-size:100%;'>{{form.p9x2 }}</span>
+   <label for='ytop9' style='font-size:125%;font-weight:normal;'>Top:</label><span id='ytop9' style='font-size:100%;'>{{ form.p9y1 }}</span>
+   <label for='ybottom9' style='margin-left:23.125%;font-size:125%;font-weight:normal;'>Bottom:</label><span id='ybottom9' style='font-size:100%;'>{{ form.p9y2 }}</span>
+   <label style='font-weight:normal;font-size:80%;'>
+   882px by 653.3px(best quality): <input type='radio' name='size9' id='gq9' value='ss'/><br>
+   1764px by 1306.6px(recomended): <input type='radio' name='size9' id='mq9' value='ms'/><br>
+   size freely(can leave white space!): <input type='radio' name='size9' id='bq9' value='fs'/>
+   </label>
+   </div>
+
+    {% if p8 != '' and p8 != blank or f.p8 != 't' and f.p8 != none %}
     <script>
     document.getElementById('8').style.display='inline';
     document.getElementById('20').style.display='inline-block';
     </script>
+    {% endif %}
+    {% if f.p8 != 't' and f.p8 != none %}
+     <script>
+     document.getElementById('hidebox8').style.display='initial';
+     document.getElementById('test8').src='../../../media/{{f.p8}}';
+     </script>
     {% endif %}
     <p id='9' class='hiddenuploadbuttons' >{{ form.j }}</p>
     <label id='21' class='hiddenuploadbuttons'>
      <p class='moretextbutton' >Add Image</p>
      <p class='hiddenuploadbuttons'>{{form.p10}}</p>
     </label>
-    {% if p9 != '' and p9 != blank %}
+
+   <div id='hidebox10' style='display:none;'>
+    <div id='bigholder10' style='background-color:blue;'>
+   <div id='clearholder10' style='border-width:5px;border-style:dashed;touch-action:none;z-index:2;' ></div>
+   <div id='greyholder10' style='position:relative;z-index:1;background-color:rgba(50, 50, 50, .9);'></div>
+   <img id='test10' src=''  style='max-width:100%;color:red;'><br>
+   </div>
+   <label for='xleft10' style='font-weight:normal;font-size:125%;'>Left:</label><span id='xleft10' style='font-size:100%;'>{{ form.p10x1 }}</span>
+   <label for='xright10' style='margin-left:31%;font-weight:normal;font-size:125%;'>Right:</label><span id='xright10' style='font-size:100%;'>{{form.p10x2 }}</span>
+   <label for='ytop10' style='font-size:125%;font-weight:normal;'>Top:</label><span id='ytop10' style='font-size:100%;'>{{ form.p10y1 }}</span>
+   <label for='ybottom10' style='margin-left:23.125%;font-size:125%;font-weight:normal;'>Bottom:</label><span id='ybottom10' style='font-size:100%;'>{{ form.p10y2 }}</span>
+   <label style='font-weight:normal;font-size:80%;'>
+   882px by 653.3px(best quality): <input type='radio' name='size10' id='gq10' value='ss'/><br>
+   1764px by 1306.6px(recomended): <input type='radio' name='size10' id='mq10' value='ms'/><br>
+   size freely(can leave white space!): <input type='radio' name='size10' id='bq10' value='fs'/>
+   </label>
+   </div>
+
+    {% if p9 != '' and p9 != blank or f.p9 != 't' and f.p9 != none %}
     <script>
     document.getElementById('9').style.display='inline';
     document.getElementById('21').style.display='inline-block';
     </script>
+    {% endif %}
+    {% if f.p9 != 't' and f.p9 != none %}
+     <script>
+     document.getElementById('hidebox9').style.display='initial';
+     document.getElementById('test9').src='../../../media/{{f.p9}}';
+     </script>
     {% endif %}
     <p id='10' class='hiddenuploadbuttons' >{{ form.k }}</p>
     <label id='22' class='hiddenuploadbuttons'>
      <p class='moretextbutton' >Add Image</p>
      <p class='hiddenuploadbuttons'>{{form.p11}}</p>
     </label>
-    {% if p10 != '' and p10 != blank %}
+
+   <div id='hidebox11' style='display:none;'>
+    <div id='bigholder11' style='background-color:blue;'>
+   <div id='clearholder11' style='border-width:5px;border-style:dashed;touch-action:none;z-index:2;' ></div>
+   <div id='greyholder11' style='position:relative;z-index:1;background-color:rgba(50, 50, 50, .9);'></div>
+   <img id='test11' src=''  style='max-width:100%;color:red;'><br>
+   </div>
+   <label for='xleft11' style='font-weight:normal;font-size:125%;'>Left:</label><span id='xleft11' style='font-size:100%;'>{{ form.p11x1 }}</span>
+   <label for='xright11' style='margin-left:31%;font-weight:normal;font-size:125%;'>Right:</label><span id='xright11' style='font-size:100%;'>{{form.p11x2 }}</span>
+   <label for='ytop11' style='font-size:125%;font-weight:normal;'>Top:</label><span id='ytop11' style='font-size:100%;'>{{ form.p11y1 }}</span>
+   <label for='ybottom11' style='margin-left:23.125%;font-size:125%;font-weight:normal;'>Bottom:</label><span id='ybottom11' style='font-size:100%;'>{{ form.p11y2 }}</span>
+   <label style='font-weight:normal;font-size:80%;'>
+   882px by 653.3px(best quality): <input type='radio' name='size11' id='gq11' value='ss'/><br>
+   1764px by 1306.6px(recomended): <input type='radio' name='size11' id='mq11' value='ms'/><br>
+   size freely(can leave white space!): <input type='radio' name='size11' id='bq11' value='fs'/>
+   </label>
+   </div>
+
+    {% if p10 != '' and p10 != blank or f.p10 != 't' and f.p10 != none %}
     <script>
     document.getElementById('10').style.display='inline';
     document.getElementById('22').style.display='inline-block';
     </script>
+    {% endif %}
+    {% if f.p10 != 't' and f.p10 != none %}
+     <script>
+     document.getElementById('hidebox10').style.display='initial';
+     document.getElementById('test10').src='../../../media/{{f.p10}}';
+     </script>
     {% endif %}
     <p id='11' class='hiddenuploadbuttons' >{{ form.l }}</p>
     <label id='23' class='hiddenuploadbuttons'>
      <p class='moretextbutton' >Add Image</p>
      <p class='hiddenuploadbuttons'>{{form.p12}}</p>
     </label>
-    {% if p11 != '' and p11 != blank %}
+
+    <div id='hidebox12' style='display:none;'>
+    <div id='bigholder12' style='background-color:blue;'>
+   <div id='clearholder12' style='border-width:5px;border-style:dashed;touch-action:none;z-index:2;' ></div>
+   <div id='greyholder12' style='position:relative;z-index:1;background-color:rgba(50, 50, 50, .9);'></div>
+   <img id='test12' src=''  style='max-width:100%;color:red;'><br>
+   </div>
+   <label for='xleft12' style='font-weight:normal;font-size:125%;'>Left:</label><span id='xleft12' style='font-size:100%;'>{{ form.p12x1 }}</span>
+   <label for='xright12' style='margin-left:31%;font-weight:normal;font-size:125%;'>Right:</label><span id='xright12' style='font-size:100%;'>{{form.p12x2 }}</span>
+   <label for='ytop12' style='font-size:125%;font-weight:normal;'>Top:</label><span id='ytop12' style='font-size:100%;'>{{ form.p12y1 }}</span>
+   <label for='ybottom12' style='margin-left:23.125%;font-size:125%;font-weight:normal;'>Bottom:</label><span id='ybottom12' style='font-size:100%;'>{{ form.p12y2 }}</span>
+   <label style='font-weight:normal;font-size:80%;'>
+   882px by 653.3px(best quality): <input type='radio' name='size12' id='gq12' value='ss'/><br>
+   1764px by 1306.6px(recomended): <input type='radio' name='size12' id='mq12' value='ms'/><br>
+   size freely(can leave white space!): <input type='radio' name='size12' id='bq12' value='fs'/>
+   </label>
+   </div>
+
+    {% if p11 != '' and p11 != blank or f.p11 != 't' and f.p11 != none %}
     <script>
     document.getElementById('11').style.display='inline';
     document.getElementById('23').style.display='inline-block';
     </script>
+    {% endif %}
+    {% if f.p11 != 't' and f.p11 != none %}
+     <script>
+     document.getElementById('hidebox11').style.display='initial';
+     document.getElementById('test11').src='../../../media/{{f.p11}}';
+     </script>
     {% endif %}
     <p id='12' class='hiddenuploadbuttons' >{{ form.m }}</p>
     <label id='24' class='hiddenuploadbuttons' >
      <p class='moretextbutton' >Add Image</p>
      <p class='hiddenuploadbuttons'>{{form.p13}}</p>
     </label>
-    {% if p12 != '' and p12 != blank %}
+
+    <div id='hidebox13' style='display:none;'>
+    <div id='bigholder13' style='background-color:blue;'>
+   <div id='clearholder13' style='border-width:5px;border-style:dashed;touch-action:none;z-index:2;' ></div>
+   <div id='greyholder13' style='position:relative;z-index:1;background-color:rgba(50, 50, 50, .9);'></div>
+   <img id='test13' src=''  style='max-width:100%;color:red;'><br>
+   </div>
+   <label for='xleft13' style='font-weight:normal;font-size:125%;'>Left:</label><span id='xleft13' style='font-size:100%;'>{{ form.p13x1 }}</span>
+   <label for='xright13' style='margin-left:31%;font-weight:normal;font-size:125%;'>Right:</label><span id='xright13' style='font-size:100%;'>{{form.p13x2 }}</span>
+   <label for='ytop13' style='font-size:125%;font-weight:normal;'>Top:</label><span id='ytop13' style='font-size:100%;'>{{ form.p13y1 }}</span>
+   <label for='ybottom13' style='margin-left:23.125%;font-size:125%;font-weight:normal;'>Bottom:</label><span id='ybottom13' style='font-size:100%;'>{{ form.p13y2 }}</span>
+   <label style='font-weight:normal;font-size:80%;'>
+   882px by 653.3px(best quality): <input type='radio' name='size13' id='gq13' value='ss'/><br>
+   1764px by 1306.6px(recomended): <input type='radio' name='size13' id='mq13' value='ms'/><br>
+   size freely(can leave white space!): <input type='radio' name='size13' id='bq13' value='fs'/>
+   </label>
+   </div>
+    {% if p12 != '' and p12 != blank or f.p12 != 't' and f.p12 != none %}
     <script>
     document.getElementById('12').style.display='inline';
     document.getElementById('24').style.display='inline-block';
     </script>
+    {% endif %}
+    {% if f.p12 != 't' and f.p12 != none %}
+     <script>
+     document.getElementById('hidebox12').style.display='initial';
+     document.getElementById('test12').src='../../../media/{{f.p12}}';
+     </script>
     {% endif %}
     <label  style='display:inline-block;margin-left:90.2px;' >
      <p class='moretextbutton' id='lesstextbutton' >-</p>
@@ -187,22 +487,41 @@
     <label style='margin-bottom:20px;display:inline-block;'>
      <p class='moretextbutton' id='moretextbutton' >Add Textbox</p>
     </label>
+
+
     <p class='labeltofieldspace'>{{ form.category.label_tag }}</p>
    </h1>
    <p style='font-size:360%;'>{{ form.category }}</p><br>
    <label style='margin-bottom:100px;text-align:right;'>
-
- 
-    <p id='input' style='margin-top:35px;position:absolute;left:327px;font-size:200%;z-index:1;'>{{form.upload}}</p>
-    <div style='background-color:rgb(240,240,240);margin-top:30px;position:absolute;z-index:2;width:39.5%;height:3.5%;'></div>
+    <p id='yup' style='margin-top:35px;position:absolute;left:327px;font-size:200%;z-index:1;' >{{ form.upload }}</p>
+    <div style='background-color:white;margin-top:30px;position:absolute;z-index:2;width:39.5%;height:3.5%;'></div>
     <p id='realinput' style='position:absolute;z-index:3;color:white;background-color:rgb(38, 38, 122);padding:15px;padding-left:40px;padding-right:40px;font-size:350%;font-weight:bold;border-radius:100px;'>Upload Image</p>
-    {% if pk  %} 
+
+   {% if pk %}
     <script>
-     document.getElementById('input').style.visibility='hidden';
+     document.getElementById('yup').style.display='none';
     </script>
     {% endif %}
    </label>
+ 
+   <div id='hidebox' style='display:none;'>
+   <div id='bigholder' style='background-color:blue;'>
+   <div id='clearholder' style='border-width:5px;border-style:dashed;touch-action:none;z-index:2;' ></div>
+   <div id='greyholder' style='position:relative;z-index:1;background-color:rgba(50, 50, 50, .9);'></div>
+   <img id='test' src=''  style='max-width:100%;color:red;'><br>
+   </div>
+   <label for='xleft' style='font-weight:normal;font-size:400%;'>Left:</label><span id='xleft' style='font-size:300%;'>{{ form.x1 }}</span>
+   <label for='xright' style='margin-left:36%;font-weight:normal;font-size:400%;'>Right:</label><span id='xright' style='font-size:300%;'>{{ form.x2 }}</span>
+   <label for='ytop' style='font-size:400%;font-weight:normal;'>Top:</label><span id='ytop' style='font-size:300%;'>{{ form.y1 }}</span>
+   <label for='ybottom' style='margin-left:29%;font-size:400%;font-weight:normal;'>Bottom:</label><span id='ybottom' style='font-size:300%;'>{{ form.y2 }}</span>
+   <label style='font-size:300%;'>
+   980px by 653.3px(best quality): <input type='radio' name='size' id='gq' value='ss'/><br>
+   1960px by 1306.6px(recomended): <input type='radio' name='size' id='mq' value='ms'/><br>
+   size freely(can leave white space!): <input type='radio' name='size' id='bq' value='fs'/> 
+   </label> 
   </div>
+
+   </div>
  </div>
 
  <div style='text-align:center;margin-left:40px;margin-right:40px;'>
@@ -210,7 +529,7 @@
    <input type='submit' name='save' value='save' style='display:none;'/>
    <p style='font-size:350%;border-style:solid;background-color:rgb(38,38,122);color:white;padding:20px;padding-left:210px;padding-right:210px;margin-top:50px;border-radius:100px;'>Save Post</p>
   </label>
-  {% if p == Null %}
+  {% if p == Null %} 
    <label style='width:100%;'>
     <input type='submit' name='publish' value='publish' style='display:none;'/>
     <p style='font-size:350%;border-style:solid;background-color:rgb(38,38,122);color:white;padding:20px;padding-left:210px;padding-right:210px;margin-top:20px;border-radius:100px;'>Publish Post</p>
@@ -220,9 +539,564 @@
    <label id='deletebutton' style='width:100%;'>
     <p style='font-size:350%;border-style:solid;background-color:rgb(38,38,122);color:white;padding:20px;padding-left:210px;padding-right:210px;margin-top:20px;border-radius:100px;'>Delete Post</p>
    </label>
+   <script>
+    document.getElementById('hidebox').style.display='initial';
+    document.getElementById('test').src='../../../media/{{f.upload}}';
+   </script>
   {% endif %}
  </div>
 </form>
+   <script>
+     var csrfcookie = function() {
+    var cookieValue = null,
+        name = 'csrftoken';
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+};
+ 
+ pn= 0;
+
+ function value(event){
+  if(event.target === document.getElementById('id_upload')){ pn = false;
+  } else{
+   for(t=1; t<14; t++){
+    if(event.target === document.getElementById('id_p' + t)){
+     pn = t;
+    };
+   };
+  };
+  submit(event.target, pn);
+ };
+
+
+ document.getElementById('id_upload').addEventListener('change', value);
+
+ for(t=1; t<14; t++){
+  document.getElementById('id_p' + t).addEventListener('change', value);
+ };
+
+
+ function submit(values, pn){
+  var xmlhttp= new XMLHttpRequest();
+  xmlhttp.open('POST', '../../../originalphotos.xml/', false);
+  var formdata = new FormData();
+  formdata.append('trashphoto', values.files[0], values.value);
+  xmlhttp.setRequestHeader('X-CSRFToken',csrfcookie());
+  xmlhttp.send(formdata);
+  shower(values, pn);
+  };
+
+
+ function shower(values, pn){
+  if(pn){
+  document.getElementById('hidebox' + pn).style.display='initial';
+  } else{
+   document.getElementById('hidebox').style.display='initial';
+  };
+  grabtrash(values, pn);
+  };
+ 
+ function grabtrash(event, pn){
+  var xmlhttp= new XMLHttpRequest();
+  xmlhttp.open('GET', '../../../originalphotos.xml', true)
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 &&this.status == 200) {
+     xmlDoc = xmlhttp.responseXML;
+     x = xmlDoc.getElementsByTagName("originalphoto");
+     d = x.length-1;
+     if(pn){
+     myimg = document.getElementById('test' + pn);
+     } else{myimg = document.getElementById('test');
+     };
+     myimg.src='../../../media/' + x[d].childNodes[0].nodeValue;
+     };};
+  xmlhttp.send();
+  setTimeout(sizematters, 300);};
+
+ function sizematters(){
+     if(pn){
+     myimg = document.getElementById('test' + pn);
+     document.getElementById('id_p' + pn + 'y1').value='0';
+     document.getElementById('id_p' + pn + 'x1').value='0';
+     document.getElementById('id_p' + pn + 'y2').value=myimg.naturalHeight;
+     document.getElementById('id_p' + pn + 'x2').value=myimg.naturalWidth;
+     document.getElementById('clearholder' + pn).style.height=myimg.height + 'px';
+     document.getElementById('clearholder' + pn).style.width=myimg.width + 'px';
+     document.getElementById('greyholder' + pn).style.height=myimg.height + 'px';
+     document.getElementById('greyholder' + pn).style.width=myimg.width + 'px';
+     setTimeout(absolutor, 100);
+     } else{
+      myimg = document.getElementById('test');
+      document.getElementById('id_y1').value='0';
+      document.getElementById('id_x1').value='0';
+      document.getElementById('id_y2').value=myimg.naturalHeight;
+      document.getElementById('id_x2').value=myimg.naturalWidth;
+      document.getElementById('clearholder').style.height=myimg.height + 'px';
+      document.getElementById('clearholder').style.width=myimg.width + 'px';
+      document.getElementById('greyholder').style.height=myimg.height + 'px';
+      document.getElementById('greyholder').style.width=myimg.width + 'px';
+      setTimeout(absolutor, 100);
+     };
+ };
+
+ function sizematters2(pn){
+     if(pn){
+     myimg = document.getElementById('test' + pn);
+     document.getElementById('id_p' + pn + 'y1').value='0';
+     document.getElementById('id_p' + pn + 'x1').value='0';
+     document.getElementById('id_p' + pn + 'y2').value=myimg.naturalHeight;
+     document.getElementById('id_p' + pn + 'x2').value=myimg.naturalWidth;
+     document.getElementById('clearholder' + pn).style.height=myimg.height + 'px';
+     document.getElementById('clearholder' + pn).style.width=myimg.width + 'px';
+     document.getElementById('greyholder' + pn).style.height=myimg.height + 'px';
+     document.getElementById('greyholder' + pn).style.width=myimg.width + 'px';
+     setTimeout(absolutor, 100);
+     } else{
+      myimg = document.getElementById('test');
+      document.getElementById('id_y1').value='0';
+      document.getElementById('id_x1').value='0';
+      document.getElementById('id_y2').value=myimg.naturalHeight;
+      document.getElementById('id_x2').value=myimg.naturalWidth;
+      document.getElementById('clearholder').style.height=myimg.height + 'px';
+      document.getElementById('clearholder').style.width=myimg.width + 'px';
+      document.getElementById('greyholder').style.height=myimg.height + 'px';
+      document.getElementById('greyholder').style.width=myimg.width + 'px';
+      setTimeout(absolutor, 100);
+     };
+ };
+
+ {% if pk %}
+ pn= false;
+ sizematters2(pn);
+ absolutor2(pn);
+ for(t=1; t<14; t++){
+  pn=t;
+  sizematters2(pn);
+  absolutor2(pn);
+ };
+ {% endif %}
+
+ function absolutor(){
+  if(pn){
+  document.getElementById('clearholder' + pn).style.position='absolute';
+  document.getElementById('greyholder' + pn).style.position='absolute';
+  } else{
+   document.getElementById('clearholder').style.position='absolute';
+   document.getElementById('greyholder').style.position='absolute';
+  };
+  pn = false;                                  
+  cropper();
+  pn = 1;
+  cropper();
+  pn = 2;
+  cropper();
+  pn = 3;                                      
+  cropper();
+  pn = 4;
+  cropper();
+  pn = 5;
+  cropper();                                   
+  pn = 6;             
+  cropper();                       
+  pn = 7;
+  cropper();
+  pn = 8;
+  cropper();                                   
+  pn = 9;
+  cropper();
+  pn = 10;                                                
+  cropper();
+  pn = 11;
+  cropper();                                   
+  pn = 12;
+  cropper();
+  pn = 13;
+  cropper();
+ }; 
+
+function absolutor2(pn){
+  if(pn){
+  document.getElementById('clearholder' + pn).style.position='absolute';
+  document.getElementById('greyholder' + pn).style.position='absolute';
+  } else{
+   document.getElementById('clearholder').style.position='absolute';
+   document.getElementById('greyholder').style.position='absolute';
+  };
+  pn = false;
+  cropper();
+  pn = 1;
+  cropper();
+  pn = 2;
+  cropper();
+  pn = 3;
+  cropper();
+  pn = 4;
+  cropper();
+  pn = 5;
+  cropper();
+  pn = 6;
+  cropper();
+  pn = 7;
+  cropper();
+  pn = 8;
+  cropper();
+  pn = 9;
+  cropper();
+  pn = 10;
+  cropper();
+  pn = 11;
+  cropper();
+  pn = 12;
+  cropper();
+  pn = 13;
+  cropper();
+ };
+
+ document.getElementById('id_y1').addEventListener('click', focuser);
+ document.getElementById('id_y2').addEventListener('click', focuser);
+ document.getElementById('id_x1').addEventListener('click', focuser);
+ document.getElementById('id_x2').addEventListener('click', focuser);
+
+ for(t=1; t<14; t++){
+  document.getElementById('id_p' + t + 'y1').addEventListener('click', focuser);
+  document.getElementById('id_p' + t + 'y2').addEventListener('click', focuser);
+  document.getElementById('id_p' + t + 'x1').addEventListener('click', focuser);
+  document.getElementById('id_p' + t + 'x2').addEventListener('click', focuser);
+ };
+
+
+
+ function focuser(event){
+  target = event.target;
+  if( target === document.getElementById('id_x1') || 
+   target === document.getElementById('id_x2') ||
+   target === document.getElementById('id_y1') ||
+   target === document.getElementById('id_y2')){
+   pn = false;
+  } else{
+   for(t=1; t<14; t++){
+    if(target === document.getElementById('id_p' + t + 'x1') ||
+    target === document.getElementById('id_p' + t + 'x2') ||
+    target === document.getElementById('id_p' + t + 'y1') ||
+    target === document.getElementById('id_p' + t + 'y2')){
+     pn = t;   
+    };
+    };
+   };
+  }; 
+
+
+
+
+
+ document.getElementById('id_y1').addEventListener('input', cropper);
+ document.getElementById('id_y2').addEventListener('input', cropper);
+ document.getElementById('id_x1').addEventListener('input', cropper);
+ document.getElementById('id_x2').addEventListener('input', cropper);
+
+
+ for(t=1; t<14; t++){
+  document.getElementById('id_p' + t + 'y1').addEventListener('input', cropper);
+  document.getElementById('id_p' + t + 'y2').addEventListener('input', cropper);
+  document.getElementById('id_p' + t + 'x1').addEventListener('input', cropper);
+  document.getElementById('id_p' + t + 'x2').addEventListener('input', cropper);
+ };
+
+
+
+
+ function cropper(){
+  if(pn){ 
+  myimg = document.getElementById('test' + pn);
+  clearbox = document.getElementById('clearholder' + pn);
+  xr = document.getElementById('id_' + 'p' + pn + 'x2').value;
+  yb = document.getElementById('id_' + 'p' + pn + 'y2').value;
+  xl = document.getElementById('id_' + 'p' + pn + 'x1').value;
+  yt = document.getElementById('id_' + 'p' + pn + 'y1').value;
+  } else{
+   myimg = document.getElementById('test');
+  clearbox = document.getElementById('clearholder');
+  xr = document.getElementById('id_x2').value;
+  yb = document.getElementById('id_y2').value;
+  xl = document.getElementById('id_x1').value;
+  yt = document.getElementById('id_y1').value;
+  };
+  oldxr = myimg.naturalWidth;
+  oldyb = myimg.naturalHeight;
+  newxr = myimg.width;
+  newyb = myimg.height;
+  yot =  myimg.offsetTop;
+  xot = myimg.offsetLeft;
+  ughxr = (newxr / oldxr) * xr -((newxr / oldxr) * xl) + 'px'; 
+  ughxl = (newxr / oldxr) * +xl + +xot + 'px';
+  ughyt = +yot + ((newyb / oldyb) * +yt) + 'px';
+  ughyb = (newyb / oldyb) * yb - ((newyb / oldyb) * +yt) + 'px';
+  clearbox.style.width= ughxr;
+  clearbox.style.height= ughyb;
+  clearbox.style.left= ughxl;
+  clearbox.style.top= ughyt;
+  clipper();
+ };
+
+function clipper(){
+  if(pn){
+   greybox = document.getElementById('greyholder' + pn);
+   clearbox = document.getElementById('clearholder' + pn);
+   myimg = document.getElementById('test' + pn);
+  } else{
+  greybox = document.getElementById('greyholder');
+  clearbox = document.getElementById('clearholder');
+  myimg = document.getElementById('test');};
+  imgW = myimg.width;
+  imgH = myimg.height;
+  L = clearbox.offsetLeft - greybox.offsetLeft + 'px';
+  T = clearbox.offsetTop - greybox.offsetTop + 'px';
+  B = clearbox.offsetHeight + (clearbox.offsetTop - greybox.offsetTop) + 'px';
+  R = clearbox.offsetWidth + (clearbox.offsetLeft - greybox.offsetLeft) + 'px';
+  greybox.style.clipPath='polygon(' + '0px 0px,' + ' ' + imgW + 'px' + ' 0px, ' + imgW + 'px' + ' ' +  imgH + 'px' + ',' + ' ' + '0px ' + imgH + 'px' + ',' + ' 0px 0px, ' + L + ' ' + T + ', ' + L + ' ' + B + ', ' + R + ' ' + B + ', ' + R + ' ' + T + ', ' + L + ' ' + T +')';
+ };
+
+ document.getElementById('clearholder').addEventListener('touchmove', grabber);
+ document.getElementById('clearholder').addEventListener('touchmove', clipper);
+ document.getElementById('clearholder').addEventListener('touchstart', fingerspot);
+ document.getElementById('clearholder').addEventListener('touchend', fixer);
+
+ for(t=1; t<14; t++){
+  document.getElementById('clearholder' + t).addEventListener('touchmove', grabber);
+  document.getElementById('clearholder' + t).addEventListener('touchmove', clipper);
+  document.getElementById('clearholder' + t).addEventListener('touchstart', fingerspot);
+  document.getElementById('clearholder' + t).addEventListener('touchend', fixer);
+ };
+
+
+ function fixer(e){
+  if(pn){
+   greybox = document.getElementById('greyholder' + pn);
+   clearbox = e.target;
+   x = document.getElementById('id_' + 'p' + pn + 'x1');
+   y = document.getElementById('id_' + 'p' + pn + 'y1');
+  } else{
+  greybox = document.getElementById('greyholder');                  
+  clearbox = e.target;
+  x = document.getElementById('id_x1');
+  y = document.getElementById('id_y1');
+  };
+  if(clearbox.offsetLeft < greybox.offsetLeft){
+   clearbox.style.left=greybox.offsetLeft + 'px';
+  };
+  if(clearbox.offsetTop < greybox.offsetTop){
+   clearbox.style.top = greybox.offsetTop + 'px';
+  };
+  if(clearbox.offsetWidth + clearbox.offsetLeft > greybox.offsetWidth + greybox.offsetLeft){
+   clearbox.style.left = (greybox.offsetLeft + greybox.offsetWidth) - clearbox.offsetWidth + 'px';
+  };
+  if(clearbox.offsetHeight + clearbox.offsetTop  > greybox.offsetHeight + greybox.offsetTop){
+   clearbox.style.top = (greybox.offsetHeight + greybox.offsetTop) - clearbox.offsetHeight + 'px';
+  };
+  if(y.value < 0){
+   y.value = 0;
+  };
+  if(x.value < 0){
+   x.value = 0;
+  };
+ };
+
+ var offsetfinger = []; 
+
+ function fingerspot(e){
+  img = e.target;
+  touch = {x: e.touches[0].pageX, y: e.touches[0].pageY, t: img.offsetTop, l: img.offsetLeft};
+  offsetfinger.push(touch);
+  if(img === document.getElementById('clearholder')){
+   pn = false;
+  } else{
+   for(t=1; t<14; t++){
+    if(img === document.getElementById('clearholder' + t)){
+     pn = t
+    };
+   };
+  };
+ };
+
+
+document.getElementById('bq').addEventListener('change', vsizer);
+document.getElementById('gq').addEventListener('change', vsizer);
+document.getElementById('mq').addEventListener('change', vsizer);
+ for(t=1; t<14; t++){
+  document.getElementById('gq' + t).addEventListener('change', vsizer);        
+  document.getElementById('mq' + t).addEventListener('change', vsizer);  
+  document.getElementById('bq' + t).addEventListener('change', vsizer);
+ };
+
+ function vsizer(event){
+  target = event.target;
+  if(target === document.getElementById('gq') || 
+  target === document.getElementById('mq') || target === document.getElementById('bq')){
+   pn= false;
+  } else{
+   for(t=1; t<14; t++){
+    if(target === document.getElementById('gq' + t) ||
+    target === document.getElementById('mq' + t) || target === document.getElementById('bq' + t)){
+     pn= t;
+    };
+   };
+  };
+  sizer();
+ };
+
+ function sizer(){
+  if(pn){
+  clearbox = document.getElementById('clearholder' + pn);
+  greybox = document.getElementById('greyholder' + pn);
+  myimg = document.getElementById('test' + pn);
+  q1 = document.getElementById('gq' + pn);
+  q2 = document.getElementById('mq' + pn);
+  q3 = document.getElementById('bq' + pn);
+  } else {
+   clearbox = document.getElementById('clearholder');
+   greybox = document.getElementById('greyholder');
+   myimg = document.getElementById('test');
+   q1 = document.getElementById('gq');
+   q2 = document.getElementById('mq');
+   q3 = document.getElementById('bq');
+  };
+  oldW = myimg.naturalWidth;
+  oldH = myimg.naturalHeight;
+  newW = myimg.width;
+  newH = myimg.height;
+  if(pn){
+   if(q1.checked === true){
+   clearbox.style.maxWidth=(newW / oldW) * 882 + 'px';
+   clearbox.style.maxHeight=(newH / oldH) * 653.3 + 'px';
+   clearbox.style.minWidth=(newW / oldW) * 882 + 'px';
+   clearbox.style.minHeight=(newH / oldH) * 653.3 + 'px';
+   } else if(q2.checked === true){                    
+   clearbox.style.maxWidth=(newW / oldW) * 1764 + 'px';           
+   clearbox.style.maxHeight=(newH / oldH) * 1306.6 + 'px';
+   clearbox.style.minWidth=(newW / oldW) * 1764 + 'px';
+   clearbox.style.minHeight=(newH / oldH) * 1306.6 + 'px';  
+   };
+  } else{
+  if(q1.checked === true){
+   clearbox.style.maxWidth=(newW / oldW) * 980 + 'px';
+   clearbox.style.maxHeight=(newH / oldH) * 653.3 + 'px';
+   clearbox.style.minWidth=(newW / oldW) * 980 + 'px';
+   clearbox.style.minHeight=(newH / oldH) * 653.3 + 'px';
+  } else if(q2.checked === true){
+   clearbox.style.maxWidth=(newW / oldW) * 1960 + 'px';
+   clearbox.style.maxHeight=(newH / oldH) * 1306.6 + 'px';
+   clearbox.style.minWidth=(newW / oldW) * 1960 + 'px';
+   clearbox.style.minHeight=(newH / oldH) * 1306.6 + 'px';
+  };
+  };
+  document.getElementById('id_x1').value= (oldW / newW) * (clearbox.offsetLeft - greybox.offsetLeft);
+  document.getElementById('id_y1').value= (oldH / newH) * (clearbox.offsetTop - greybox.offsetTop);
+  document.getElementById('id_x2').value= (oldW / newW) * (clearbox.offsetWidth + ( clearbox.offsetLeft - greybox.offsetLeft));
+  document.getElementById('id_y2').value= (oldH / newH) * (clearbox.offsetHeight + (clearbox.offsetTop - greybox.offsetTop));
+  cropper();
+ };
+
+
+ function grabber(e){
+  if(pn){  
+  clearbox = document.getElementById('clearholder' + pn);
+  greybox = document.getElementById('greyholder' + pn);
+  myimg = document.getElementById('test' + pn);
+  q1 = document.getElementById('gq' + pn);
+  q2 = document.getElementById('mq' + pn);
+  q3 = document.getElementById('bq' + pn);
+  } else {
+   clearbox = document.getElementById('clearholder');
+   greybox = document.getElementById('greyholder');
+   myimg = document.getElementById('test');
+   q1 = document.getElementById('gq');
+   q2 = document.getElementById('mq');
+   q3 = document.getElementById('bq');
+  };
+  oldW = myimg.naturalWidth;
+  oldH = myimg.naturalHeight;
+  newW = myimg.width;
+  newH = myimg.height;
+  if(pn){
+   if(q1.checked === true){
+   clearbox.style.maxWidth=(newW / oldW) * 882 + 'px';
+   clearbox.style.maxHeight=(newH / oldH) * 653.3 + 'px';
+   clearbox.style.minWidth=(newW / oldW) * 882 + 'px';
+   clearbox.style.minHeight=(newH / oldH) * 653.3 + 'px';
+  } else if(q2.checked === true){
+   clearbox.style.maxWidth=(newW / oldW) * 1764 + 'px';
+   clearbox.style.maxHeight=(newH / oldH) * 1306.6 + 'px';
+   clearbox.style.minWidth=(newW / oldW) * 1764 + 'px';
+   clearbox.style.minHeight=(newH / oldH) * 1306.6 + 'px';
+  } else{
+  clearbox.style.maxWidth= greybox.offsetWidth - (clearbox.offsetLeft - greybox.offsetLeft) + 'px';
+  clearbox.style.maxHeight= greybox.offsetHeight - (clearbox.offsetTop - greybox.offsetTop) + 'px';
+  };
+  } else{
+  if(q1.checked === true){
+   clearbox.style.maxWidth=(newW / oldW) * 980 + 'px';
+   clearbox.style.maxHeight=(newH / oldH) * 653.3 + 'px';
+   clearbox.style.minWidth=(newW / oldW) * 980 + 'px';           
+   clearbox.style.minHeight=(newH / oldH) * 653.3 + 'px'; 
+  } else if(q2.checked === true){
+   clearbox.style.maxWidth=(newW / oldW) * 1960 + 'px';
+   clearbox.style.maxHeight=(newH / oldH) * 1306.6 + 'px';
+   clearbox.style.minWidth=(newW / oldW) * 1960 + 'px';
+   clearbox.style.minHeight=(newH / oldH) * 1306.6 + 'px';
+  } else{
+  clearbox.style.maxWidth= greybox.offsetWidth - (clearbox.offsetLeft - greybox.offsetLeft) + 'px';
+  clearbox.style.maxHeight= greybox.offsetHeight - (clearbox.offsetTop - greybox.offsetTop) + 'px';
+  };
+  };
+  if(pn){
+   document.getElementById('id_p' + pn + 'x1').value= (oldW / newW) * (clearbox.offsetLeft - greybox.offsetLeft);
+   document.getElementById('id_p' + pn + 'y1').value= (oldH / newH) * (clearbox.offsetTop - greybox.offsetTop);
+   document.getElementById('id_p' + pn + 'x2').value= (oldW / newW) * (clearbox.offsetWidth + ( clearbox.offsetLeft - greybox.offsetLeft));
+   document.getElementById('id_p' + pn + 'y2').value= (oldH / newH) * (clearbox.offsetHeight + (clearbox.offsetTop - greybox.offsetTop));
+  } else{
+  document.getElementById('id_x1').value= (oldW / newW) * (clearbox.offsetLeft - greybox.offsetLeft);
+  document.getElementById('id_y1').value= (oldH / newH) * (clearbox.offsetTop - greybox.offsetTop);
+  document.getElementById('id_x2').value= (oldW / newW) * (clearbox.offsetWidth + ( clearbox.offsetLeft - greybox.offsetLeft));
+  document.getElementById('id_y2').value= (oldH / newH) * (clearbox.offsetHeight + (clearbox.offsetTop - greybox.offsetTop));
+  };
+  if(clearbox.offsetWidth + clearbox.offsetLeft <= greybox.offsetWidth + greybox.offsetLeft){
+   if(clearbox.offsetHeight + clearbox.offsetTop <= greybox.offsetHeight + greybox.offsetTop){
+    if(clearbox.offsetTop >= greybox.offsetTop){
+     if(clearbox.offsetLeft >= greybox.offsetLeft){
+      if(e.touches[0].pageX - clearbox.offsetLeft > .75 * clearbox.offsetWidth){
+       if(e.touches[0].pageY - clearbox.offsetTop > .75 * clearbox.offsetHeight){
+        clearbox.style.height= e.touches[0].pageY - clearbox.offsetTop + 'px';
+        clearbox.style.width= e.touches[0].pageX - clearbox.offsetLeft + 'px';} 
+       else{   
+        clearbox.style.width= e.touches[0].pageX - clearbox.offsetLeft + 'px';
+       };}
+      else if(e.touches[0].pageY - clearbox.offsetTop > .75 * clearbox.offsetHeight){
+       clearbox.style.height= e.touches[0].pageY - clearbox.offsetTop + 'px';}
+      else{ 
+       d = offsetfinger.length - 1;
+       x=offsetfinger[d].x;
+       y=offsetfinger[d].y;
+       t=offsetfinger[d].t;
+       l=offsetfinger[d].l;
+       clearbox.style.top = e.touches[0].pageY - (y - t) + 'px';
+       clearbox.style.left = e.touches[0].pageX - (x - l) + 'px';
+      };
+     } else{};
+    } else{};
+   };
+  };
+ };
+
+</script>
 <script>
 i=0;
 f=12;

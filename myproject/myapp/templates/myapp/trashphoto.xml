@@ -1,0 +1,5 @@
+<trashphotoalbum>
+ {% for photo in ophoto %}
+ <originalphoto>{{photo.trashphoto}}</originalphoto>
+ {% endfor %}
+</trashphotoalbum>

@@ -13,58 +13,174 @@
   <a style='color:rgb(73,118,173);' href="{% url 'CatPage' cat=post.category %}"> {{post.category}}</a>
   <a style='color:rgb(73,118,173);padding-left:10px;' href="{% url 'subcat' Subcategory=post.subcategory %}">{{post.subcategory}}</a>
  </p>
- <img  style="width:100%;height:600px;object-fit:cover;object-position:20% 41%;" src="/media/{{ post.upload }}">
+
+ <svg id='img' width='980' height='653.3'>
+  <clipPath>                                                            
+   <rect id='bunt' x='0' y='0' width='980px' height='653.3px' />               
+  </clipPath>   
+  <image style='' id='image' href="/media/{{ post.upload }}"/>   
+ </svg>
+ <span id='x1' style='display:none;'>{{ post.x1 }}</span>
+ <span id='x2' style='display:none;'>{{ post.x2 }}</span>
+ <span id='y1' style='display:none;'>{{ post.y1 }}</span>
+ <span id='y2' style='display:none;'>{{ post.y2 }}</span>
+
  <p id='textbox' style='margin-top:200px;'>{{post.Text}}</p>
  {% if post.p1 != 't' %}
- <img id='postimages' src="/media/{{ post.p1 }}">
+ <svg id='img' style='margin-left:49px;' width='882' height='653.3'>
+  <clipPath>
+   <rect id='bunt' x='0' y='0' width='980px' height='653.3px' />
+  </clipPath>
+  <image style='' id='image' href="/media/{{ post.p1 }}"/>
+ </svg>
+ <span id='x1' style='display:none;'>{{ post.p1x1 }}</span>
+ <span id='x2' style='display:none;'>{{ post.p1x2 }}</span>
+ <span id='y1' style='display:none;'>{{ post.p1y1 }}</span>
+ <span id='y2' style='display:none;'>{{ post.p1y2 }}</span>
  {% endif %}
  <p id='textbox'>{{post.b}}</p>
  {% if post.p2 != 't' %}
- <img id='postimages' src="/media/{{ post.p2 }}">
- {% endif %}
+ <svg id='img' style='margin-left:49px;' width='882' height='653.3'>
+  <clipPath>
+   <rect id='bunt' x='0' y='0' width='980px' height='653.3px' />
+  </clipPath>
+  <image style='' id='image' href="/media/{{ post.p2 }}"/>                               </svg>
+ <span id='x1' style='display:none;'>{{ post.p2x1 }}</span>
+ <span id='x2' style='display:none;'>{{ post.p2x2 }}</span>
+ <span id='y1' style='display:none;'>{{ post.p2y1 }}</span>
+ <span id='y2' style='display:none;'>{{ post.p2y2 }}</span>
+ {%	 endif %}
  <p id='textbox'>{{post.c}}</p>
  {% if post.p3 != 't' %}
- <img id='postimages' src="/media/{{ post.p3 }}">
+ <svg id='img' style='margin-left:49px;' width='882' height='653.3'>
+  <clipPath>
+   <rect id='bunt' x='0' y='0' width='980px' height='653.3px' />
+  </clipPath>
+  <image style='' id='image' href="/media/{{ post.p3 }}"/>                               </svg>
+ <span id='x1' style='display:none;'>{{ post.p3x1 }}</span>
+ <span id='x2' style='display:none;'>{{ post.p3x2 }}</span>
+ <span id='y1' style='display:none;'>{{ post.p3y1 }}</span>
+ <span id='y2' style='display:none;'>{{ post.p3y2 }}</span>
  {% endif %}
  <p id='textbox'>{{post.d}}</p>
  {% if post.p4 != 't' %}
- <img id='postimages' src="/media/{{ post.p4 }}">
+ <svg id='img' style='margin-left:49px;' width='882' height='653.3'>
+  <clipPath>
+   <rect id='bunt' x='0' y='0' width='980px' height='653.3px' />
+  </clipPath>
+  <image style='' id='image' href="/media/{{ post.p4 }}"/>                               </svg>
+ <span id='x1' style='display:none;'>{{ post.p4x1 }}</span>
+ <span id='x2' style='display:none;'>{{ post.p4x2 }}</span>
+ <span id='y1' style='display:none;'>{{ post.p4y1 }}</span>
+ <span id='y2' style='display:none;'>{{ post.p4y2 }}</span>
  {% endif %}
  <p id='textbox'>{{post.e}}</p>
  {% if post.p5 != 't' %}
- <img id='postimages' src="/media/{{ post.p5 }}">
+ <svg id='img' style='margin-left:49px;' width='882' height='653.3'>
+  <clipPath>
+   <rect id='bunt' x='0' y='0' width='980px' height='653.3px' />
+  </clipPath>
+  <image style='' id='image' href="/media/{{ post.p5 }}"/>                               </svg>
+ <span id='x1' style='display:none;'>{{ post.p5x1 }}</span>
+ <span id='x2' style='display:none;'>{{ post.p5x2 }}</span>
+ <span id='y1' style='display:none;'>{{ post.p5y1 }}</span>
+ <span id='y2' style='display:none;'>{{ post.p5y2 }}</span>
  {% endif %}
  <p id='textbox'>{{post.f}}</p>
  {% if post.p6 != 't' %}
- <img id='postimages' src="/media/{{ post.p6 }}">
+ <svg id='img' style='margin-left:49px;' width='882' height='653.3'>
+  <clipPath>
+   <rect id='bunt' x='0' y='0' width='980px' height='653.3px' />
+  </clipPath>
+  <image style='' id='image' href="/media/{{ post.p6 }}"/>                               </svg>
+ <span id='x1' style='display:none;'>{{ post.p6x1 }}</span>
+ <span id='x2' style='display:none;'>{{ post.p6x2 }}</span>
+ <span id='y1' style='display:none;'>{{ post.p6y1 }}</span>
+ <span id='y2' style='display:none;'>{{ post.p6y2 }}</span>
  {% endif %}
  <p id='textbox'>{{post.g}}</p>
  {% if post.p7 != 't' %}
- <img id='postimages' src="/media/{{ post.p7 }}">
+ <svg id='img' style='margin-left:49px;' width='882' height='653.3'>
+  <clipPath>
+   <rect id='bunt' x='0' y='0' width='980px' height='653.3px' />
+  </clipPath>
+  <image style='' id='image' href="/media/{{ post.p7 }}"/>                               </svg>
+ <span id='x1' style='display:none;'>{{ post.p7x1 }}</span>
+ <span id='x2' style='display:none;'>{{ post.p7x2 }}</span>
+ <span id='y1' style='display:none;'>{{ post.p7y1 }}</span>
+ <span id='y2' style='display:none;'>{{ post.p7y2 }}</span>
  {% endif %}
  <p id='textbox'>{{post.h}}</p>
  {% if post.p8 != 't' %}
- <img id='postimages' src="/media/{{ post.p8 }}">
+ <svg id='img' style='margin-left:49px;' width='882' height='653.3'>
+  <clipPath>
+   <rect id='bunt' x='0' y='0' width='980px' height='653.3px' />
+  </clipPath>
+  <image style='' id='image' href="/media/{{ post.p8 }}"/>                               </svg>
+ <span id='x1' style='display:none;'>{{ post.p8x1 }}</span>
+ <span id='x2' style='display:none;'>{{ post.p8x2 }}</span>
+ <span id='y1' style='display:none;'>{{ post.p8y1 }}</span>
+ <span id='y2' style='display:none;'>{{ post.p8y2 }}</span>
  {% endif %}
  <p id='textbox'>{{post.i}}</p>
  {% if post.p9 != 't' %}
- <img id='postimages' src="/media/{{ post.p9 }}">
+ <svg id='img' style='margin-left:49px;' width='882' height='653.3'>
+  <clipPath>
+   <rect id='bunt' x='0' y='0' width='980px' height='653.3px' />
+  </clipPath>
+  <image style='' id='image' href="/media/{{ post.p9 }}"/>                               </svg>
+ <span id='x1' style='display:none;'>{{ post.p9x1 }}</span>
+ <span id='x2' style='display:none;'>{{ post.p9x2 }}</span>
+ <span id='y1' style='display:none;'>{{ post.p9y1 }}</span>
+ <span id='y2' style='display:none;'>{{ post.p9y2 }}</span>
  {% endif %}
  <p id='textbox'>{{post.j}}</p>
  {% if post.p10 != 't' %}
- <img id='postimages' src="/media/{{ post.p10 }}">
+ <svg id='img' style='margin-left:49px;' width='882' height='653.3'>
+  <clipPath>
+   <rect id='bunt' x='0' y='0' width='980px' height='653.3px' />
+  </clipPath>
+  <image style='' id='image' href="/media/{{ post.p10 }}"/>                               </svg>
+ <span id='x1' style='display:none;'>{{ post.p10x1 }}</span>
+ <span id='x2' style='display:none;'>{{ post.p10x2 }}</span>
+ <span id='y1' style='display:none;'>{{ post.p10y1 }}</span>
+ <span id='y2' style='display:none;'>{{ post.p10y2 }}</span>
  {% endif %}
  <p id='textbox'>{{post.k}}</p>
  {% if post.p11 != 't' %}
- <img id='postimages' src="/media/{{ post.p11 }}">
+ <svg id='img' style='margin-left:49px;' width='882' height='653.3'>
+  <clipPath>
+   <rect id='bunt' x='0' y='0' width='980px' height='653.3px' />
+  </clipPath>
+  <image style='' id='image' href="/media/{{ post.p11 }}"/>                               </svg>
+ <span id='x1' style='display:none;'>{{ post.p11x1 }}</span>
+ <span id='x2' style='display:none;'>{{ post.p11x2 }}</span>
+ <span id='y1' style='display:none;'>{{ post.p11y1 }}</span>
+ <span id='y2' style='display:none;'>{{ post.p11y2 }}</span>
  {% endif %}
  <p id='textbox'>{{post.l}}</p>
  {% if post.p12 != 't' %}
- <img id='postimages' src="/media/{{ post.p12 }}">
+ <svg id='img' style='margin-left:49px;' width='882' height='653.3'>
+  <clipPath>
+   <rect id='bunt' x='0' y='0' width='980px' height='653.3px' />
+  </clipPath>
+  <image style='' id='image' href="/media/{{ post.p12 }}"/>                               </svg>
+ <span id='x1' style='display:none;'>{{ post.p12x1 }}</span>
+ <span id='x2' style='display:none;'>{{ post.p12x2 }}</span>
+ <span id='y1' style='display:none;'>{{ post.p12y1 }}</span>
+ <span id='y2' style='display:none;'>{{ post.p12y2 }}</span>
  {% endif %}
  <p id='textbox'>{{post.m}}</p>
  {% if post.p13 != 't' %}
- <img id='postimages' src="/media/{{ post.p13 }}">
+ <svg id='img' style='margin-left:49px;' width='882' height='653.3'>
+  <clipPath>
+   <rect id='bunt' x='0' y='0' width='980px' height='653.3px' />
+  </clipPath>
+  <image style='' id='image' href="/media/{{ post.p13 }}"/>                               </svg>
+ <span id='x1' style='display:none;'>{{ post.p13x1 }}</span>
+ <span id='x2' style='display:none;'>{{ post.p13x2 }}</span>
+ <span id='y1' style='display:none;'>{{ post.p13y1 }}</span>
+ <span id='y2' style='display:none;'>{{ post.p13y2 }}</span>
  {% endif %}
 </div>
 {% if post.published_date != null %}<label style='margin-left:40px;'>Published: <a style='color:rgb(73,118,173);' >{{ post.published_date }}</a></label><br>{% endif %}
@@ -77,5 +193,26 @@
  </a>
 </label>
 {% endif %}
-
+ <script>
+  img = document.querySelectorAll('#img');
+ image = document.querySelectorAll('#image');
+ x1 = document.querySelectorAll('#x1');
+ y1 = document.querySelectorAll('#y1');
+ x2 = document.querySelectorAll('#x2');
+ y2 = document.querySelectorAll('#y2');
+ ugh = document.querySelectorAll('#bunt');
+ nug = document.querySelectorAll('clipPath');
+ for(z=0; z < img.length; z++){
+  w = +x2[z].innerHTML - +x1[z].innerHTML;
+  y = +y2[z].innerHTML - +y1[z].innerHTML;
+  nug[z].id = 'clip' + z;
+  clip = document.getElementById('clip' + z);
+  ugh[z].setAttribute('x', x1[z].innerHTML);
+  ugh[z].setAttribute('y', y1[z].innerHTML);
+  ugh[z].setAttribute('width', w);
+  ugh[z].setAttribute('height', y);
+  image[z].style.clipPath='url(#' + clip.id + ')';
+  img[z].setAttribute('viewBox', x1[z].innerHTML + ' ' + y1[z].innerHTML + ' ' + w + ' ' + y);
+ };
+ </script>
 {% endblock %}

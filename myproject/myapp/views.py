@@ -1,13 +1,28 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post, Profile, Messages
+from .models import Post, Profile, Messages, Trashphoto
 from django.utils import timezone
-from .forms import PostForm, signupform, loginform, CreateProfile, SendMessage
+from .forms import PostForm, signupform, loginform, CreateProfile, SendMessage, cropimage
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import Post
 from django.contrib.auth.models import User
 from django.template import Context, loader
+
+def trashphotoxml(request):
+ if request.method=='POST':
+  form=cropimage(request.POST, request.FILES)
+  if form.is_valid:
+   post=form.save(commit=False)
+   post.author=request.user
+   post.save()
+ else:
+  User=request.user
+  ophoto=Trashphoto.objects.filter(author=User)
+  form=cropimage()
+  t = loader.get_template('myapp/trashphoto.xml')
+  c={'ophoto':ophoto}
+  return HttpResponse(t.render(c), content_type='application/xml')
 
 def messenger(request, recipient):
  user=request.user
@@ -83,7 +98,7 @@ def editprofile(request, profilepk):
   else:
    form=CreateProfile(instance=f)
    user=request.user
-   return render(request, 'myapp/createprofile.html',{'form':form,'pk':pk,})
+  return render(request, 'myapp/createprofile.html',{'form':form,'pk':pk,'f':f})
  else:
   return HttpResponse('You can only edit you own profile!')
 
@@ -184,7 +199,7 @@ def post_new(request):
     post.save()
     return redirect('post_detail', Pk=post.pk)
    else:
-    return  messages.error(request, "Error")
+    return render(request, 'myapp/post_edit.html', {'form':form})
   if 'publish' in request.POST:
    if form.is_valid():
     post = form.save(commit=False)
@@ -224,7 +239,8 @@ def post_new(request):
     return redirect('post_detail', Pk=post.pk)
  else:
   form=PostForm()
-  return render(request, 'myapp/post_edit.html',{'form':form})
+  User=request.user
+  return render(request, 'myapp/post_edit.html',{'form':form, 'User':User})
 
 def Post_Edit(request, PK):
  f=Post.objects.get(pk=PK)
@@ -319,9 +335,11 @@ def Post_Edit(request, PK):
      post.subcategory='Opinion'
     post.save()
     return redirect('post_detail', Pk=post.pk)
+   else:
+    return httpResponse('banana')
  else:
   form=PostForm(instance=f)
-  return render(request, 'myapp/post_edit.html', {'form':form, 'p':p,'p1':p1,'p2':p2,'p3':p3,'p4':p4,'p5':p5,'p6':p6,'p7':p7,'p8':p8,'p9':p9,'p10':p10,'p11':p11,'p12':p12,'pk':pk,})
+  return render(request, 'myapp/post_edit.html', {'form':form, 'p':p,'p1':p1,'p2':p2,'p3':p3,'p4':p4,'p5':p5,'p6':p6,'p7':p7,'p8':p8,'p9':p9,'p10':p10,'p11':p11,'p12':p12,'pk':pk,'f':f})
 
 def ArcheologyCat(request, cat):
  posts= Post.objects.filter(category=cat).order_by('published_date').reverse()

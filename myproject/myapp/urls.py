@@ -18,6 +18,7 @@ sitemaps = {
 }
 
 urlpatterns = [
+ path('originalphotos.xml/', views.trashphotoxml, name='trashphoto'),
  path('sendmessage/<str:recipient>', views.messenger, name='messenger'),
  path('sendmessage.xml/<str:recipient>/', views.messengerxml, name='messengerxml'),
  path('hello.xml/', views.helloxml, name='helloxml'),
